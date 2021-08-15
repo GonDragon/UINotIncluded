@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -15,10 +16,18 @@ namespace UINotIncluded
         static Mod()
         {
             const string Id = "UINotIncluded";
-            const string Name = Id;
-            const string Version = "1.0.0";
+            const string author = "GonDragon";
 
-            Log.Message("UINotIncluded Initialized");
+            var harmony = new Harmony($"{author}.{Id}");
+            harmony.PatchAll();
+
+            Log.Message("UINotIncluded Initialized. Harmony id:");
+            Log.Message($"{author}.{Id}");
+            Log.Message("Patched methods:");
+            var myOriginalMethods = harmony.GetPatchedMethods();
+            foreach (var method in myOriginalMethods) {
+                Log.Message(method.Name);
+            }
         }
     }
 }

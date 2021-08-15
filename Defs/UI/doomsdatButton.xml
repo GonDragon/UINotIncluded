@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <DoomsdatButton>
+        <defName>Doomed</defName>
+        <label>Doomed</label>
+        <windowClass></windowClass>
+        <description>You Fool!</description>
+    </DoomsdatButton>
+</Defs>
