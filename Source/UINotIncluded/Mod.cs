@@ -13,21 +13,24 @@ namespace UINotIncluded
     [StaticConstructorOnStartup]
     public static class Mod
     {
+        public const string Name = "UINotIncluded";
+        public const string Author = "GonDragon";
+        public const string Id = Author + "." + Name;
+        public const string Version = "1.0.0";
+
+        public static readonly Harmony Harmony;
         static Mod()
         {
-            const string Id = "UINotIncluded";
-            const string author = "GonDragon";
-
-            var harmony = new Harmony($"{author}.{Id}");
-            harmony.PatchAll();
-
-            Log.Message("UINotIncluded Initialized. Harmony id:");
-            Log.Message($"{author}.{Id}");
-            Log.Message("Patched methods:");
-            var myOriginalMethods = harmony.GetPatchedMethods();
-            foreach (var method in myOriginalMethods) {
-                Log.Message(method.Name);
-            }
+            Harmony = new Harmony(Id);
+            Harmony.PatchAll();
         }
+
+        public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));
+        public static void Warning(string message) => Verse.Log.Warning(PrefixMessage(message));
+        public static void Error(string message) => Verse.Log.Error(PrefixMessage(message));
+        public static void ErrorOnce(string message, string key) => Verse.Log.ErrorOnce(PrefixMessage(message), key.GetHashCode());
+        public static void Message(string message) => Messages.Message(message, MessageTypeDefOf.TaskCompletion, false);
+        private static string PrefixMessage(string message) => $"[{Name} v{Version}] {message}";
+
     }
 }
