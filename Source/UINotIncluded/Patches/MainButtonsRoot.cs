@@ -12,19 +12,19 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(MainButtonsRoot), "MainButtonsOnGUI")]
     class MainButtonRootPatch
     {
-        private static UIManager manager = new UIManager();
         static void Postfix()
         {
-            manager.MainUIOnGUI();
+            UIManager.Instance.MainUIOnGUI();
         }
     }
 
     [HarmonyPatch(typeof(MainButtonsRoot), "DoButtons")]
     class DoButtonsPatch
     {
-        static bool Prefix(MainButtonsRoot __instance)
+        static bool Prefix(MainButtonsRoot __instance, List<MainButtonDef> ___allButtonsInOrder)
         {
-            var allButtonsInOrder = Traverse.Create(__instance).Field("allButtonsInOrder").GetValue<List<MainButtonDef>>();
+            //var allButtonsInOrder = Traverse.Create(__instance).Field("allButtonsInOrder").GetValue<List<MainButtonDef>>();
+            var allButtonsInOrder = ___allButtonsInOrder;
 
             float num1 = 0.0f;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
@@ -33,10 +33,11 @@ namespace UINotIncluded
                     num1 += allButtonsInOrder[index].minimized ? 0.5f : 1f;
             }
             GUI.color = Color.white;
-            int num2 = (int)((double)UI.screenWidth / (double)num1);
+            double spaceReserved = (double)UI.screenWidth / 4;
+            int num2 = (int)(((double)UI.screenWidth - spaceReserved) / (double)num1);
             int num3 = num2 / 2;
             int lastIndex = allButtonsInOrder.FindLastIndex((Predicate<MainButtonDef>)(x => x.buttonVisible));
-            int num4 = 0;
+            int num4 = (int)spaceReserved;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
             {
                 if (allButtonsInOrder[index].buttonVisible)
