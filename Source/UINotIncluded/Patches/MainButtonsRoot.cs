@@ -23,7 +23,6 @@ namespace UINotIncluded
     {
         static bool Prefix(MainButtonsRoot __instance, List<MainButtonDef> ___allButtonsInOrder)
         {
-            //var allButtonsInOrder = Traverse.Create(__instance).Field("allButtonsInOrder").GetValue<List<MainButtonDef>>();
             var allButtonsInOrder = ___allButtonsInOrder;
 
             float num1 = 0.0f;

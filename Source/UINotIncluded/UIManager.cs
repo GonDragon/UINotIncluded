@@ -12,13 +12,13 @@ namespace UINotIncluded
     public sealed class UIManager
     {
         
-        private Clock clock;
+        private ExtendedToolbar clock;
         public float nextPosition = 5f;
         public float ClockHeight => clock.height;
 
         private UIManager()
         {
-            this.clock = new Clock(0, 0, (float)UI.screenWidth / 4);
+            this.clock = new ExtendedToolbar(0, 0, (float)UI.screenWidth / 4);
         }
         
         private static UIManager instance = null;
@@ -36,7 +36,7 @@ namespace UINotIncluded
 
         public void Before_MainUIOnGUI() 
         {
-            clock.ClockOnGUI();
+            clock.ExtendedToolbarOnGUI();
         }
         public void MainUIOnGUI()
         {
