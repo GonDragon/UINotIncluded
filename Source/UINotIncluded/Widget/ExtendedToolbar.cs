@@ -7,42 +7,23 @@ using Verse;
 
 namespace UINotIncluded.Widget
 {
-    class ExtendedToolbar
+    static class ExtendedToolbar
     {
-        public float width;
-        public float height = 35f;
-        public float x;
-        public float y;
-        public WidgetRow row = new WidgetRow();
-        public ExtendedToolbar(float x, float y, float width)
-        {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-        }
 
-        public void ExtendedToolbarOnGUI()
+        public static float height = 35f;
+
+        public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
-            Rect rect = new Rect(this.x, this.y, this.width, this.height);
+            WidgetRow row = new WidgetRow();
+            Rect rect = new Rect(x, y, width, height);
             GUI.DrawTexture(rect, SolidColorMaterials.NewSolidColorTexture(new ColorInt(111, 111, 111, (int)byte.MaxValue).ToColor));
-            Widgets.DrawAtlas(new Rect(this.x + 1f, this.y + 1f, this.width - 2f, this.height - 2f), ContentFinder<Texture2D>.Get("GD/UI/ClockBG"));
+            Widgets.DrawAtlas(new Rect(x + 1f, y + 1f, width - 2f, height - 2f), ContentFinder<Texture2D>.Get("GD/UI/ClockBG"));
 
-            float rowHeight = this.height - 8f;
-            row.Init(this.x + 6f, this.y + 5f, UIDirection.RightThenDown,width, 4f);
+            float rowHeight = height - 8f;
+            row.Init(x + 6f, y + 5f, UIDirection.RightThenDown,width, 4f);
             Weather.DoWeatherGUI(row, rowHeight);
             row.Gap(10f);
             Time.DoTimeWeather(row, rowHeight);
-
-            /*
-            float groupHeight = this.height - 8f;
-            GUI.BeginGroup(new Rect(this.x + 4f, this.y + 4f, this.width - 8f, groupHeight));
-
-            float groupX = 0;
-            float groupY = 0;            
-            size = Weather.DoWeatherGUI(groupX, groupY, groupHeight);
-            groupX += size + 4f;
-            GUI.EndGroup();
-            */
 
         }
 

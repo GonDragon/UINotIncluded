@@ -16,7 +16,7 @@ namespace UINotIncluded
     {
         static void Prefix(ref Rect rect)
         {
-            rect.y += UIManager.Instance.ClockHeight;
+            if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.Instance.ExtendedBarHeight;
         }
     }
 
@@ -25,7 +25,7 @@ namespace UINotIncluded
     {
         static void Prefix(ref Rect rect)
         {
-            rect.y += UIManager.Instance.ClockHeight;
+            if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.Instance.ExtendedBarHeight;
         }
     }
 }

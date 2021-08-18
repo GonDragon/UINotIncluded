@@ -38,14 +38,14 @@ namespace UINotIncluded
             Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, inRect.height);
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(column1);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref settings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
-            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), settings.dateFormat.ToStringHuman()))
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref UINotIncludedSettings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
+            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), UINotIncludedSettings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (DateFormat dateFormat in Enum.GetValues(typeof(DateFormat)))
                 {
                     DateFormat localFormat = dateFormat;
-                    options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => settings.dateFormat = dateFormat)));
+                    options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => UINotIncludedSettings.dateFormat = dateFormat)));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }

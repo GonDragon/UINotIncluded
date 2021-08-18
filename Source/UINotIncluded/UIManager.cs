@@ -4,6 +4,7 @@ using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using HarmonyLib;
 
 using UINotIncluded.Widget;
 
@@ -11,15 +12,7 @@ namespace UINotIncluded
 {
     public sealed class UIManager
     {
-        
-        private ExtendedToolbar clock;
-        public float nextPosition = 5f;
-        public float ClockHeight => clock.height;
-
-        private UIManager()
-        {
-            this.clock = new ExtendedToolbar(0, 0, (float)UI.screenWidth / 4);
-        }
+        public float ExtendedBarHeight => ExtendedToolbar.height;
         
         private static UIManager instance = null;
         public static UIManager Instance
@@ -36,7 +29,8 @@ namespace UINotIncluded
 
         public void Before_MainUIOnGUI() 
         {
-            clock.ExtendedToolbarOnGUI();
+            float posY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
+            ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, (float)UI.screenWidth / 4);
         }
         public void MainUIOnGUI()
         {
@@ -45,11 +39,7 @@ namespace UINotIncluded
 
         public void After_MainUIOnGUI()
         {
-            this.Clear();
-        }
-        private void Clear()
-        {
-            this.nextPosition = 5f;
+
         }
     }
 }

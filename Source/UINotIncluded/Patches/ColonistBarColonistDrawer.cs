@@ -11,12 +11,12 @@ using UnityEngine;
 
 namespace UINotIncluded
 {
-    [HarmonyPatch(typeof(ColonistBarDrawLocsFinder), "GetDrawLoc")]
-    class GetDrawLocPatch
+    [HarmonyPatch(typeof(ColonistBarColonistDrawer), "DrawColonist")]
+    class DrawColonistPatch
     {
-        static void Prefix(ref float groupStartY)
+        static void Prefix(ref Rect rect)
         {
-            groupStartY += 35f;
+            if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.Instance.ExtendedBarHeight;
         }
     }
 }

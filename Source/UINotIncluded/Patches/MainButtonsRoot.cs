@@ -6,6 +6,7 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using UnityEngine;
+using UINotIncluded.Settings;
 
 namespace UINotIncluded
 {
@@ -21,11 +22,13 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(MainButtonsRoot), "DoButtons")]
     class DoButtonsPatch
     {
-        static bool Prefix(MainButtonsRoot __instance, List<MainButtonDef> ___allButtonsInOrder)
+        static bool Prefix(List<MainButtonDef> ___allButtonsInOrder)
         {
             var allButtonsInOrder = ___allButtonsInOrder;
+            int height = 35;
+            int posY = UINotIncludedSettings.tabsOnTop ? 0 : UI.screenHeight - height;
 
-            float num1 = 0.0f;
+            float num1 = 0;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
             {
                 if (allButtonsInOrder[index].buttonVisible)
@@ -44,7 +47,7 @@ namespace UINotIncluded
                     int num5 = allButtonsInOrder[index].minimized ? num3 : num2;
                     if (index == lastIndex)
                         num5 = UI.screenWidth - num4;
-                    Rect rect = new Rect((float)num4, 0f, (float)num5, 35f);
+                    Rect rect = new Rect((float)num4, (float)posY, (float)num5, height);
                     allButtonsInOrder[index].Worker.DoButton(rect);
                     num4 += num5;
                 }
