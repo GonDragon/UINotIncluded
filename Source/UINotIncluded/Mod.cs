@@ -11,7 +11,7 @@ using Verse;
 namespace UINotIncluded
 {
     [StaticConstructorOnStartup]
-    public static class Mod
+    public static class UINotIncludedStatic
     {
         public const string Name = "UINotIncluded";
         public const string Author = "GonDragon";
@@ -19,7 +19,7 @@ namespace UINotIncluded
         public const string Version = "1.0.0";
 
         public static readonly Harmony Harmony;
-        static Mod()
+        static UINotIncludedStatic()
         {
             Harmony = new Harmony(Id);
             Harmony.PatchAll();

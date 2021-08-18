@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+<UINotIncluded.Setting.tabsOnTop>Tabs On Top</UINotIncluded.Setting.tabsOnTop>
+<UINotIncluded.Setting.tabsOnTop.Description>If checked, the bar with the main tabs and the clock will be on top, instead of on the bottom.</UINotIncluded.Setting.tabsOnTop.Description>
+<UINotIncluded.Setting.dateFormat>Date format</UINotIncluded.Setting.dateFormat>
+</LanguageData>
