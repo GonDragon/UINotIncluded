@@ -15,16 +15,14 @@ namespace UINotIncluded.Widget
     {
         public const float width = 65f;
 
-        public static float DoWeatherGUI(WidgetRow row, float height)
+        public static void DoWeatherGUI(WidgetRow row, float height)
         {
-            Traverse globalControls = Traverse.Create(Find.MapUI.globalControls);
-
-            Rect background = new Rect(row.FinalX -2, row.FinalY, width+2, height);
+            Rect background = new Rect(row.FinalX, row.FinalY, width, height);
             ExtendedToolbar.DoToolbarBackground(background);
 
+            row.Gap(2f);
             float climaWidth = width / 2;
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;
-            Rect rect = new Rect(row.FinalX, row.FinalY, climaWidth, height);
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
@@ -42,7 +40,6 @@ namespace UINotIncluded.Widget
             row.Label(temp.ToString() + new string[] {"°C", "°F", "°K" }[(int)Prefs.TemperatureMode], climaWidth,null,height);
 
             Text.Anchor = TextAnchor.UpperLeft;
-            return width;
         }
     }
 }

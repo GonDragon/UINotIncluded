@@ -28,8 +28,10 @@ namespace UINotIncluded.Widget
             Widgets.DrawAtlas(new Rect(this.x + 1f, this.y + 1f, this.width - 2f, this.height - 2f), ContentFinder<Texture2D>.Get("GD/UI/ClockBG"));
 
             float rowHeight = this.height - 8f;
-            row.Init(this.x + 6f, this.y + 5f, UIDirection.RightThenDown);
+            row.Init(this.x + 6f, this.y + 5f, UIDirection.RightThenDown,width, 4f);
             Weather.DoWeatherGUI(row, rowHeight);
+            row.Gap(10f);
+            Time.DoTimeWeather(row, rowHeight);
 
             /*
             float groupHeight = this.height - 8f;
