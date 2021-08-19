@@ -6,7 +6,6 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using UnityEngine;
-using UINotIncluded.Settings;
 
 namespace UINotIncluded
 {

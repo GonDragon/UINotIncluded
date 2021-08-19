@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using Verse;
 using UnityEngine;
-using UINotIncluded.Settings;
 
 namespace UINotIncluded
 {

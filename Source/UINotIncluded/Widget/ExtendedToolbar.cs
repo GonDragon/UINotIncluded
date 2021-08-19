@@ -11,6 +11,8 @@ namespace UINotIncluded.Widget
     {
 
         public static float height = 35f;
+        public static float interGap = 5f;
+        public static float padding = 5f;
 
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
@@ -22,8 +24,8 @@ namespace UINotIncluded.Widget
             float rowHeight = height - 8f;
             row.Init(x + 6f, y + 5f, UIDirection.RightThenDown,width, 4f);
             Weather.DoWeatherGUI(row, rowHeight);
-            row.Gap(10f);
-            Time.DoTimeWeather(row, rowHeight);
+            row.Gap(interGap);
+            Time.DoTimeWidget(row, rowHeight);
 
         }
 
