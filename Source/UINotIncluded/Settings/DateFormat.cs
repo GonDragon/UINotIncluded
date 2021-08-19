@@ -55,5 +55,23 @@ namespace UINotIncluded
                     throw new NotImplementedException();
             }
         }
+
+        public static int GetFormatedLength(this DateFormat format)
+        {
+            switch (format)
+            {
+                case DateFormat.MMDDYYYY:
+                    return 100;
+                case DateFormat.DDMMYYYY:
+                    return 100;
+                case DateFormat.DDmmmYYYY:
+                    return 110;
+                case DateFormat.ddmmmYYYY:
+                    return 120;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }

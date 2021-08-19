@@ -48,8 +48,8 @@ namespace UINotIncluded.Widget
         public static void DoDate(WidgetRow row, float height, Vector2 pos)
         {
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Small;
-            float width = 130f;
+            Text.Font = GameFont.Tiny;
+            float width = UINotIncludedSettings.dateFormat.GetFormatedLength();
             float startX = row.FinalX;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
             row.Gap(ExtendedToolbar.padding);
@@ -58,10 +58,22 @@ namespace UINotIncluded.Widget
 
             row.Icon(season.GetIconTex(), season.LabelCap());
             float labelWidth = width - (row.FinalX - startX) - ExtendedToolbar.padding;
-            row.Label(UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x), labelWidth, null,height);
+            row.Label(UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x), labelWidth, GetDateDescription(pos,season),height);
             row.Gap(ExtendedToolbar.padding);
             Text.Anchor = TextAnchor.UpperLeft;
 
+        }
+
+        private static string GetDateDescription(Vector2 pos, Season season)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < 4; ++i)
+            {
+                Quadrum quadrum = (Quadrum)i;
+                stringBuilder.AppendLine(quadrum.Label() + " - " + quadrum.GetSeason(pos.y).LabelCap());
+            }
+            TaggedString description = "DateReadoutTip".Translate((NamedArgument)GenDate.DaysPassed, (NamedArgument)15, (NamedArgument)season.LabelCap(), (NamedArgument)15, (NamedArgument)GenDate.Quadrum((long)GenTicks.TicksAbs, pos.x).Label(), (NamedArgument)stringBuilder.ToString());
+            return description.ToString();
         }
     }
 }

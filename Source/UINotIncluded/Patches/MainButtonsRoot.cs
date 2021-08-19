@@ -14,7 +14,7 @@ namespace UINotIncluded
     {
         static void Postfix()
         {
-            UIManager.Instance.MainUIOnGUI();
+            UIManager.MainUIOnGUI();
         }
     }
 

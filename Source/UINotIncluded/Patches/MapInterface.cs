@@ -18,7 +18,7 @@ namespace UINotIncluded
         {
             if (!(Find.CurrentMap == null) && (!WorldRendererUtility.WorldRenderedNow))
             {
-                UIManager.Instance.Before_MainUIOnGUI();
+                UIManager.Before_MainUIOnGUI();
             }
         }
     }
@@ -28,7 +28,7 @@ namespace UINotIncluded
     {
         static void Postfix()
         {
-            UIManager.Instance.After_MainUIOnGUI();
+            UIManager.After_MainUIOnGUI();
         }
     }
 }

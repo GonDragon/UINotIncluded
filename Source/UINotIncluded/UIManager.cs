@@ -10,34 +10,28 @@ using UINotIncluded.Widget;
 
 namespace UINotIncluded
 {
-    public sealed class UIManager
+    public static class UIManager
     {
-        public float ExtendedBarHeight => ExtendedToolbar.height;
-        
-        private static UIManager instance = null;
-        public static UIManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new UIManager();
-                }
-                return instance;
-            }
-        }
+        public static float ExtendedBarHeight => ExtendedToolbar.height;
+        private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
 
-        public void Before_MainUIOnGUI() 
+        public static void Before_MainUIOnGUI() 
         {
+            if (tabsOnTop != UINotIncludedSettings.tabsOnTop)
+            {
+                tabsOnTop = UINotIncludedSettings.tabsOnTop;
+                Find.ColonistBar.MarkColonistsDirty();
+            }
+            if (Event.current.type == EventType.Layout) return;
             float posY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
             ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, (float)UI.screenWidth / 4);
         }
-        public void MainUIOnGUI()
+        public static void MainUIOnGUI()
         {
             
         }
 
-        public void After_MainUIOnGUI()
+        public static void After_MainUIOnGUI()
         {
 
         }

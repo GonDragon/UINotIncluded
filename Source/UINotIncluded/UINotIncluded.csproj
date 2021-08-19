@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
-    <Compile Include="Patches\ColonistBarColonistDrawer.cs" />
+    <Compile Include="Patches\ColonistBar.cs" />
     <Compile Include="Settings\DateFormat.cs" />
     <Compile Include="Settings\ModSettings.cs" />
     <Compile Include="Patches\GlobalControls.cs" />
