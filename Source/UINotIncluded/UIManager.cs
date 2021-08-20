@@ -15,8 +15,7 @@ namespace UINotIncluded
         public static float ExtendedBarHeight => ExtendedToolbar.height;
         public static float ExtendedBarWidth => _width;
 
-        [TweakValue("A.Extended Bar Width", 410f, 900f)]
-        private static float _width = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
+        private static readonly float _width = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
 
         public static void Before_MainUIOnGUI()

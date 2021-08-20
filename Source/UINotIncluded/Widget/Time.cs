@@ -13,50 +13,59 @@ namespace UINotIncluded.Widget
 {
     static class Time
     {
+        private static readonly float extraSize = 12f; // Width with WidgetRow is inconsistent. Dirty fix.
         public static void DoTimeWidget(WidgetRow row, float height, float width)
         {
             if (Find.CurrentMap == null) return;
 
-            float gadgetsWidth = width - 2 * ExtendedToolbar.padding - ExtendedToolbar.interGap;
-            float timeWidth = (float)Math.Floor(gadgetsWidth / 3);
-            float dateWidth = gadgetsWidth - timeWidth;
             
-            Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
-            Time.DoHours(row, height, pos, timeWidth);
-            row.Gap(ExtendedToolbar.interGap + 2 * ExtendedToolbar.padding);
-            Time.DoDate(row, height, pos, dateWidth);
-            
-
+            float gadgetsWidth = width - 2 * ExtendedToolbar.padding;
+            float datetimeWidth = gadgetsWidth;
+            if (Prefs.ShowRealtimeClock)
+            {
+                float realtimeWidth = (float)Math.Floor(gadgetsWidth * 0.27f);
+                Time.DoRealtimeClock(row, height, realtimeWidth);
+                row.Gap(ExtendedToolbar.interGap + 2 * ExtendedToolbar.padding);
+                datetimeWidth -= realtimeWidth - 2 * ExtendedToolbar.padding - ExtendedToolbar.interGap;
+            } else
+            {
+                datetimeWidth += extraSize;
+            }
+            Time.DoDateAndTime(row, height, datetimeWidth);
         }
 
-        public static void DoHours(WidgetRow row, float height, Vector2 pos, float width)
+        public static void DoRealtimeClock(WidgetRow row, float height, float width)
         {
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
 
+            Rect iconSpace = row.Icon(ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/world"));
+            String label = DateTime.Now.ToString("HH:mm");
 
-            float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
-            int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
-            string label = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
-
-            row.Label(label, width, null,height);
+            row.Label(label, width - iconSpace.width, null,height);
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        public static void DoDate(WidgetRow row, float height, Vector2 pos, float width)
+        public static void DoDateAndTime(WidgetRow row, float height, float width)
         {
+            float startX = row.FinalX;
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
 
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
-
+            Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
 
             Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
-            Rect iconSpace = row.Icon(season.GetIconTex(), season.LabelCap());
+            row.Icon(season.GetIconTex(), season.LabelCap());
 
-            float labelWidth = width - iconSpace.width;
-            row.Label(UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x), labelWidth, GetDateDescription(pos,season),height);
+            float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
+            int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
+            string timestamp = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
+            string datestamp = UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+
+            row.Label(datestamp,-1, GetDateDescription(pos,season),height);
+            row.Label(timestamp, width - (row.FinalX - startX));
             Text.Anchor = TextAnchor.UpperLeft;
 
         }

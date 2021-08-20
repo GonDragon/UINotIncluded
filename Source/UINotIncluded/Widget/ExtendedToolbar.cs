@@ -13,7 +13,8 @@ namespace UINotIncluded.Widget
         public static float interGap = 2;
         public static float padding = 1;
         public static float margin = 5;
-        public static float tail = 11f; // I did the math wrong somewhere. This fixes that.
+        [TweakValue("A.Tail", 00f, 50f)]
+        public static float tail = 16f; // I did the math wrong somewhere. This fixes that.
 
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
@@ -29,7 +30,7 @@ namespace UINotIncluded.Widget
             float timeSpeedSpace = (float)Math.Floor(widgetSpace / 3f) - (2 * padding) - tail;
 
             float rowHeight = height - 10f;
-            row.Init(x + margin + padding, y + 5f, UIDirection.RightThenDown, widgetSpace, padding);
+            row.Init(x + margin + padding, y + 5f, UIDirection.RightThenDown, widgetSpace, 0);
             Weather.DoWeatherGUI(row, rowHeight, weatherSpace);
             row.Gap(interGap + 2 * padding);
             Time.DoTimeWidget(row, rowHeight, timeSpace);
