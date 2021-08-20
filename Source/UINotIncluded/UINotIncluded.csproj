@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />
     <Compile Include="Settings\DateFormat.cs" />
     <Compile Include="Settings\ModSettings.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Patches\ResourceReadout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\SeasonExtension.cs" />
+    <Compile Include="Utility\TimeSpeedExtension.cs" />
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
     <Compile Include="Widget\Time.cs" />

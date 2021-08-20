@@ -14,7 +14,7 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(ColonistBar), "CheckRecacheEntries")]
     class CheckRecacheEntriesPatch
     {
-        static void Prefix(ColonistBar __instance, in bool ___entriesDirty,out bool __state)
+        static void Prefix(in bool ___entriesDirty,out bool __state)
         {
             __state = ___entriesDirty;
         }
