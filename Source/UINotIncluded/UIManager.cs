@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 using HarmonyLib;
@@ -15,8 +15,9 @@ namespace UINotIncluded
         public static float ExtendedBarHeight => ExtendedToolbar.height;
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
 
-        public static void Before_MainUIOnGUI() 
+        public static void Before_MainUIOnGUI()
         {
+            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
             if (tabsOnTop != UINotIncludedSettings.tabsOnTop)
             {
                 tabsOnTop = UINotIncludedSettings.tabsOnTop;
@@ -28,12 +29,12 @@ namespace UINotIncluded
         }
         public static void MainUIOnGUI()
         {
-            
+            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
         }
 
         public static void After_MainUIOnGUI()
         {
-
+            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
         }
     }
 }
