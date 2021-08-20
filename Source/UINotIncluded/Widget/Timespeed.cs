@@ -13,18 +13,13 @@ namespace UINotIncluded.Widget
 {
     static class Timespeed
     {
-        public static float width = 140f;
-        public static void DoTimespeedControls(WidgetRow row, float height)
+        public static void DoTimespeedControls(WidgetRow row, float height, float width)
         {
-
-            float startX = row.FinalX;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
             row.Gap(ExtendedToolbar.padding);
-            float width2 = width - ExtendedToolbar.padding * 2;
 
-            Rect timerRect = new Rect(row.FinalX, row.FinalY, width2, height);
+            Rect timerRect = new Rect(row.FinalX, row.FinalY, width, height);
             TimeControls.DoTimeControlsGUI(timerRect);
-            row.Gap(width2 + ExtendedToolbar.padding);
         }
     }
 }

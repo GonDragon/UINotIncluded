@@ -13,6 +13,10 @@ namespace UINotIncluded
     public static class UIManager
     {
         public static float ExtendedBarHeight => ExtendedToolbar.height;
+        public static float ExtendedBarWidth => _width;
+
+        [TweakValue("A.Extended Bar Width", 410f, 900f)]
+        private static float _width = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
 
         public static void Before_MainUIOnGUI()
@@ -25,7 +29,7 @@ namespace UINotIncluded
             }
             if (Event.current.type == EventType.Layout) return;
             float posY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
-            ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, (float)UI.screenWidth / 4);
+            ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, _width);
         }
         public static void MainUIOnGUI()
         {

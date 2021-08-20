@@ -13,53 +13,50 @@ namespace UINotIncluded.Widget
 {
     static class Time
     {
-        public static void DoTimeWidget(WidgetRow row, float height)
+        public static void DoTimeWidget(WidgetRow row, float height, float width)
         {
             if (Find.CurrentMap == null) return;
 
+            float gadgetsWidth = width - 2 * ExtendedToolbar.padding - ExtendedToolbar.interGap;
+            float timeWidth = (float)Math.Floor(gadgetsWidth / 3);
+            float dateWidth = gadgetsWidth - timeWidth;
             
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
-            Time.DoHours(row, height, pos);
-            row.Gap(ExtendedToolbar.interGap);
-            Time.DoDate(row, height, pos);
+            Time.DoHours(row, height, pos, timeWidth);
+            row.Gap(ExtendedToolbar.interGap + 2 * ExtendedToolbar.padding);
+            Time.DoDate(row, height, pos, dateWidth);
             
 
         }
 
-        public static void DoHours(WidgetRow row, float height, Vector2 pos)
+        public static void DoHours(WidgetRow row, float height, Vector2 pos, float width)
         {
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            float width = 60f;
-            float startX = row.FinalX;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
-            row.Gap(ExtendedToolbar.padding);
+
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
             string label = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
 
-            float labelWidth = width - (row.FinalX - startX) - ExtendedToolbar.padding;
-            row.Label(label, labelWidth, null,height);
-            row.Gap(ExtendedToolbar.padding);
+            row.Label(label, width, null,height);
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        public static void DoDate(WidgetRow row, float height, Vector2 pos)
+        public static void DoDate(WidgetRow row, float height, Vector2 pos, float width)
         {
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            float width = UINotIncludedSettings.dateFormat.GetFormatedLength();
-            float startX = row.FinalX;
+
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
-            row.Gap(ExtendedToolbar.padding);
+
 
             Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
+            Rect iconSpace = row.Icon(season.GetIconTex(), season.LabelCap());
 
-            row.Icon(season.GetIconTex(), season.LabelCap());
-            float labelWidth = width - (row.FinalX - startX) - ExtendedToolbar.padding;
+            float labelWidth = width - iconSpace.width;
             row.Label(UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x), labelWidth, GetDateDescription(pos,season),height);
-            row.Gap(ExtendedToolbar.padding);
             Text.Anchor = TextAnchor.UpperLeft;
 
         }

@@ -34,7 +34,7 @@ namespace UINotIncluded
                     num1 += allButtonsInOrder[index].minimized ? 0.5f : 1f;
             }
             GUI.color = Color.white;
-            double spaceReserved = (double)UI.screenWidth / 4;
+            double spaceReserved = UIManager.ExtendedBarWidth;
             int num2 = (int)(((double)UI.screenWidth - spaceReserved) / (double)num1);
             int num3 = num2 / 2;
             int lastIndex = allButtonsInOrder.FindLastIndex((Predicate<MainButtonDef>)(x => x.buttonVisible));
