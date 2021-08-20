@@ -26,6 +26,8 @@ namespace UINotIncluded.Widget
             Weather.DoWeatherGUI(row, rowHeight);
             row.Gap(interGap);
             Time.DoTimeWidget(row, rowHeight);
+            row.Gap(interGap);
+            Timespeed.DoTimespeedControls(row, rowHeight);
 
         }
 

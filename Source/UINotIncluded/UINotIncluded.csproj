@@ -89,6 +89,7 @@
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
     <Compile Include="Widget\Time.cs" />
+    <Compile Include="Widget\Timespeed.cs" />
     <Compile Include="Widget\Weather.cs" />
   </ItemGroup>
   <ItemGroup>
