@@ -11,8 +11,8 @@ namespace UINotIncluded
 {
     public class UINotIncludedSettings : ModSettings
     {
-        public static bool tabsOnTop = false;
-        public static DateFormat dateFormat = DateFormat.MMDDYYYY;
+        public static bool tabsOnTop = true;
+        public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
 
         public override void ExposeData()
         {
