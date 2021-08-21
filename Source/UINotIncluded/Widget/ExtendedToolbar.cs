@@ -13,7 +13,6 @@ namespace UINotIncluded.Widget
         public static float interGap = 2;
         public static float padding = 1;
         public static float margin = 5;
-        [TweakValue("A.Tail", 00f, 50f)]
         public static float tail = 16f; // I did the math wrong somewhere. This fixes that.
 
         public static void ExtendedToolbarOnGUI(float x, float y, float width)

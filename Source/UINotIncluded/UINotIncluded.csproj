@@ -76,8 +76,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="Widget\MouseReadoutWidget.cs" />
+    <Compile Include="Patches\Game.cs" />
+    <Compile Include="Patches\GlobalControlsUtility.cs" />
     <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />
+    <Compile Include="Patches\MouseoverReadout.cs" />
+    <Compile Include="Patches\PlaySettings.cs" />
     <Compile Include="Settings\DateFormat.cs" />
     <Compile Include="Settings\ModSettings.cs" />
     <Compile Include="Patches\GlobalControls.cs" />

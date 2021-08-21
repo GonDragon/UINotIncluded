@@ -13,6 +13,7 @@ namespace UINotIncluded
     {
         public static bool tabsOnTop = true;
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
+        public static bool altInspectActive = true; 
 
         public override void ExposeData()
         {
