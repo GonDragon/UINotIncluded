@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\MouseReadoutWidget.cs" />
     <Compile Include="Patches\Game.cs" />
     <Compile Include="Patches\GlobalControlsUtility.cs" />

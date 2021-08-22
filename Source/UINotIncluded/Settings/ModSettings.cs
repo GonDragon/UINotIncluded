@@ -15,6 +15,7 @@ namespace UINotIncluded
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool altInspectActive = true;
         public static bool vanillaArchitect = false;
+        public static bool vanillaAnimals = false;
 
         public override void ExposeData()
         {
@@ -41,6 +42,7 @@ namespace UINotIncluded
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref UINotIncludedSettings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref UINotIncludedSettings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref UINotIncludedSettings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), UINotIncludedSettings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();

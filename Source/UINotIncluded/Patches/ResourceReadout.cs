@@ -16,7 +16,7 @@ namespace UINotIncluded
     {
         static void Prefix(ref Rect rect)
         {
-            if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.ExtendedBarHeight;
+            rect.y += UIManager.ResourceGap;
         }
     }
 
@@ -25,7 +25,7 @@ namespace UINotIncluded
     {
         static void Prefix(ref Rect rect)
         {
-            if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.ExtendedBarHeight;
+            rect.y += UIManager.ResourceGap;
         }
     }
 }
