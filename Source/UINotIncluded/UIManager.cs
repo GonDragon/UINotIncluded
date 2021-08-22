@@ -17,27 +17,35 @@ namespace UINotIncluded
 
         private static readonly float _width = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
+        private static bool architectVanilla = true;
 
         public static void Before_MainUIOnGUI()
         {
-            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
             if (tabsOnTop != UINotIncludedSettings.tabsOnTop)
             {
                 tabsOnTop = UINotIncludedSettings.tabsOnTop;
                 Find.ColonistBar.MarkColonistsDirty();
             }
-            if (Event.current.type == EventType.Layout) return;
-            float posY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
-            ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, _width);
+            if(architectVanilla != UINotIncludedSettings.vanillaArchitect)
+            {
+                architectVanilla = UINotIncludedSettings.vanillaArchitect;
+                SetArchitectVisibility(architectVanilla);
+            }
         }
         public static void MainUIOnGUI()
         {
-            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
+            float posY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
+            ExtendedToolbar.ExtendedToolbarOnGUI(0, posY, _width);
         }
 
         public static void After_MainUIOnGUI()
         {
-            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow || Find.UIRoot.screenshotMode.FiltersCurrentEvent) return;
+
+        }
+
+        private static void SetArchitectVisibility(bool visible)
+        {
+            DefDatabase<MainButtonDef>.GetNamed("Architect").buttonVisible = visible;
         }
     }
 }

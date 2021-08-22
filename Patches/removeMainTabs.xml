@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
     <Operation Class="PatchOperationAdd">
-        <xpath>/Defs/MainButtonDef[defName="Architect"]</xpath>
-        <value>
-            <buttonVisible>false</buttonVisible>
-        </value>
-    </Operation>
-    <Operation Class="PatchOperationAdd">
         <xpath>/Defs/MainButtonDef[defName="Animals"]</xpath>
         <value>
             <buttonVisible>false</buttonVisible>
