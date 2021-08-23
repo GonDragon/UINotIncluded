@@ -11,7 +11,7 @@ using RimWorld.Planet;
 
 namespace UINotIncluded.Widget
 {
-    static class Time
+    static class TimeWidget
     {
         private static readonly float extraSize = 12f; // Width with WidgetRow is inconsistent. Dirty fix.
         public static void DoTimeWidget(WidgetRow row, float height, float width)
@@ -24,14 +24,14 @@ namespace UINotIncluded.Widget
             if (Prefs.ShowRealtimeClock)
             {
                 float realtimeWidth = (float)Math.Floor(gadgetsWidth * 0.27f);
-                Time.DoRealtimeClock(row, height, realtimeWidth);
+                TimeWidget.DoRealtimeClock(row, height, realtimeWidth);
                 row.Gap(ExtendedToolbar.interGap + 2 * ExtendedToolbar.padding);
                 datetimeWidth -= realtimeWidth - 2 * ExtendedToolbar.padding - ExtendedToolbar.interGap;
             } else
             {
                 datetimeWidth += extraSize;
             }
-            Time.DoDateAndTime(row, height, datetimeWidth);
+            TimeWidget.DoDateAndTime(row, height, datetimeWidth);
         }
 
         public static void DoRealtimeClock(WidgetRow row, float height, float width)

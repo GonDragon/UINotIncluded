@@ -21,6 +21,7 @@ namespace UINotIncluded
         private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
+        private static JobDesignatorBar JobsBar = new JobDesignatorBar();
 
         public static void Before_MainUIOnGUI()
         {
@@ -48,6 +49,7 @@ namespace UINotIncluded
 
             ExtendedToolbar.ExtendedToolbarOnGUI(0, toolbarY, _width);
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
+            JobsBar.JobDesignatorBarOnGUI();
         }
 
         public static void After_MainUIOnGUI()

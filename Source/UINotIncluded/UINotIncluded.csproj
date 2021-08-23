@@ -76,7 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
+    <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Widget\MouseReadoutWidget.cs" />
     <Compile Include="Patches\Game.cs" />
     <Compile Include="Patches\GlobalControlsUtility.cs" />
@@ -96,7 +98,7 @@
     <Compile Include="Utility\TimeSpeedExtension.cs" />
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
-    <Compile Include="Widget\Time.cs" />
+    <Compile Include="Widget\TimeWidget.cs" />
     <Compile Include="Widget\Timespeed.cs" />
     <Compile Include="Widget\Weather.cs" />
   </ItemGroup>

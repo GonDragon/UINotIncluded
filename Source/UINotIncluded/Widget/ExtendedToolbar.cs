@@ -32,7 +32,7 @@ namespace UINotIncluded.Widget
             row.Init(x + margin + padding, y + 5f, UIDirection.RightThenDown, widgetSpace, 0);
             Weather.DoWeatherGUI(row, rowHeight, weatherSpace);
             row.Gap(interGap + 2 * padding);
-            Time.DoTimeWidget(row, rowHeight, timeSpace);
+            TimeWidget.DoTimeWidget(row, rowHeight, timeSpace);
             row.Gap(interGap + 2 * padding);
             Timespeed.DoTimespeedControls(row, rowHeight, timeSpeedSpace);
 
