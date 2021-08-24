@@ -427,4 +427,6 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,windows
 
-.Assemblies/*
+*.dll
+*.pdb
+/Assemblies/
