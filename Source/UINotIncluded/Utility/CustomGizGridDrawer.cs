@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 using RimWorld;
+using UINotIncluded;
 
 namespace Verse
 {
@@ -45,9 +46,11 @@ namespace Verse
                 CustomGizmoGridDrawer.gizmoGroups.Clear();
 
                 float buttonSize = (defaultSize / (float)rows) - (GizmoSpacing.y * ((float)rows - 1f) / rows);
-                float startY = (UI.screenHeight - 35f) - buttonSize * rows - (GizmoSpacing.y * (rows - 1));
+                float startY = (UI.screenHeight - 15f) - buttonSize * rows - (GizmoSpacing.y * (rows - 1));
                 int[] startYrows = new int[rows];
                 bool simpleButtons = buttonSize < 50;
+
+                if (!UINotIncludedSettings.tabsOnTop) startY -= UIManager.ExtendedBarHeight;
 
                 for (int i = 0; i < rows; i++)
                 {
