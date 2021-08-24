@@ -11,8 +11,7 @@ namespace Verse
 {
     public static class CustomGizmoGridDrawer
     {
-
-        public static HashSet<KeyCode> drawnHotKeys = new HashSet<KeyCode>();
+        public static Dictionary<KeyCode, Gizmo> drawnHotKeys = new Dictionary<KeyCode, Gizmo>();
         public static Func<Gizmo, bool> customActivator;
         private static float heightDrawn;
         private static int heightDrawnFrame;
@@ -132,7 +131,6 @@ namespace Verse
                         CustomGizmoGridDrawer.firstGizmos.Add(gizmo);
                     }
                 }
-                CustomGizmoGridDrawer.drawnHotKeys.Clear();
                 CustomGizmoGridDrawer.customActivator = customActivatorFunc;
                 Text.Font = GameFont.Tiny;
                 
@@ -260,6 +258,12 @@ namespace Verse
                 }
                 return (List<Gizmo>)null;
             }
+        }
+
+        public static void Clean()
+        {
+            GizmoGridDrawer.drawnHotKeys.Clear();
+            drawnHotKeys.Clear();
         }
     }
 }

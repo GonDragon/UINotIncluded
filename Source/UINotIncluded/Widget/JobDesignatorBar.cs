@@ -41,13 +41,18 @@ namespace UINotIncluded.Widget
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, false);
             CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)testc, 2, ref curX, out mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
+            CustomGizmoGridDrawer.Clean();
         }
         public static void DrawTooltip(Designator instance, bool detailed)
         {
+            KeyCode k = instance.hotKey == null ? KeyCode.None : instance.hotKey.MainKey;
             String tipText = "";
+
+            if (k != KeyCode.None && CustomGizmoGridDrawer.drawnHotKeys.ContainsKey(k) && CustomGizmoGridDrawer.drawnHotKeys[k] != instance) k = KeyCode.None;
+
             if (detailed)
             {
-                String hotkeyText = instance.hotKey != null ? String.Format("Hotkey: {0}\n", instance.hotKey.defaultKeyCodeA.ToString()) : "";
+                String hotkeyText = String.Format("Hotkey: {0}\n", k.ToString());
                 tipText += String.Format("<b>{0}</b>\n{1}\n", instance.Label, hotkeyText);
             }
             tipText += instance.Desc;
@@ -57,6 +62,7 @@ namespace UINotIncluded.Widget
             Rect rect = new Rect(mousePos, size);
             TipSignal tip = new TipSignal(tipText, 24637);
             TooltipHandler.TipRegion(rect, tip);
+
         }
     }
 }

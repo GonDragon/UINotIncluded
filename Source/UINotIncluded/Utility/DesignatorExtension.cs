@@ -40,11 +40,11 @@ namespace Verse
             if (parms.lowLight)
                 GUI.color = Command.LowLightLabelColor;
             KeyCode k = instance.hotKey == null ? KeyCode.None : instance.hotKey.MainKey;
-            if (k != KeyCode.None && !CustomGizmoGridDrawer.drawnHotKeys.Contains(k))
+            if (k != KeyCode.None && !CustomGizmoGridDrawer.drawnHotKeys.ContainsKey(k))
             {
                 Vector2 vector2 = parms.shrunk ? new Vector2(3f, 0.0f) : new Vector2(5f, 3f);
                 Widgets.Label(new Rect(butRect.x + vector2.x, butRect.y + vector2.y, butRect.width - 10f, 18f), k.ToStringReadable());
-                CustomGizmoGridDrawer.drawnHotKeys.Add(k);
+                CustomGizmoGridDrawer.drawnHotKeys.Add(k,instance);
                 if (instance.hotKey.KeyDownEvent)
                 {
                     flag2 = true;
