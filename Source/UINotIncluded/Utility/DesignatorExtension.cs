@@ -40,18 +40,18 @@ namespace Verse
             if (parms.lowLight)
                 GUI.color = Command.LowLightLabelColor;
             KeyCode k = instance.hotKey == null ? KeyCode.None : instance.hotKey.MainKey;
-            if (k != KeyCode.None && !GizmoGridDrawer.drawnHotKeys.Contains(k))
+            if (k != KeyCode.None && !CustomGizmoGridDrawer.drawnHotKeys.Contains(k))
             {
                 Vector2 vector2 = parms.shrunk ? new Vector2(3f, 0.0f) : new Vector2(5f, 3f);
                 Widgets.Label(new Rect(butRect.x + vector2.x, butRect.y + vector2.y, butRect.width - 10f, 18f), k.ToStringReadable());
-                GizmoGridDrawer.drawnHotKeys.Add(k);
+                CustomGizmoGridDrawer.drawnHotKeys.Add(k);
                 if (instance.hotKey.KeyDownEvent)
                 {
                     flag2 = true;
                     Event.current.Use();
                 }
             }
-            if (GizmoGridDrawer.customActivator != null && GizmoGridDrawer.customActivator((Gizmo)instance))
+            if (CustomGizmoGridDrawer.customActivator != null && CustomGizmoGridDrawer.customActivator((Gizmo)instance))
                 flag2 = true;
             if (Widgets.ButtonInvisible(butRect))
                 flag2 = true;
@@ -110,23 +110,6 @@ namespace Verse
                 return gizmoResult;
             }
             return flag1 ? new GizmoResult(GizmoState.Mouseover, (Event)null) : new GizmoResult(GizmoState.Clear, (Event)null);
-        }
-
-        public static void DrawTooltip(this Designator instance, bool detailed)
-        {
-            String tipText = "";
-            if (detailed)
-            {
-                String hotkeyText = instance.hotKey != null ? String.Format("Hotkey: {0}\n", instance.hotKey.defaultKeyCodeA.ToString()) : "";
-                tipText += String.Format("<b>{0}</b>\n{1}\n", instance.Label, hotkeyText);
-            }
-            tipText += instance.Desc;
-
-            Vector2 mousePos = Event.current.mousePosition;
-            Vector2 size = new Vector2(999f, 999f);
-            Rect rect = new Rect(mousePos, size);
-            TipSignal tip = new TipSignal(tipText, 24637);
-            TooltipHandler.TipRegion(rect, tip);
         }
     }
 }
