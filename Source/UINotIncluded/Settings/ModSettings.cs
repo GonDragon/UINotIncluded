@@ -17,11 +17,85 @@ namespace UINotIncluded
         public static bool vanillaArchitect = false;
         public static bool vanillaAnimals = false;
 
+        public static List<String> hiddenDesignations = new List<String>();
+        public static List<String> leftDesignations = new List<String>();
+        public static List<String> mainDesignations = new List<String>();
+        public static List<String> rightDesignations = new List<String>();
+
+        public static bool initializedDesignations = false;
+        public static readonly List<String>[] designationConfigs = new List<String>[] { hiddenDesignations, leftDesignations, mainDesignations, rightDesignations };
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref tabsOnTop, "tabsOnTop", false);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             base.ExposeData();
+        }
+
+        public static void RestoreDesignationLists()
+        {
+            SetDefaultList(Settings.DesignationConfig.left);
+            SetDefaultList(Settings.DesignationConfig.main);
+            SetDefaultList(Settings.DesignationConfig.right);
+            UINotIncludedSettings.hiddenDesignations.Clear();
+        }
+
+        private static void SetDefaultList(Settings.DesignationConfig designationList)
+        {
+            List<String> orderedDesignationNames;
+            switch (designationList)
+            {
+                case Settings.DesignationConfig.hidden:
+
+                    return;
+                case Settings.DesignationConfig.left:
+                    orderedDesignationNames = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
+                    break;
+                case Settings.DesignationConfig.main:
+                    orderedDesignationNames = new List<string> { "Harvest", "Deconstruct", "Cancel", "Chop wood", "Mine" };
+                    break;
+                case Settings.DesignationConfig.right:
+                    orderedDesignationNames = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
+                    break;
+                default:
+                    throw new NotImplementedException();
+
+            }
+            designationConfigs[(int)designationList].Clear();
+
+            designationConfigs[(int)designationList].AddRange(orderedDesignationNames);
+        }
+
+        public static List<Designator>[] GetDesignationConfigs()
+        {
+            List<Designator> avaibleDesignators = DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators;
+            List<Designator> usedDesignators = new List<Designator>();
+            List<Designator>[] arrayDesignatorConfigs = new List<Designator>[] { new List<Designator>(), new List<Designator>(), new List<Designator>(), new List<Designator>() };
+
+            for (int i = 0; i < designationConfigs.Count(); i++)
+            {
+                foreach(String designatorName in designationConfigs[i])
+                {
+                    bool found = false;
+                    foreach(Designator designator in avaibleDesignators)
+                    {
+                        if (designator.Label == designatorName) { arrayDesignatorConfigs[i].Add(designator); usedDesignators.Add(designator); found = true; break; }
+                    }
+                    if (!found) UINotIncludedStatic.Warning(String.Format("The designation named '{0}' was not found.", designatorName));
+                }
+            }
+
+            foreach(Designator designator in avaibleDesignators)
+            {
+                UINotIncludedStatic.Log(String.Format("The designation name is '{0}'.", designator.Label));
+                if (!usedDesignators.Contains(designator))
+                {
+                    arrayDesignatorConfigs[(int)Settings.DesignationConfig.hidden].Add(designator);
+                    hiddenDesignations.Add(designator.Label);
+                };
+            }
+
+            return arrayDesignatorConfigs;
         }
     }
 
@@ -32,6 +106,8 @@ namespace UINotIncluded
         public UINotIncludedMod(ModContentPack content) : base(content)
         {
             this.settings = GetSettings<UINotIncludedSettings>();
+            UINotIncludedSettings.RestoreDesignationLists();
+            if (!UINotIncludedSettings.initializedDesignations) { UINotIncludedSettings.RestoreDesignationLists(); UINotIncludedSettings.initializedDesignations = true; }
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
