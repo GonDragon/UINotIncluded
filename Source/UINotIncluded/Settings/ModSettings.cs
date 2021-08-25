@@ -16,6 +16,7 @@ namespace UINotIncluded
         public static bool altInspectActive = true;
         public static bool vanillaArchitect = false;
         public static bool vanillaAnimals = false;
+        public static bool useDesignatorBar = true;
 
         public static List<String> hiddenDesignations = new List<String>();
         public static List<String> leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
@@ -31,6 +32,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaArchitect, "vanillaArchitect", false);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
+            Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
 
             Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations", LookMode.Value);
@@ -149,6 +151,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref UINotIncludedSettings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref UINotIncludedSettings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref UINotIncludedSettings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref UINotIncludedSettings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), UINotIncludedSettings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();

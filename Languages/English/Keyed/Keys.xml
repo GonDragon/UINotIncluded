@@ -6,6 +6,8 @@
 <UINotIncluded.Setting.vanillaArchitect.Description>This will disable the new Architect Menu.</UINotIncluded.Setting.vanillaArchitect.Description>
 <UINotIncluded.Setting.vanillaAnimals>Use vanilla Animals and Wildlife buttons</UINotIncluded.Setting.vanillaAnimals>
 <UINotIncluded.Setting.vanillaAnimals.Description>This will disable the new position of the Animals and Wildlife buttons.</UINotIncluded.Setting.vanillaAnimals.Description>
+<UINotIncluded.Setting.useDesignatorBar>Use the new Designator Bar</UINotIncluded.Setting.useDesignatorBar>
+<UINotIncluded.Setting.useDesignatorBar.Description>This will enable the new Designator bar. This bar in very configurable and shows a list of designation job orders on screen.</UINotIncluded.Setting.useDesignatorBar.Description>
 <UINotIncluded.Setting.dateFormat>Date format</UINotIncluded.Setting.dateFormat>
 <UINotIncluded.Playsetting.altinspect.tooltip>Toggle the Alt Inspector.\n\nWhen the Alt Inspector is active, the cell info in the bottom left will disappear. This info will now appear as a tooltip near the mouse while the "Alt" key is pressed.</UINotIncluded.Playsetting.altinspect.tooltip>
 <UINotIncluded.Setting.DesignatorBar.Description>Designator Bar Config</UINotIncluded.Setting.DesignatorBar.Description>

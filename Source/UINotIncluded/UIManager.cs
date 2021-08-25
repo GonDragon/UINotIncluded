@@ -48,8 +48,9 @@ namespace UINotIncluded
             float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
 
             ExtendedToolbar.ExtendedToolbarOnGUI(0, toolbarY, _width);
+            if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
-            JobsBar.JobDesignatorBarOnGUI();
+            if(UINotIncludedSettings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
         }
 
         public static void After_MainUIOnGUI()

@@ -24,9 +24,10 @@ namespace UINotIncluded
             MethodInfo DoCountdownTimer = AccessTools.Method(typeof(GlobalControls), "DoCountdownTimer");
 
             float posX = (float)UI.screenWidth - 200f;
-            float posY = (float)UI.screenHeight - 100f;
+            float posY = (float)UI.screenHeight - 20f;
 
             if (!UINotIncludedSettings.tabsOnTop) posY -= UIManager.ExtendedBarHeight;
+            if (UINotIncludedSettings.useDesignatorBar) posY -= 80f;
 
             GenUI.DrawTextWinterShadow(new Rect((float)(UI.screenWidth - 270), (float)(UI.screenHeight - 450), 270f, 450f));
             
