@@ -22,7 +22,7 @@ namespace UINotIncluded.Widget
                 Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0.0f, (float)((double)(UI.screenHeight - 35) - (double)((MainTabWindow_Architect)MainButtonDefOf.Architect.TabWindow).WinHeight - 270.0));
 
 
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.right],2,ref curX,out Gizmo mousoverGizmo);
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.right],2,ref curX,out Gizmo mousoverGizmo,true);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
             CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], 1, ref curX, out mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, false);

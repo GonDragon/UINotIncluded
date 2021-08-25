@@ -19,7 +19,7 @@ namespace UINotIncluded
 
         public static List<String> hiddenDesignations = new List<String>();
         public static List<String> leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
-        public static List<String> mainDesignations = new List<string> { "Harvest", "Deconstruct", "Cancel", "Chop wood", "Mine" };
+        public static List<String> mainDesignations = new List<string> { "Deconstruct", "Cancel", "Harvest", "Chop wood", "Mine" };
         public static List<String> rightDesignations = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
 
         public static bool initializedDesignations = false;
@@ -79,10 +79,10 @@ namespace UINotIncluded
                     leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
                     break;
                 case DesignationConfig.main:
-                    mainDesignations = new List<string> { "Harvest", "Deconstruct", "Cancel", "Chop wood", "Mine" };
+                    mainDesignations = new List<string> { "Deconstruct", "Cancel", "Harvest", "Chop wood", "Mine" };
                     break;
                 case DesignationConfig.right:
-                    rightDesignations = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
+                    rightDesignations = new List<string> { "Haul things", "Smooth surface", "Slaughter", "Cut plants", "Hunt", "Tame" };
                     break;
                 default:
                     throw new NotImplementedException();
@@ -170,7 +170,7 @@ namespace UINotIncluded
             float curY = rect.y;
 
 
-            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 2), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) UINotIncludedSettings.RestoreDesignationLists();
+            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) UINotIncludedSettings.RestoreDesignationLists();
             curY += 25f;
             for (int i = 0; i < 4; i++)
             {

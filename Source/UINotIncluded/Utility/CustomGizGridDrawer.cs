@@ -30,6 +30,7 @@ namespace Verse
           int rows,
           ref float curX,
           out Gizmo mouseoverGizmo,
+          bool leftoversOnRight = false,
           Func<Gizmo, bool> customActivatorFunc = null,
           Func<Gizmo, bool> highlightFunc = null,
           Func<Gizmo, bool> lowlightFunc = null)
@@ -79,9 +80,7 @@ namespace Verse
                     }
                 }
                 CustomGizmoGridDrawer.firstGizmos.Clear();
-                float curXtmp = curX;
-
-                int curRow = 1;
+                
                 for (int index3 = 0; index3 < CustomGizmoGridDrawer.gizmoGroups.Count; ++index3)
                 {
                     List<Gizmo> gizmoGroup = CustomGizmoGridDrawer.gizmoGroups[index3];
@@ -121,18 +120,7 @@ namespace Verse
                             }
                         }
                     }
-                    if (gizmo != null)
-                    {
-                        /* Math Stuff ?*/
-                        curRow++;
-                        if (curRow > rows)
-                        {
-                            curRow = 1;
-                            curXtmp -= buttonSize + GizmoSpacing.x;
-                        }
-                        /* End Math Stuff ?*/
-                        CustomGizmoGridDrawer.firstGizmos.Add(gizmo);
-                    }
+                    if (gizmo != null) CustomGizmoGridDrawer.firstGizmos.Add(gizmo);
                 }
                 CustomGizmoGridDrawer.customActivator = customActivatorFunc;
                 Text.Font = GameFont.Tiny;
@@ -141,14 +129,40 @@ namespace Verse
                 Gizmo interactedGiz = (Gizmo)null;
                 Event interactedEvent = (Event)null;
                 Gizmo floatMenuGiz = (Gizmo)null;
-                curRow = 1;
+
+                int curRow = 1;
+                if (leftoversOnRight && (CustomGizmoGridDrawer.firstGizmos.Count % rows) != 0)
+                {
+                    int remainder = CustomGizmoGridDrawer.firstGizmos.Count % rows;
+                    for(int i = 0; i < remainder; i++)
+                    {
+                        Gizmo element = CustomGizmoGridDrawer.firstGizmos.Pop();
+                        Rect buttonSpace = new Rect(curX - buttonSize, startYrows[curRow - 1], buttonSize, buttonSize);
+                        float curY = startYrows[curRow - 1];
+                        curRow++;
+                        CustomGizmoGridDrawer.heightDrawnFrame = Time.frameCount;
+                        CustomGizmoGridDrawer.heightDrawn = (float)UI.screenHeight - curY;
+                        GizmoResult result = ((Designator)element).DoCustomGuizmoOnGUI(buttonSpace, new GizmoRenderParms()
+                        {
+                            highLight = highlightFunc != null && highlightFunc(element),
+                            lowLight = lowlightFunc != null && lowlightFunc(element)
+                        },
+                        simpleButtons);
+                        ProcessGizmoState(element, result, ref mouseoverGizmo);
+                        GenUI.AbsorbClicksInRect(buttonSpace);
+                    }
+                    curRow = 1;
+                    curX -= buttonSize + GizmoSpacing.x;
+                };
+
+                
                 for (int index = 0; index < CustomGizmoGridDrawer.firstGizmos.Count; ++index)
                 {
                     Gizmo firstGizmo = CustomGizmoGridDrawer.firstGizmos[index];
                     if (firstGizmo.Visible)
                     {
                         /* Math Stuff ?*/
-                        Rect buttonSpace = new Rect(curX - buttonSize, startYrows[curRow - 1], buttonSize, buttonSize); // ??
+                        Rect buttonSpace = new Rect(curX - buttonSize, startYrows[curRow - 1], buttonSize, buttonSize);
                         float curY = startYrows[curRow - 1];
                         curRow++;
                         if (curRow > rows)
@@ -169,7 +183,8 @@ namespace Verse
                         GenUI.AbsorbClicksInRect(buttonSpace);
                     }
                 }
-                
+                if (curRow != 1) curX -= buttonSize + GizmoSpacing.x;
+
                 if (interactedGiz != null)
                 {
                     List<Gizmo> matchingGroup = FindMatchingGroup(interactedGiz);
