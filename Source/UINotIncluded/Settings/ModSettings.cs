@@ -169,7 +169,10 @@ namespace UINotIncluded
             float columnWidth = rect.width / 4;
             float curY = rect.y;
 
-
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
+            Text.Anchor = TextAnchor.UpperLeft;
+            curY += 25f;
             if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) UINotIncludedSettings.RestoreDesignationLists();
             curY += 25f;
             for (int i = 0; i < 4; i++)
