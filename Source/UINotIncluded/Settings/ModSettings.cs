@@ -192,10 +192,16 @@ namespace UINotIncluded
             curY += 25f;
             Widgets.DrawMenuSection(new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)));
 
+            ScrollInstance scroll = ScrollManager.GetInstance((int)i);
+            Rect scrollviewRect = new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)).ContractedBy(3f);
+            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width -20f, buttonHeight * elements.Count());
+
+            Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
+            curY = 0;
             bool shouldMove = false; String moveElement = null; ButtonArrowAction moveDirection = ButtonArrowAction.none;
             foreach (String element in elements)
             {
-                ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(rect.x, curY, rect.width, buttonHeight).ContractedBy(buttonContract), element);
+                ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
                 if (result != ButtonArrowAction.none)
                 {
                     shouldMove = true;
@@ -206,6 +212,7 @@ namespace UINotIncluded
             }
 
             if (shouldMove) DoMove(moveElement, moveDirection, i);
+            Widgets.EndScrollView();
         }
 
         private void DoMove(String element, ButtonArrowAction direction, DesignationConfig current)

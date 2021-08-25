@@ -78,6 +78,7 @@
     <Compile Include="DefExtensions.cs" />
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
+    <Compile Include="Settings\ScrollManager.cs" />
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
