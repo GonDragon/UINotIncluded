@@ -49,23 +49,29 @@ namespace UINotIncluded.Widget
 
         public static void DoDateAndTime(WidgetRow row, float height, float width)
         {
-            float startX = row.FinalX;
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
 
+            float startX = row.FinalX;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
 
             Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
-            row.Icon(season.GetIconTex(), season.LabelCap());
+            Rect iconSpace = row.Icon(season.GetIconTex(), season.LabelCap());
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
             string timestamp = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
             string datestamp = UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
-            row.Label(datestamp,-1, GetDateDescription(pos,season),height);
-            row.Label(timestamp, width - (row.FinalX - startX));
+            float dateWidth = Text.CalcSize(datestamp).x;
+            float timeWidth = Text.CalcSize(timestamp).x;
+            float remainingSpace = width - dateWidth - timeWidth - iconSpace.width;
+
+            float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace/2);
+
+            row.Label(datestamp, dateLabelWidth, GetDateDescription(pos,season),height);
+            row.Label(timestamp, width - (row.FinalX - startX), height: height);
             Text.Anchor = TextAnchor.UpperLeft;
 
         }
