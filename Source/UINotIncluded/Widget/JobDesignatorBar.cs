@@ -12,11 +12,8 @@ namespace UINotIncluded.Widget
     {
         private static readonly float posX = (float)UI.screenWidth - 15f;
 
-        public static List<Designator>[] Jobs;
-        public JobDesignatorBar()
-        {
-            Jobs = UINotIncludedSettings.GetDesignationConfigs();
-        }
+        public static List<Designator>[] Jobs => DesignatorManager.GetDesignationConfigs();
+
         public void JobDesignatorBarOnGUI()
         {
             float curX = posX;
@@ -25,11 +22,11 @@ namespace UINotIncluded.Widget
                 Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0.0f, (float)((double)(UI.screenHeight - 35) - (double)((MainTabWindow_Architect)MainButtonDefOf.Architect.TabWindow).WinHeight - 270.0));
 
 
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)Settings.DesignationConfig.right],2,ref curX,out Gizmo mousoverGizmo);
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.right],2,ref curX,out Gizmo mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)Settings.DesignationConfig.main], 1, ref curX, out mousoverGizmo);
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], 1, ref curX, out mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, false);
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)Settings.DesignationConfig.left], 2, ref curX, out mousoverGizmo);
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.left], 2, ref curX, out mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
             CustomGizmoGridDrawer.Clean();
         }

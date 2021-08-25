@@ -23,7 +23,6 @@ namespace UINotIncluded
         public static List<String> rightDesignations = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
 
         public static bool initializedDesignations = false;
-        public static readonly List<String>[] designationConfigs = new List<String>[] { hiddenDesignations, leftDesignations, mainDesignations, rightDesignations };
 
         public override void ExposeData()
         {
@@ -34,7 +33,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
 
-            Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations",LookMode.Value);
+            Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations", LookMode.Value);
             Scribe_Collections.Look(ref leftDesignations, "leftDesignations", LookMode.Value);
             Scribe_Collections.Look(ref mainDesignations, "mainDesignations", LookMode.Value);
             Scribe_Collections.Look(ref rightDesignations, "rightDesignations", LookMode.Value);
@@ -42,29 +41,47 @@ namespace UINotIncluded
             base.ExposeData();
         }
 
+        public static List<String> GetDesignationList(DesignationConfig list)
+        {
+            switch(list)
+            {
+                case DesignationConfig.hidden:
+                    return hiddenDesignations;
+                case DesignationConfig.left:
+                    return leftDesignations;
+                case DesignationConfig.main:
+                    return mainDesignations;
+                case DesignationConfig.right:
+                    return rightDesignations;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static void RestoreDesignationLists()
         {
-            SetDefaultList(Settings.DesignationConfig.hidden);
-            SetDefaultList(Settings.DesignationConfig.left);
-            SetDefaultList(Settings.DesignationConfig.main);
-            SetDefaultList(Settings.DesignationConfig.right);
+            SetDefaultList(DesignationConfig.hidden);
+            SetDefaultList(DesignationConfig.left);
+            SetDefaultList(DesignationConfig.main);
+            SetDefaultList(DesignationConfig.right);
+            DesignatorManager.Update();
             UINotIncludedStatic.Log("DesignationConfigs default restored.");
         }
 
-        private static void SetDefaultList(Settings.DesignationConfig designationList)
+        private static void SetDefaultList(DesignationConfig designationList)
         {
             switch (designationList)
             {
-                case Settings.DesignationConfig.hidden:
+                case DesignationConfig.hidden:
                     hiddenDesignations = new List<string>();
                     return;
-                case Settings.DesignationConfig.left:
+                case DesignationConfig.left:
                     leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
                     break;
-                case Settings.DesignationConfig.main:
+                case DesignationConfig.main:
                     mainDesignations = new List<string> { "Harvest", "Deconstruct", "Cancel", "Chop wood", "Mine" };
                     break;
-                case Settings.DesignationConfig.right:
+                case DesignationConfig.right:
                     rightDesignations = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
                     break;
                 default:
@@ -79,12 +96,12 @@ namespace UINotIncluded
             List<Designator> usedDesignators = new List<Designator>();
             List<Designator>[] arrayDesignatorConfigs = new List<Designator>[] { new List<Designator>(), new List<Designator>(), new List<Designator>(), new List<Designator>() };
 
-            for (int i = 0; i < designationConfigs.Count(); i++)
+            for (int i = 0; i < 4; i++)
             {
-                foreach(String designatorName in designationConfigs[i])
+                foreach (String designatorName in GetDesignationList((DesignationConfig)i))
                 {
                     bool found = false;
-                    foreach(Designator designator in avaibleDesignators)
+                    foreach (Designator designator in avaibleDesignators)
                     {
                         if (designator.Label == designatorName) { arrayDesignatorConfigs[i].Add(designator); usedDesignators.Add(designator); found = true; break; }
                     }
@@ -92,12 +109,12 @@ namespace UINotIncluded
                 }
             }
 
-            foreach(Designator designator in avaibleDesignators)
+            foreach (Designator designator in avaibleDesignators)
             {
                 UINotIncludedStatic.Log(String.Format("The designation name is '{0}'.", designator.Label));
                 if (!usedDesignators.Contains(designator))
                 {
-                    arrayDesignatorConfigs[(int)Settings.DesignationConfig.hidden].Add(designator);
+                    arrayDesignatorConfigs[(int)DesignationConfig.hidden].Add(designator);
                     hiddenDesignations.Add(designator.Label);
                 };
             }
@@ -113,7 +130,8 @@ namespace UINotIncluded
         public UINotIncludedMod(ModContentPack content) : base(content)
         {
             this.settings = GetSettings<UINotIncludedSettings>();
-            if (!UINotIncludedSettings.initializedDesignations) {
+            if (!UINotIncludedSettings.initializedDesignations)
+            {
                 UINotIncludedStatic.Log("DesigationConfigs never initialized. Initializing.");
                 UINotIncludedSettings.RestoreDesignationLists();
                 UINotIncludedSettings.initializedDesignations = true;
@@ -146,18 +164,78 @@ namespace UINotIncluded
             base.DoSettingsWindowContents(inRect);
         }
 
-        public void DoJobBarConfigurationWidget(Rect rect)
+        private void DoJobBarConfigurationWidget(Rect rect)
         {
             float columnWidth = rect.width / 4;
             float curY = rect.y;
 
 
-            Widgets.ButtonText(new Rect(rect.x,curY,rect.width,25f), "Reestore to default");
+            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 2), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) UINotIncludedSettings.RestoreDesignationLists();
             curY += 25f;
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Widgets.DrawAtlas(new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), ContentFinder<Texture2D>.Get("GD/UI/ClockSCR"));
+                DoJobsDesignatorColumn(new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), ((DesignationConfig)i).ToStringHuman(), (DesignationConfig)i);
             }
+        }
+
+        private void DoJobsDesignatorColumn(Rect rect, String label, DesignationConfig i)
+        {
+            List<String> elements = UINotIncludedSettings.GetDesignationList(i);
+            float buttonHeight = 30f;
+            float buttonContract = 4f;
+
+            float curY = rect.y;
+            Widgets.Label(new Rect(rect.x, curY, rect.width, buttonHeight), new GUIContent(label));
+            curY += 25f;
+            Widgets.DrawMenuSection(new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)));
+
+            bool shouldMove = false; String moveElement = null; ButtonArrowAction moveDirection = ButtonArrowAction.none;
+            foreach (String element in elements)
+            {
+                ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(rect.x, curY, rect.width, buttonHeight).ContractedBy(buttonContract), element);
+                if (result != ButtonArrowAction.none)
+                {
+                    shouldMove = true;
+                    moveElement = element;
+                    moveDirection = result;
+                }
+                curY += (buttonHeight - (float)Math.Floor(buttonContract / 2));
+            }
+
+            if (shouldMove) DoMove(moveElement, moveDirection, i);
+        }
+
+        private void DoMove(String element, ButtonArrowAction direction, DesignationConfig current)
+        {
+            List<String> currentList = UINotIncludedSettings.GetDesignationList(current);
+            int curIndex = currentList.IndexOf(element);
+
+            switch (direction)
+            {
+                case ButtonArrowAction.up:
+                    if (curIndex == 0) return;
+                    currentList.RemoveAt(curIndex);
+                    currentList.Insert(curIndex - 1, element);
+                    break;
+                case ButtonArrowAction.down:
+                    if (curIndex == currentList.Count() - 1) return;
+                    currentList.RemoveAt(curIndex);
+                    currentList.Insert(curIndex + 1, element);
+                    break;
+                case ButtonArrowAction.left:
+                    if (current == DesignationConfig.hidden) return;
+                    UINotIncludedSettings.GetDesignationList(current - 1).Add(element);
+                    currentList.RemoveAt(curIndex);
+                    break;
+                case ButtonArrowAction.right:
+                    if (current == DesignationConfig.right) return;
+                    UINotIncludedSettings.GetDesignationList(current + 1).Add(element);
+                    currentList.RemoveAt(curIndex);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            DesignatorManager.Update();
         }
 
         public override string SettingsCategory()
