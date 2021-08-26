@@ -39,7 +39,7 @@ namespace UINotIncluded
             int num2 = (int)(((double)UI.screenWidth - spaceReserved) / (double)num1);
             int num3 = num2 / 2;
             int lastIndex = allButtonsInOrder.FindLastIndex((Predicate<MainButtonDef>)(x => x.buttonVisible));
-            int num4 = (int)spaceReserved;
+            int num4 = UINotIncludedSettings.barOnRight ? (UINotIncludedSettings.vanillaArchitect ? 0 : (int)UIManager.archButtonWidth) : (int)spaceReserved;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
             {
                 if (allButtonsInOrder[index].buttonVisible)

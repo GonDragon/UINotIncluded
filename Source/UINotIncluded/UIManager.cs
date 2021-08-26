@@ -46,7 +46,8 @@ namespace UINotIncluded
         public static void MainUIOnGUI()
         {
             float toolbarY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
-            float toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth;
+            float toolbarX;
+            if (UINotIncludedSettings.barOnRight) { toolbarX = UI.screenWidth - extendedBarWidth; } else { toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth; };
             float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
 
             ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, extendedBarWidth);
