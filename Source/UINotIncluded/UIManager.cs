@@ -13,15 +13,16 @@ namespace UINotIncluded
     public static class UIManager
     {
         public static float ExtendedBarHeight => ExtendedToolbar.height;
-        public static float ExtendedBarWidth => _width;
         public static float ResourceGap => (vanillaAnimals ? ExtendedToolbar.height : animalsRow.FinalY + 26f);
 
-        private static readonly float _width = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
+        public static readonly float extendedBarWidth = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
+        public static readonly float archButtonWidth = ExtendedToolbar.height;
+
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
         private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
-        private static JobDesignatorBar JobsBar = new JobDesignatorBar();
+        private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
 
         public static void Before_MainUIOnGUI()
         {
@@ -45,12 +46,14 @@ namespace UINotIncluded
         public static void MainUIOnGUI()
         {
             float toolbarY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
+            float toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth;
             float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
 
-            ExtendedToolbar.ExtendedToolbarOnGUI(0, toolbarY, _width);
+            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, extendedBarWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
-            if(UINotIncludedSettings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
+            if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
+            if (UINotIncludedSettings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
         }
 
         public static void After_MainUIOnGUI()

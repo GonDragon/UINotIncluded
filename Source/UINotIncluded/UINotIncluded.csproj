@@ -82,6 +82,7 @@
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
+    <Compile Include="Widget\ArchitectMenuButton.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Widget\MouseReadoutWidget.cs" />
