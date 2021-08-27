@@ -28,7 +28,7 @@ namespace Verse
         public static void DrawGizmoGrid(
           IEnumerable<Gizmo> gizmos,
           int rows,
-          ref float curX,
+          float startX,
           out Gizmo mouseoverGizmo,
           bool leftoversOnRight = false,
           Func<Gizmo, bool> customActivatorFunc = null,
@@ -47,7 +47,12 @@ namespace Verse
                 CustomGizmoGridDrawer.gizmoGroups.Clear();
 
                 float buttonSize = (defaultSize / (float)rows) - (GizmoSpacing.y * ((float)rows - 1f) / rows);
+                int rowLength = (int)Math.Ceiling((float)gizmos.Count() / rows);
+                int needToFill = rows - (rowLength % rows);
+
+                float curX = startX;
                 float startY = (UI.screenHeight - 15f) - buttonSize * rows - (GizmoSpacing.y * (rows - 1));
+
                 int[] startYrows = new int[rows];
                 bool simpleButtons = buttonSize < 50;
 
@@ -131,48 +136,17 @@ namespace Verse
                 Gizmo floatMenuGiz = (Gizmo)null;
 
                 int curRow = 1;
-                if (leftoversOnRight && (CustomGizmoGridDrawer.firstGizmos.Count % rows) != 0)
-                {
-                    int remainder = CustomGizmoGridDrawer.firstGizmos.Count % rows;
-                    for(int i = 0; i < remainder; i++)
-                    {
-                        Gizmo element = CustomGizmoGridDrawer.firstGizmos.Pop();
-                        Rect buttonSpace = new Rect(curX - buttonSize, startYrows[curRow - 1], buttonSize, buttonSize);
-                        float curY = startYrows[curRow - 1];
-                        curRow++;
-                        CustomGizmoGridDrawer.heightDrawnFrame = Time.frameCount;
-                        CustomGizmoGridDrawer.heightDrawn = (float)UI.screenHeight - curY;
-                        GizmoResult result = ((Designator)element).DoCustomGuizmoOnGUI(buttonSpace, new GizmoRenderParms()
-                        {
-                            highLight = highlightFunc != null && highlightFunc(element),
-                            lowLight = lowlightFunc != null && lowlightFunc(element)
-                        },
-                        simpleButtons);
-                        ProcessGizmoState(element, result, ref mouseoverGizmo);
-                        GenUI.AbsorbClicksInRect(buttonSpace);
-                    }
-                    curRow = 1;
-                    curX -= buttonSize + GizmoSpacing.x;
-                };
-
-                
                 for (int index = 0; index < CustomGizmoGridDrawer.firstGizmos.Count; ++index)
                 {
                     Gizmo firstGizmo = CustomGizmoGridDrawer.firstGizmos[index];
                     if (firstGizmo.Visible)
                     {
-                        /* Math Stuff ?*/
-                        Rect buttonSpace = new Rect(curX - buttonSize, startYrows[curRow - 1], buttonSize, buttonSize);
-                        float curY = startYrows[curRow - 1];
-                        curRow++;
-                        if (curRow > rows)
-                        {
-                            curRow = 1;
-                            curX -= buttonSize + GizmoSpacing.x;
-                        }
-                        /* End Math Stuff ?*/
+
+                        Rect buttonSpace = new Rect(curX, startYrows[curRow - 1], buttonSize, buttonSize);
+                       
+
                         CustomGizmoGridDrawer.heightDrawnFrame = Time.frameCount;
-                        CustomGizmoGridDrawer.heightDrawn = (float)UI.screenHeight - curY;
+                        CustomGizmoGridDrawer.heightDrawn = (float)UI.screenHeight - startYrows[curRow - 1];
                         GizmoResult result = ((Designator)firstGizmo).DoCustomGuizmoOnGUI(buttonSpace, new GizmoRenderParms()
                         {
                             highLight = highlightFunc != null && highlightFunc(firstGizmo),
@@ -181,9 +155,19 @@ namespace Verse
                         simpleButtons);
                         ProcessGizmoState(firstGizmo, result, ref mouseoverGizmo);
                         GenUI.AbsorbClicksInRect(buttonSpace);
+
+                        if ((index + 1) % rowLength == 0)
+                        {
+                            curX = startX;
+                            curRow++;
+                            if (curRow == rows && !leftoversOnRight && needToFill < rows) { curX += (buttonSize + GizmoSpacing.x) * needToFill; }
+                        }
+                        else
+                        {
+                            curX += buttonSize + GizmoSpacing.x;
+                        }
                     }
                 }
-                if (curRow != 1) curX -= buttonSize + GizmoSpacing.x;
 
                 if (interactedGiz != null)
                 {
@@ -290,7 +274,7 @@ namespace Verse
             float buttonSize = (defaultSize / (float)rows) - (GizmoSpacing.y * ((float)rows - 1f) / rows);
             float rowLength = (float)Math.Ceiling(amountGizmos / rows);
 
-            return rowLength * buttonSize + GizmoSpacing.y * (rowLength);
+            return (rowLength * buttonSize) + GizmoSpacing.y * (rowLength);
         }
     }
 }
