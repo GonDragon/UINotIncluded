@@ -115,7 +115,6 @@ namespace UINotIncluded
 
             foreach (Designator designator in avaibleDesignators)
             {
-                UINotIncludedStatic.Log(String.Format("The designation name is '{0}'.", designator.Label));
                 if (!usedDesignators.Contains(designator))
                 {
                     arrayDesignatorConfigs[(int)DesignationConfig.hidden].Add(designator);
