@@ -15,7 +15,7 @@ namespace UINotIncluded
         public static float ExtendedBarHeight => ExtendedToolbar.height;
         public static float ResourceGap => (vanillaAnimals ? ExtendedToolbar.height : animalsRow.FinalY + 26f);
 
-        public static readonly float extendedBarWidth = Math.Min(Math.Max(410f, (float)UI.screenWidth / 4), 900f);
+        public static readonly float extendedBarWidth = Math.Min(Math.Max(450f, (float)UI.screenWidth / 4), 900f);
         public static readonly float archButtonWidth = ExtendedToolbar.height;
 
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
