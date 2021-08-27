@@ -51,9 +51,9 @@ namespace UINotIncluded
             float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
 
             ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, extendedBarWidth);
+            if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
-            if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (UINotIncludedSettings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
         }
 
