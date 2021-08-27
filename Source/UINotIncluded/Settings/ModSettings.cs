@@ -62,6 +62,23 @@ namespace UINotIncluded
             }
         }
 
+        public static int GetDesignationRows(DesignationConfig list)
+        {
+            switch (list)
+            {
+                case DesignationConfig.hidden:
+                    return 0;
+                case DesignationConfig.left:
+                    return 2;
+                case DesignationConfig.main:
+                    return 1;
+                case DesignationConfig.right:
+                    return 2;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static void RestoreDesignationLists()
         {
             SetDefaultList(DesignationConfig.hidden);
@@ -83,7 +100,7 @@ namespace UINotIncluded
                     leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
                     break;
                 case DesignationConfig.main:
-                    mainDesignations = new List<string> { "Deconstruct", "Cancel", "Harvest", "Chop wood", "Mine" };
+                    mainDesignations = new List<string> { "Mine", "Chop wood", "Harvest", "Cancel", "Deconstruct" };
                     break;
                 case DesignationConfig.right:
                     rightDesignations = new List<string> { "Haul things", "Smooth surface", "Slaughter", "Cut plants", "Hunt", "Tame" };
@@ -186,9 +203,11 @@ namespace UINotIncluded
             }
         }
 
-        private void DoJobsDesignatorColumn(Rect rect, String label, DesignationConfig i)
+        private void DoJobsDesignatorColumn(Rect rect, String label, DesignationConfig designation)
         {
-            List<String> elements = UINotIncludedSettings.GetDesignationList(i);
+            List<String> elements = UINotIncludedSettings.GetDesignationList(designation);
+            int rows = UINotIncludedSettings.GetDesignationRows(designation);
+            int rowLength = (int)Math.Ceiling((float)elements.Count() / rows);
             float buttonHeight = 30f;
             float buttonContract = 4f;
 
@@ -197,15 +216,17 @@ namespace UINotIncluded
             curY += 25f;
             Widgets.DrawMenuSection(new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)));
 
-            ScrollInstance scroll = ScrollManager.GetInstance((int)i);
+            ScrollInstance scroll = ScrollManager.GetInstance((int)designation);
             Rect scrollviewRect = new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)).ContractedBy(3f);
             Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width -20f, buttonHeight * elements.Count());
 
             Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
             curY = 0;
             bool shouldMove = false; String moveElement = null; ButtonArrowAction moveDirection = ButtonArrowAction.none;
-            foreach (String element in elements)
+            
+            for(int i = 0; i < elements.Count(); i++)
             {
+                String element = elements[i];
                 ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
                 if (result != ButtonArrowAction.none)
                 {
@@ -214,9 +235,19 @@ namespace UINotIncluded
                     moveDirection = result;
                 }
                 curY += (buttonHeight - (float)Math.Floor(buttonContract / 2));
+                if ((i + 1) % rowLength == 0 && (i+1) < elements.Count() && rows > 1)
+                {
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Text.Font = GameFont.Tiny;
+                    Widgets.Label(new Rect(0, curY, scrollviewInRect.width, buttonHeight), "Row Jump");
+                    Widgets.DrawLineHorizontal(0, curY + buttonHeight, scrollviewInRect.width);
+                    curY += buttonHeight + buttonContract;
+                    Text.Anchor = TextAnchor.UpperLeft;
+                    Text.Font = GameFont.Small;
+                }
             }
 
-            if (shouldMove) DoMove(moveElement, moveDirection, i);
+            if (shouldMove) DoMove(moveElement, moveDirection, designation);
             Widgets.EndScrollView();
         }
 
