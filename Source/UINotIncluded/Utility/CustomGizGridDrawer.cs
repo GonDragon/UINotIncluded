@@ -283,5 +283,14 @@ namespace Verse
             GizmoGridDrawer.drawnHotKeys.Clear();
             drawnHotKeys.Clear();
         }
+
+        public static float CalculateWidth(IEnumerable<Gizmo> gizmos, int rows)
+        {
+            float amountGizmos = gizmos.Count();
+            float buttonSize = (defaultSize / (float)rows) - (GizmoSpacing.y * ((float)rows - 1f) / rows);
+            float rowLength = (float)Math.Ceiling(amountGizmos / rows);
+
+            return rowLength * buttonSize + GizmoSpacing.y * (rowLength);
+        }
     }
 }
