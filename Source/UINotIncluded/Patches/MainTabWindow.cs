@@ -26,72 +26,19 @@ namespace UINotIncluded
 
 
 
-    [HarmonyPatch(typeof(Window), "SetInitialSizeAndPosition")]
+    [HarmonyPatch(typeof(MainTabWindow), "SetInitialSizeAndPosition")]
     public class MainTabWindowPatch
     {
-        public static void Postfix(ref Rect ___windowRect)
+        public static void Postfix(ref Rect ___windowRect, Window __instance)
         {
-            MainTabWindowPatchHelper.CenterRectOnScreen(ref ___windowRect);
+            if (!UINotIncludedSettings.tabsOnTop) return;
+            Type windowType = __instance.GetType();
+
+            if (windowType == typeof(MainTabWindow_Inspect)) return;
+
+            if (windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research)) { ___windowRect.y = UI.screenHeight - ___windowRect.height; return; }
+
+                MainTabWindowPatchHelper.CenterRectOnScreen(ref ___windowRect);
         }
     }
-
-    //[HarmonyPatch(typeof(MainTabWindow_Assign))]
-    //public class MainTabWindow_AssignPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Factions))]
-    //public class MainTabWindow_FactionsPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_History))]
-    //public class MainTabWindow_HistoryPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Ideos))]
-    //public class MainTabWindow_IdeosPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Menu))]
-    //public class MainTabWindow_MenuPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Quests))]
-    //public class MainTabWindow_QuestsPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Research))]
-    //public class MainTabWindow_ResearchPatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Schedule))]
-    //public class MainTabWindow_SchedulePatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Wildlife))]
-    //public class MainTabWindow_WildlifePatch
-    //{
-
-    //}
-
-    //[HarmonyPatch(typeof(MainTabWindow_Work))]
-    //public class MainTabWindow_WorkPatch
-    //{
-
-    //}
 }

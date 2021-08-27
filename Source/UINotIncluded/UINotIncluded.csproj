@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="Patches\MainTabWindow.cs" />
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
