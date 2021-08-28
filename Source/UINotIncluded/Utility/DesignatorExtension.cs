@@ -39,7 +39,9 @@ namespace Verse
             GUI.color = Color.white;
             if (parms.lowLight)
                 GUI.color = Command.LowLightLabelColor;
-            KeyCode k = instance.hotKey == null ? KeyCode.None : instance.hotKey.MainKey;
+            KeyCode keyA = instance.hotKey == null ? KeyCode.None : instance.hotKey.defaultKeyCodeA;
+            KeyCode keyB = instance.hotKey == null ? KeyCode.None : instance.hotKey.defaultKeyCodeB;
+            KeyCode k = (keyA == KeyCode.None || CustomGizmoGridDrawer.drawnHotKeys.ContainsKey(keyA)) ? keyB : keyA;
             if (k != KeyCode.None && !CustomGizmoGridDrawer.drawnHotKeys.ContainsKey(k))
             {
                 Vector2 vector2 = parms.shrunk ? new Vector2(3f, 0.0f) : new Vector2(5f, 3f);
