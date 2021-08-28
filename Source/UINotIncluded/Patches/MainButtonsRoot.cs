@@ -46,7 +46,10 @@ namespace UINotIncluded
                 {
                     int num5 = allButtonsInOrder[index].minimized ? num3 : num2;
                     if (index == lastIndex)
+                    {
                         num5 = UI.screenWidth - num4;
+                        if (UINotIncludedSettings.barOnRight) num5 -= (int)UIManager.extendedBarWidth;
+                    }                        
                     Rect rect = new Rect((float)num4, (float)posY, (float)num5, height);
                     allButtonsInOrder[index].Worker.DoButton(rect);
                     num4 += num5;
