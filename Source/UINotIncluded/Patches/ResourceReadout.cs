@@ -14,7 +14,7 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(ResourceReadout), "DoReadoutSimple")]
     class DoReadoutSimplePatch
     {
-        static void Prefix(ref Rect rect)
+        public static void Prefix(ref Rect rect)
         {
             rect.y += UIManager.ResourceGap;
         }
@@ -23,7 +23,7 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(ResourceReadout), "DoReadoutCategorized")]
     class DoReadoutCategorizedPatch
     {
-        static void Prefix(ref Rect rect)
+        public static void Prefix(ref Rect rect)
         {
             rect.y += UIManager.ResourceGap;
         }

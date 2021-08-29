@@ -14,12 +14,12 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(ColonistBar), "CheckRecacheEntries")]
     class CheckRecacheEntriesPatch
     {
-        static void Prefix(in bool ___entriesDirty,out bool __state)
+        public static void Prefix(in bool ___entriesDirty,out bool __state)
         {
             __state = ___entriesDirty;
         }
 
-        static void Postfix(List<Vector2> ___cachedDrawLocs, bool __state)
+        public static void Postfix(List<Vector2> ___cachedDrawLocs, bool __state)
         {
             if (__state && UINotIncludedSettings.tabsOnTop)
             {
