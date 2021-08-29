@@ -36,7 +36,7 @@ namespace UINotIncluded
 
             if (windowType == typeof(MainTabWindow_Inspect)) 
             {
-                if (UINotIncludedSettings.tabsOnTop) ___windowRect.y += 35f;
+                ___windowRect.y += 35f;
                 return;
             }
 
