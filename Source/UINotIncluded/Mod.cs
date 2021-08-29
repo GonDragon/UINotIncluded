@@ -16,7 +16,7 @@ namespace UINotIncluded
         public const string Name = "UINotIncluded";
         public const string Author = "GonDragon";
         public const string Id = Author + "." + Name;
-        public const string Version = "1.0.1";
+        public const string Version = "1.0.2";
 
         public static readonly Harmony Harmony;
         static UINotIncludedStatic()
