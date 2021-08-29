@@ -21,7 +21,7 @@ namespace UINotIncluded.Widget
             Rect rect = new Rect(x, y, width, height);
             GUI.DrawTexture(rect, SolidColorMaterials.NewSolidColorTexture(new ColorInt(111, 111, 111, (int)byte.MaxValue).ToColor));
             
-            Widgets.DrawAtlas(new Rect(x + 1f, y + 1f, width - 2f, height - 2f), ContentFinder<Texture2D>.Get("GD/UI/ClockBG"));
+            Widgets.DrawAtlas(new Rect(x + 1f, y + 1f, width - 2f, height - 2f), ModTextures.toolbarBackground);
 
             float widgetSpace = (float)Math.Floor(width - margin * 2);
             float weatherSpace = (float)Math.Floor(widgetSpace / 6f) - 2 * padding - interGap;
@@ -41,7 +41,7 @@ namespace UINotIncluded.Widget
         public static void DoToolbarBackground(Rect rect)
         {
             Rect rect1 = new Rect(rect.x-padding, rect.y-2, rect.width+padding*2, rect.height+2);
-            Widgets.DrawAtlas(rect1, ContentFinder<Texture2D>.Get("GD/UI/ClockSCR"));
+            Widgets.DrawAtlas(rect1, ModTextures.toolbarWidgetBackground);
         }
     }
 }

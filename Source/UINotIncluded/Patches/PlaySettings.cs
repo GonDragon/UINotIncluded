@@ -22,7 +22,7 @@ namespace UINotIncluded
             }
             else
             {
-                row.ToggleableIcon(ref UINotIncludedSettings.altInspectActive, ContentFinder<Texture2D>.Get("GD/UI/Icons/Playsettings/alt-info"), "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
+                row.ToggleableIcon(ref UINotIncludedSettings.altInspectActive, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
             }
         }
     }

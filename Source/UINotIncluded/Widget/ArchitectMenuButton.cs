@@ -20,8 +20,8 @@ namespace UINotIncluded.Widget
             Rect inRect = rect.ContractedBy(1f);
 
             GUI.DrawTexture(rect, SolidColorMaterials.NewSolidColorTexture(new ColorInt(111, 111, 111, (int)byte.MaxValue).ToColor));
-            Widgets.DrawAtlas(inRect, ContentFinder<Texture2D>.Get("GD/UI/ClockBG"));
-            if (Widgets.ButtonImage(inRect, ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/ruler-square-compass"))) Find.MainTabsRoot.ToggleTab(DefDatabase<MainButtonDef>.GetNamed("Architect"));
+            Widgets.DrawAtlas(inRect, ModTextures.toolbarBackground);
+            if (Widgets.ButtonImage(inRect, ModTextures.arquitectMenuIcon)) Find.MainTabsRoot.ToggleTab(DefDatabase<MainButtonDef>.GetNamed("Architect"));
         }
     }
 }

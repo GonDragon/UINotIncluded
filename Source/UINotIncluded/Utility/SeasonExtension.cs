@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace RimWorld
+namespace UINotIncluded
 {
     public static class SeasonExtension
     {
@@ -16,19 +17,19 @@ namespace RimWorld
             switch (season)
             {
                 case Season.Undefined:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Weather/Unknown");
+                    return ModTextures.weatherUnknown;
                 case Season.Spring:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/Spring");
+                    return ModTextures.seasonSpring;
                 case Season.Summer:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/Summer");
+                    return ModTextures.seasonSummer;
                 case Season.Fall:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/Fall");
+                    return ModTextures.seasonFall;
                 case Season.Winter:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/Winter");
+                    return ModTextures.seasonWinter;
                 case Season.PermanentSummer:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/PermanentSummer");
+                    return ModTextures.seasonPermaSummer;
                 case Season.PermanentWinter:
-            return ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/PermanentWinter");
+                    return ModTextures.seasonPermaWinter;
                 default:
                     throw new NotImplementedException();
             }

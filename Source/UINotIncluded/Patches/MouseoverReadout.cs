@@ -20,7 +20,7 @@ namespace UINotIncluded
         [HarmonyPatch(nameof(MouseoverReadout.MouseoverReadoutOnGUI))]
         static bool MouseoverReadoutOnGUIPrefix(ref TerrainDef ___cachedTerrain, ref string ___cachedTerrainString, string[] ___glowStrings)
         {
-            if (Event.current.type != EventType.Repaint || Find.MainTabsRoot.OpenTab != null) return false;
+            if (Event.current.type != EventType.Repaint || (!MouseReadoutWidget.AltInspector && Find.MainTabsRoot.OpenTab != null)) return false;
 
             string readout = "";
 

@@ -20,7 +20,7 @@ namespace UINotIncluded.Widget
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            Texture2D icon = ContentFinder<Texture2D>.Get(weatherPerceived.GetModExtension<WeatherDefExtension>().icon);
+            Texture2D icon = ModTextures.WeatherIcon(weatherPerceived.GetModExtension<WeatherDefExtension>().icon);
 
             Rect iconSpace;
             if (!weatherPerceived.description.NullOrEmpty())

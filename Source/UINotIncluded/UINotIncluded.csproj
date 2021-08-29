@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefExtensions.cs" />
+    <Compile Include="ModTextures.cs" />
     <Compile Include="Patches\ArchitectCategoryTab.cs" />
     <Compile Include="Patches\WorldInspectPane.cs" />
     <Compile Include="Patches\GizmoGridDrawer.cs" />

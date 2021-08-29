@@ -40,7 +40,7 @@ namespace UINotIncluded.Widget
             Text.Font = GameFont.Tiny;
             ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
 
-            Rect iconSpace = row.Icon(ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/world"));
+            Rect iconSpace = row.Icon(ModTextures.iconWorld);
             String label = DateTime.Now.ToString("HH:mm");
 
             row.Label(label, width - iconSpace.width, null,height);
