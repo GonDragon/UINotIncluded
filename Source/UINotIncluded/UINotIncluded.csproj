@@ -79,7 +79,7 @@
     <Compile Include="DefExtensions.cs" />
     <Compile Include="ModTextures.cs" />
     <Compile Include="Patches\ArchitectCategoryTab.cs" />
-    <Compile Include="Patches\WorldInspectPane.cs" />
+    <Compile Include="Patches\IInspectPane.cs" />
     <Compile Include="Patches\GizmoGridDrawer.cs" />
     <Compile Include="Patches\WindowStack.cs" />
     <Compile Include="Patches\MainTabWindow.cs" />

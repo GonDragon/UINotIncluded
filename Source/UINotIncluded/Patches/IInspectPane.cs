@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using HarmonyLib;
 using UnityEngine;
+using RimWorld;
 using RimWorld.Planet;
 using Verse;
 
@@ -17,6 +18,15 @@ namespace UINotIncluded
         public static void Postfix(ref float __result)
         {
             if (Current.ProgramState == ProgramState.Playing && UINotIncludedSettings.tabsOnTop) __result += 35;
+        }
+    }
+
+    [HarmonyPatch(typeof(MainTabWindow_Inspect), "PaneTopY", MethodType.Getter)]
+    class MainTabWindow_InspectPatches
+    {
+        public static void Postfix(ref float __result)
+        {
+            if (UINotIncludedSettings.tabsOnTop) __result += 35;
         }
     }
 }
