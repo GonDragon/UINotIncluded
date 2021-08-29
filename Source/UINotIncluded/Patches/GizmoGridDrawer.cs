@@ -36,7 +36,7 @@ namespace UINotIncluded.Patches
             }
             else
             {
-                float baseY = UINotIncludedSettings.tabsOnTop ? UI.screenHeight : UI.screenHeight - 35; // ONLY reason for this patch
+                float baseY = UINotIncludedSettings.tabsOnTop ? UI.screenHeight : UI.screenHeight - 33; // ONLY reason for this patch
                 ___tmpAllGizmos.Clear();
                 ___tmpAllGizmos.AddRange(gizmos);
                 ___tmpAllGizmos.SortStable<Gizmo>(___SortByOrder);

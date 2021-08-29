@@ -34,7 +34,11 @@ namespace UINotIncluded
             if (!UINotIncludedSettings.tabsOnTop) return;
             Type windowType = __instance.GetType();
 
-            if (windowType == typeof(MainTabWindow_Inspect)) return;
+            if (windowType == typeof(MainTabWindow_Inspect)) 
+            {
+                if (UINotIncludedSettings.tabsOnTop) ___windowRect.y += 35f;
+                return;
+            }
 
             if (windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research)) { ___windowRect.y = UI.screenHeight - ___windowRect.height; return; }
 
