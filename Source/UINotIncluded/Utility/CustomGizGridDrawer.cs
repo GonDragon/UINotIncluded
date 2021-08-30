@@ -48,7 +48,7 @@ namespace Verse
 
                 float buttonSize = (defaultSize / (float)rows) - (GizmoSpacing.y * ((float)rows - 1f) / rows);
                 int rowLength = (int)Math.Ceiling((float)gizmos.Count() / rows);
-                int needToFill = rows - (rowLength % rows);
+                bool fullRows = gizmos.Count() % rows == 0;
 
                 float curX = startX;
                 float startY = (UI.screenHeight - 15f) - buttonSize * rows - (GizmoSpacing.y * (rows - 1));
@@ -160,7 +160,7 @@ namespace Verse
                         {
                             curX = startX;
                             curRow++;
-                            if (curRow == rows && !leftoversOnRight && needToFill < rows) { curX += (buttonSize + GizmoSpacing.x) * needToFill; }
+                            if (curRow == rows && !leftoversOnRight && !fullRows) { curX += buttonSize + GizmoSpacing.x; } // TODO: Dirty fix. Only works with 2 rows. Make it work on n rows.
                         }
                         else
                         {
