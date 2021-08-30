@@ -10,13 +10,13 @@ namespace UINotIncluded.Widget
 {
     public class JobDesignatorBar
     {
-        private static float posX = (float)UI.screenWidth - 15f;
+        private static readonly float posX = (float)UI.screenWidth - 15f;
 
         public static List<Designator>[] Jobs => DesignatorManager.GetDesignationConfigs();
 
-        private int mainRows = 1;
-        private int leftRows = 2;
-        private int rigthRows = 2;
+        private readonly int mainRows = 1;
+        private readonly int leftRows = 2;
+        private readonly int rigthRows = 2;
 
         public void JobDesignatorBarOnGUI()
         {
@@ -28,11 +28,9 @@ namespace UINotIncluded.Widget
             float leftWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.left], leftRows);
 
             float curX = UINotIncludedSettings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth: posX;
-
-            Gizmo mousoverGizmo;
-
             curX -= (rigthWidth + mainWidth);
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], mainRows, curX, out mousoverGizmo);
+
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], mainRows, curX, out Gizmo mousoverGizmo);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, false);
 
             curX -= leftWidth;

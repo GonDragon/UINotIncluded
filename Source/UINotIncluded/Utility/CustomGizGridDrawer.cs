@@ -18,9 +18,9 @@ namespace Verse
         private static int heightDrawnFrame;
         public static readonly Vector2 GizmoSpacing = new Vector2(5f, 5f);
         private static readonly float defaultSize = 80f;
-        private static List<List<Gizmo>> gizmoGroups = new List<List<Gizmo>>();
-        private static List<Gizmo> firstGizmos = new List<Gizmo>();
-        private static List<Gizmo> tmpAllGizmos = new List<Gizmo>();
+        private static readonly List<List<Gizmo>> gizmoGroups = new List<List<Gizmo>>();
+        private static readonly List<Gizmo> firstGizmos = new List<Gizmo>();
+        private static readonly List<Gizmo> tmpAllGizmos = new List<Gizmo>();
         private static readonly Func<Gizmo, Gizmo, int> SortByOrder = (Func<Gizmo, Gizmo, int>)((lhs, rhs) => lhs.order.CompareTo(rhs.order));
 
         public static float HeightDrawnRecently => Time.frameCount > CustomGizmoGridDrawer.heightDrawnFrame + 2 ? 0.0f : CustomGizmoGridDrawer.heightDrawn;

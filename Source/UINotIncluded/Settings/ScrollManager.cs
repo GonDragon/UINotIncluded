@@ -10,7 +10,7 @@ namespace UINotIncluded
 {
     public static class ScrollManager
     {
-        private static Dictionary<int, ScrollInstance> instances = new Dictionary<int, ScrollInstance>();
+        private static readonly Dictionary<int, ScrollInstance> instances = new Dictionary<int, ScrollInstance>();
 
         public static ScrollInstance GetInstance(int i)
         {

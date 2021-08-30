@@ -17,11 +17,8 @@ namespace UINotIncluded.Widget
 
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
-            WidgetRow row = new WidgetRow();
-            Rect rect = new Rect(x, y, width, height);
-            GUI.DrawTexture(rect, SolidColorMaterials.NewSolidColorTexture(new ColorInt(111, 111, 111, (int)byte.MaxValue).ToColor));
-            
-            Widgets.DrawAtlas(new Rect(x + 1f, y + 1f, width - 2f, height - 2f), ModTextures.toolbarBackground);
+            WidgetRow row = new WidgetRow();     
+            Widgets.DrawAtlas(new Rect(x, y, width, height), ModTextures.toolbarBackground);
 
             float widgetSpace = (float)Math.Floor(width - margin * 2);
             float weatherSpace = (float)Math.Floor(widgetSpace / 6f) - 2 * padding - interGap;

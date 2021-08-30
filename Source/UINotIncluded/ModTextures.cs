@@ -42,7 +42,7 @@ namespace UINotIncluded
         public static Texture2D speedTwo = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/skip-forward");
         public static Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/skip-forward-outline");
 
-        private static Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
+        private static readonly Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
         public static Texture2D WeatherIcon(string iconPath)
         {
             if (weathers.ContainsKey(iconPath)) return weathers[iconPath];
