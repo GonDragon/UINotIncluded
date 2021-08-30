@@ -13,6 +13,7 @@ namespace UINotIncluded
     {
         public static bool tabsOnTop = true;
         public static bool barOnRight = false;
+        public static bool designationsOnLeft = false;
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool altInspectActive = true;
         public static bool vanillaArchitect = false;
@@ -30,6 +31,7 @@ namespace UINotIncluded
         {
             Scribe_Values.Look(ref tabsOnTop, "tabsOnTop", true);
             Scribe_Values.Look(ref barOnRight, "barOnRight", false);
+            Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
             Scribe_Values.Look(ref altInspectActive, "altInspectActive", true);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaArchitect, "vanillaArchitect", false);
@@ -161,16 +163,17 @@ namespace UINotIncluded
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            float columnWidth = inRect.width / 3;
+            float columnWidth = inRect.width / 2;
             float heigth = (float)Math.Floor(inRect.height / 3);
-            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth);
+            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
+            
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref UINotIncludedSettings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref UINotIncludedSettings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref UINotIncludedSettings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref UINotIncludedSettings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref UINotIncludedSettings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), UINotIncludedSettings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
@@ -182,7 +185,12 @@ namespace UINotIncluded
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
             listingStandard.End();
-            DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
+
+            listingStandard.Begin(column2);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref UINotIncludedSettings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
+            if (UINotIncludedSettings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref UINotIncludedSettings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
+            listingStandard.End();
+            if (UINotIncludedSettings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
             base.DoSettingsWindowContents(inRect);
         }
 

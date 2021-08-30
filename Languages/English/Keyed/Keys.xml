@@ -4,6 +4,8 @@
 <UINotIncluded.Setting.tabsOnTop.Description>If checked, the bar with the main tabs and the clock will be on top, instead of on the bottom.</UINotIncluded.Setting.tabsOnTop.Description>
 <UINotIncluded.Setting.barOnRight>Extended bar on the right side</UINotIncluded.Setting.barOnRight>
 <UINotIncluded.Setting.barOnRight.Description>If checked, the bar with the clima and date widgets will be on the right side, instead of on the left.</UINotIncluded.Setting.barOnRight.Description>
+<UINotIncluded.Setting.designationsOnLeft>Designator bar on the left side</UINotIncluded.Setting.designationsOnLeft>
+<UINotIncluded.Setting.designationsOnLeft.Description>If checked, the new designator bar will be on the left.</UINotIncluded.Setting.designationsOnLeft.Description>
 <UINotIncluded.Setting.vanillaArchitect>Use vanilla Architect Menu</UINotIncluded.Setting.vanillaArchitect>
 <UINotIncluded.Setting.vanillaArchitect.Description>This will disable the new Architect Menu.</UINotIncluded.Setting.vanillaArchitect.Description>
 <UINotIncluded.Setting.vanillaAnimals>Use vanilla Animals and Wildlife buttons</UINotIncluded.Setting.vanillaAnimals>

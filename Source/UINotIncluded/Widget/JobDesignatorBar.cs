@@ -10,7 +10,7 @@ namespace UINotIncluded.Widget
 {
     public class JobDesignatorBar
     {
-        private static readonly float posX = (float)UI.screenWidth - 15f;
+        private static float posX = (float)UI.screenWidth - 15f;
 
         public static List<Designator>[] Jobs => DesignatorManager.GetDesignationConfigs();
 
@@ -20,14 +20,14 @@ namespace UINotIncluded.Widget
 
         public void JobDesignatorBarOnGUI()
         {
-            float curX = posX;
-
             if (Find.DesignatorManager.SelectedDesignator != null)
                 Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0.0f, (float)((double)(UI.screenHeight - 35) - (double)((MainTabWindow_Architect)MainButtonDefOf.Architect.TabWindow).WinHeight - 270.0));
 
             float rigthWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.right], rigthRows);
             float mainWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.main], mainRows);
             float leftWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.left], leftRows);
+
+            float curX = UINotIncludedSettings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth: posX;
 
             Gizmo mousoverGizmo;
 
