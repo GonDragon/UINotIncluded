@@ -11,53 +11,30 @@ using RimWorld.Planet;
 
 namespace UINotIncluded.Widget
 {
-    static class TimeWidget
+    public class TimeWidget : ExtendedWidget
     {
-        private static readonly float extraSize = 12f; // Width with WidgetRow is inconsistent. Dirty fix.
-        public static void DoTimeWidget(WidgetRow row, float height, float width)
-        {
-            if (Find.CurrentMap == null) return;
+        public override float MinimunWidth => 150f;
 
+        public override float MaximunWidth => 200f;
+
+        public override void OnGUI(Rect rect)
+        {
+            ExtendedToolbar.DoToolbarBackground(rect);
             
-            float gadgetsWidth = width - 2 * ExtendedToolbar.padding;
-            float datetimeWidth = gadgetsWidth;
-            if (Prefs.ShowRealtimeClock)
-            {
-                float realtimeWidth = (float)Math.Floor(gadgetsWidth * 0.27f);
-                TimeWidget.DoRealtimeClock(row, height, realtimeWidth);
-                row.Gap(ExtendedToolbar.interGap + 2 * ExtendedToolbar.padding);
-                datetimeWidth -= realtimeWidth - 2 * ExtendedToolbar.padding - ExtendedToolbar.interGap;
-            } else
-            {
-                datetimeWidth += extraSize;
-            }
-            TimeWidget.DoDateAndTime(row, height, datetimeWidth);
-        }
+            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
 
-        public static void DoRealtimeClock(WidgetRow row, float height, float width)
-        {
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
-            ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
+            Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
+            Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
+            Rect iconSpace = DrawIcon(season.GetIconTex(), space.x, season.LabelCap());
+            space.x += iconSpace.width;
+            space.width -= iconSpace.width;
 
-            Rect iconSpace = row.Icon(ModTextures.iconWorld);
-            String label = DateTime.Now.ToString("HH:mm");
-
-            row.Label(label, width - iconSpace.width, null,height);
-            Text.Anchor = TextAnchor.UpperLeft;
-        }
-
-        public static void DoDateAndTime(WidgetRow row, float height, float width)
-        {
+            WidgetRow row = new WidgetRow(space.x, space.y,UIDirection.RightThenDown, space.width,ExtendedToolbar.interGap);
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
 
             float startX = row.FinalX;
-            ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
-            Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
 
-            Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
-            Rect iconSpace = row.Icon(season.GetIconTex(), season.LabelCap());
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
@@ -66,14 +43,16 @@ namespace UINotIncluded.Widget
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float timeWidth = Text.CalcSize(timestamp).x;
-            float remainingSpace = width - dateWidth - timeWidth - iconSpace.width;
+            float remainingSpace = space.width - dateWidth - timeWidth - iconSpace.width;
 
-            float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace/2);
+            float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace / 2);
+            float timeLabelWidth = (float)Math.Floor(timeWidth + remainingSpace / 2);
 
-            row.Label(datestamp, dateLabelWidth, GetDateDescription(pos,season),height);
-            row.Label(timestamp, width - (row.FinalX - startX), height: height);
+            UINotIncludedStatic.Warning(String.Format("timestamp: {0}",timestamp));
+
+            row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
+            row.Label(timestamp, timeLabelWidth, height: space.height);
             Text.Anchor = TextAnchor.UpperLeft;
-
         }
 
         private static string GetDateDescription(Vector2 pos, Season season)
