@@ -33,9 +33,6 @@ namespace UINotIncluded.Widget
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
 
-            float startX = row.FinalX;
-
-
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
             string timestamp = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
