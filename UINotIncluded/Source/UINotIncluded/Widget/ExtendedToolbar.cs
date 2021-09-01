@@ -18,7 +18,7 @@ namespace UINotIncluded.Widget
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
             Widgets.DrawAtlas(new Rect(x, y, width, height), ModTextures.toolbarBackground);
-            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), new List<ExtendedWidget> { new RealTimeWidget(), new TimeWidget() });
+            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), new List<ExtendedWidget> {new Weather(), new RealTimeWidget(), new TimeWidget() });
 
         }
 

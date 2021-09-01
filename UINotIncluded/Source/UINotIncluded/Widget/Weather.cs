@@ -11,11 +11,19 @@ using HarmonyLib;
 
 namespace UINotIncluded.Widget
 {
-    static class Weather
+    public class Weather : ExtendedWidget
     {
-        public static void DoWeatherGUI(WidgetRow row, float height, float width)
+        public override float MinimunWidth => 75f;
+
+        public override float MaximunWidth => 100f;
+
+        public override void OnGUI(Rect rect)
         {
-            ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
+
+            ExtendedToolbar.DoToolbarBackground(rect);
+            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
+            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, space.width, ExtendedToolbar.interGap);
+
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;
 
             Text.Anchor = TextAnchor.MiddleCenter;
@@ -24,14 +32,15 @@ namespace UINotIncluded.Widget
 
             Rect iconSpace;
             if (!weatherPerceived.description.NullOrEmpty())
-                iconSpace = row.Icon(icon, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
+                iconSpace = DrawIcon(icon,space.x, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
             else
-                iconSpace = row.Icon(icon, weatherPerceived.LabelCap);
+                iconSpace = DrawIcon(icon, space.x, weatherPerceived.LabelCap);
+            space.x += iconSpace.width;
+            space.width -= iconSpace.width;
 
             float temp = Mathf.RoundToInt(GenTemperature.CelsiusTo(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile), Prefs.TemperatureMode));
 
-            float climaWidth = width - iconSpace.width - ExtendedToolbar.padding;
-            row.Label(temp.ToString() + new string[] { "°C", "°F", "°K" }[(int)Prefs.TemperatureMode], climaWidth,null,height);
+            row.Label(temp.ToString() + new string[] { "°C", "°F", "°K" }[(int)Prefs.TemperatureMode], space.width, null, space.height);
             Text.Anchor = TextAnchor.UpperLeft;
         }
     }

@@ -30,7 +30,7 @@ namespace UINotIncluded.Widget
             Text.Font = GameFont.Tiny;
             String label = DateTime.Now.ToString("HH:mm");
 
-            row.Label(label, space.width - iconSpace.width, null, space.height);
+            row.Label(label, space.width, null, space.height);
             Text.Anchor = TextAnchor.UpperLeft;
         }
     }
