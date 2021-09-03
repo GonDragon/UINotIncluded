@@ -23,6 +23,7 @@ namespace UINotIncluded
         {
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
+            CompatibilityPatches();
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));
@@ -32,5 +33,13 @@ namespace UINotIncluded
         public static void Message(string message) => Messages.Message(message, MessageTypeDefOf.TaskCompletion, false);
         private static string PrefixMessage(string message) => $"[{Name} v{Version}] {message}";
 
+        static void CompatibilityPatches()
+        {
+            try
+            {
+                if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Timespeed.SetSmartspeedMode();
+            }
+            catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
+        }
     }
 }

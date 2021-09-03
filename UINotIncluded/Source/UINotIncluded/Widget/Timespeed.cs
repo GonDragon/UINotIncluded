@@ -18,13 +18,23 @@ namespace UINotIncluded.Widget
 
         public override float MaximunWidth => 150f;
 
+        private static Action<Rect> cached_DoTimeControlsGUI;
+
+        public static void SetSmartspeedMode()
+        {
+            cached_DoTimeControlsGUI = CustomTimeControls.DoSmartTimeControlsGUI;
+        }
+        public Timespeed()
+        {
+            cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoTimeControlsGUI;
+        }
+
         public override void OnGUI(Rect rect)
         {
             ExtendedToolbar.DoToolbarBackground(rect);
             Rect space = rect.ContractedBy(ExtendedToolbar.padding);
-            space.x += 14;
             space.y += 1;
-            TimeControls.DoTimeControlsGUI(space);
+            cached_DoTimeControlsGUI(space);
         }
 
         private static class CustomTimeControls
@@ -136,6 +146,12 @@ namespace UINotIncluded.Widget
                     return;
                 tickManager.DoSingleTick();
                 SoundDefOf.Clock_Stop.PlayOneShotOnCamera();
+            }
+
+            public static void DoSmartTimeControlsGUI(Rect timerRect)
+            {
+                timerRect.x += 14;
+                TimeControls.DoTimeControlsGUI(timerRect);
             }
         }
 
