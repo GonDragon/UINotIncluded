@@ -33,14 +33,14 @@ namespace UINotIncluded
         public static Texture2D iconAltInspector = ContentFinder<Texture2D>.Get("GD/UI/Icons/Playsettings/alt-info");
         public static Texture2D iconWorld = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/world");
 
-        public static Texture2D pause = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/pause");
-        public static Texture2D pause_outl = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/pause-outline");
-        public static Texture2D play = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/play");
-        public static Texture2D play_outl = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/play-outline");
-        public static Texture2D speedOne = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/fast-forward");
-        public static Texture2D speedOne_outl = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/fast-forward-outline");
-        public static Texture2D speedTwo = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/skip-forward");
-        public static Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/skip-forward-outline");
+        public static Texture2D pause = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Pause");
+        public static Texture2D pause_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/pause-outline");
+        public static Texture2D play = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Normal");
+        public static Texture2D play_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/play-outline");
+        public static Texture2D speedOne = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Fast");
+        public static Texture2D speedOne_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/fast-forward-outline");
+        public static Texture2D speedTwo = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Superfast");
+        public static Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/skip-forward-outline");
 
         private static readonly Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
         public static Texture2D WeatherIcon(string iconPath)
