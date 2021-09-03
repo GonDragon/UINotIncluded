@@ -15,14 +15,23 @@ namespace UINotIncluded
         public static float ExtendedBarHeight => ExtendedToolbar.height;
         public static float ResourceGap => (vanillaAnimals ? ExtendedToolbar.height : animalsRow.FinalY + 26f);
 
-        public static readonly float extendedBarWidth = Math.Min(Math.Max(450f, (float)UI.screenWidth / 4), 900f);
+        public static float ExtendedBarWidth => currentSize;
         public static readonly float archButtonWidth = ExtendedToolbar.height;
+
+        private static float currentSize = Math.Min(Math.Max(450f + 60f * (float)UINotIncludedSettings.fontSize, (float)UI.screenWidth / 4), 900f);
+
 
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
         private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
         private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
+
+        public static void SetCorrectWidth(GameFont fontsize)
+        {
+            float minSize = 450f + 60f * (float)fontsize;
+            currentSize = Math.Min(Math.Max(minSize, (float)UI.screenWidth / 4), 900f);
+        }
 
         public static void Before_MainUIOnGUI()
         {
@@ -47,10 +56,10 @@ namespace UINotIncluded
         {
             float toolbarY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
             float toolbarX;
-            if (UINotIncludedSettings.barOnRight) { toolbarX = UI.screenWidth - extendedBarWidth; } else { toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth; };
+            if (UINotIncludedSettings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth; };
             float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
 
-            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, extendedBarWidth);
+            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, ExtendedBarWidth);
             if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);

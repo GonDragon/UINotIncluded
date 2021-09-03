@@ -15,4 +15,5 @@
 <UINotIncluded.Setting.dateFormat>Date format</UINotIncluded.Setting.dateFormat>
 <UINotIncluded.Playsetting.altinspect.tooltip>Toggle the Alt Inspector.\n\nWhen the Alt Inspector is active, the cell info in the bottom left will disappear. This info will now appear as a tooltip near the mouse while the "Alt" key is pressed.</UINotIncluded.Playsetting.altinspect.tooltip>
 <UINotIncluded.Setting.DesignatorBar.Description>Designator Bar Config</UINotIncluded.Setting.DesignatorBar.Description>
+<UINotIncluded.Setting.fontSize>Font Size</UINotIncluded.Setting.fontSize>
 </LanguageData>

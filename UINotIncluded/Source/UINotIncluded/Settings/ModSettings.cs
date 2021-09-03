@@ -19,6 +19,7 @@ namespace UINotIncluded
         public static bool vanillaArchitect = false;
         public static bool vanillaAnimals = false;
         public static bool useDesignatorBar = true;
+        public static GameFont fontSize = GameFont.Tiny;
 
         public static List<String> hiddenDesignations = new List<String>();
         public static List<String> leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
@@ -38,6 +39,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
+            Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
 
             Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations", LookMode.Value);
             Scribe_Collections.Look(ref leftDesignations, "leftDesignations", LookMode.Value);
@@ -181,6 +183,15 @@ namespace UINotIncluded
                 {
                     DateFormat localFormat = dateFormat;
                     options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => UINotIncludedSettings.dateFormat = dateFormat)));
+                }
+                Find.WindowStack.Add((Window)new FloatMenu(options));
+            }
+            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), UINotIncludedSettings.fontSize.ToString()))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (GameFont font in Enum.GetValues(typeof(GameFont)))
+                {
+                    options.Add(new FloatMenuOption(font.ToString(), (Action)(() => { UINotIncludedSettings.fontSize = font; UIManager.SetCorrectWidth(font); })));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }

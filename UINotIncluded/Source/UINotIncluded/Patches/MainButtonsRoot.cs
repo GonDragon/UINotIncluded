@@ -34,7 +34,7 @@ namespace UINotIncluded
                     num1 += allButtonsInOrder[index].minimized ? 0.5f : 1f;
             }
             GUI.color = Color.white;
-            double spaceReserved = UIManager.extendedBarWidth;
+            double spaceReserved = UIManager.ExtendedBarWidth;
             if (!UINotIncludedSettings.vanillaArchitect) spaceReserved += UIManager.archButtonWidth;
             int num2 = (int)(((double)UI.screenWidth - spaceReserved) / (double)num1);
             int num3 = num2 / 2;
@@ -48,7 +48,7 @@ namespace UINotIncluded
                     if (index == lastIndex)
                     {
                         num5 = UI.screenWidth - num4;
-                        if (UINotIncludedSettings.barOnRight) num5 -= (int)UIManager.extendedBarWidth;
+                        if (UINotIncludedSettings.barOnRight) num5 -= (int)UIManager.ExtendedBarWidth;
                     }                        
                     Rect rect = new Rect((float)num4, (float)posY, (float)num5, height);
                     allButtonsInOrder[index].Worker.DoButton(rect);

@@ -21,6 +21,8 @@ namespace UINotIncluded.Widget
         private static readonly ExtendedWidget datetime = new TimeWidget();
         private static readonly ExtendedWidget timespeed = new Timespeed();
 
+        public static GameFont FontSize => UINotIncludedSettings.fontSize;
+
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
             widgetList.Clear();
@@ -31,7 +33,7 @@ namespace UINotIncluded.Widget
             widgetList.Add(timespeed);
 
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
+            Text.Font = FontSize;
 
             Widgets.DrawAtlas(new Rect(x, y, width, height), ModTextures.toolbarBackground);
             ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), widgetList);
