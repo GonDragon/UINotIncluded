@@ -27,7 +27,7 @@ namespace UINotIncluded
             float posY = (float)UI.screenHeight - 20f;
 
             if (!UINotIncludedSettings.tabsOnTop) posY -= UIManager.ExtendedBarHeight;
-            if (UINotIncludedSettings.useDesignatorBar) posY -= 80f;
+            if (UINotIncludedSettings.useDesignatorBar && !UINotIncludedSettings.designationsOnLeft) posY -= 80f;
 
             GenUI.DrawTextWinterShadow(new Rect((float)(UI.screenWidth - 270), (float)(UI.screenHeight - 450), 270f, 450f));
             
