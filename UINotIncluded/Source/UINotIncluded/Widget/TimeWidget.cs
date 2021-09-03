@@ -43,8 +43,6 @@ namespace UINotIncluded.Widget
             float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace / 2);
             float timeLabelWidth = (float)Math.Floor(timeWidth + remainingSpace / 2);
 
-            UINotIncludedStatic.Warning(String.Format("timestamp: {0}",timestamp));
-
             row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
             row.Label(timestamp, timeLabelWidth, height: space.height);
         }
