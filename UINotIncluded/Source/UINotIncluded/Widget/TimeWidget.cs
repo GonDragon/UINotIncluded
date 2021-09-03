@@ -13,7 +13,7 @@ namespace UINotIncluded.Widget
 {
     public class TimeWidget : ExtendedWidget
     {
-        public override float MinimunWidth => 150f;
+        public override float MinimunWidth => 125f;
 
         public override float MaximunWidth => 200f;
 
@@ -29,9 +29,7 @@ namespace UINotIncluded.Widget
             space.x += iconSpace.width;
             space.width -= iconSpace.width;
 
-            WidgetRow row = new WidgetRow(space.x, space.y,UIDirection.RightThenDown, space.width,ExtendedToolbar.interGap);
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
+            WidgetRow row = new WidgetRow(space.x, space.y,UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
@@ -49,7 +47,6 @@ namespace UINotIncluded.Widget
 
             row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
             row.Label(timestamp, timeLabelWidth, height: space.height);
-            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         private static string GetDateDescription(Vector2 pos, Season season)

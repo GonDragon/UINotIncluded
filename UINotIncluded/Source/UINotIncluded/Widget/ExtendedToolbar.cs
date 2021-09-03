@@ -10,15 +10,33 @@ namespace UINotIncluded.Widget
     static class ExtendedToolbar
     {
         public static float height = 35f;
-        public static float interGap = 2;
+        public static float interGap = 0;
         public static float padding = 2;
-        [TweakValue("A.Margin Toolbar", 0f, 20f)]
         public static float margin = 5;
+
+        private static readonly List<ExtendedWidget> widgetList = new List<ExtendedWidget>();
+
+        private static readonly ExtendedWidget weather = new Weather();
+        private static readonly ExtendedWidget realtime = new RealTimeWidget();
+        private static readonly ExtendedWidget datetime = new TimeWidget();
+        private static readonly ExtendedWidget timespeed = new Timespeed();
 
         public static void ExtendedToolbarOnGUI(float x, float y, float width)
         {
+            widgetList.Clear();
+
+            widgetList.Add(weather);
+            if (Prefs.ShowRealtimeClock) widgetList.Add(realtime);
+            widgetList.Add(datetime);
+            widgetList.Add(timespeed);
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+
             Widgets.DrawAtlas(new Rect(x, y, width, height), ModTextures.toolbarBackground);
-            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), new List<ExtendedWidget> {new Weather(), new RealTimeWidget(), new TimeWidget() });
+            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), widgetList);
+
+            Text.Anchor = TextAnchor.UpperLeft;
 
         }
 

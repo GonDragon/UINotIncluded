@@ -12,7 +12,7 @@ namespace UINotIncluded.Widget
 {
     class RealTimeWidget : ExtendedWidget
     {
-        public override float MinimunWidth => 75f;
+        public override float MinimunWidth => 45f;
 
         public override float MaximunWidth => 100f;
 
@@ -20,18 +20,15 @@ namespace UINotIncluded.Widget
         {
             ExtendedToolbar.DoToolbarBackground(rect);
             Rect space = rect.ContractedBy(ExtendedToolbar.padding);
-            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, space.width, ExtendedToolbar.interGap);
 
             Rect iconSpace = DrawIcon(ModTextures.iconWorld, space.x);
             space.x += iconSpace.width;
             space.width -= iconSpace.width;
+            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown,gap: ExtendedToolbar.interGap);
 
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
             String label = DateTime.Now.ToString("HH:mm");
 
             row.Label(label, space.width, null, space.height);
-            Text.Anchor = TextAnchor.UpperLeft;
         }
     }
 }

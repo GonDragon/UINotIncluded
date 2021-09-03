@@ -12,15 +12,19 @@ using UINotIncluded.Utility;
 
 namespace UINotIncluded.Widget
 {
-    static class Timespeed
+    public class Timespeed : ExtendedWidget
     {
-        public static void DoTimespeedControls(WidgetRow row, float height, float width)
-        {
-            ExtendedToolbar.DoToolbarBackground(new Rect(row.FinalX, row.FinalY, width, height));
-            row.Gap(ExtendedToolbar.padding);
+        public override float MinimunWidth => 100f;
 
-            Rect timerRect = new Rect(row.FinalX, row.FinalY, width, height);
-            CustomTimeControls.DoTimeControlsGUI(timerRect);
+        public override float MaximunWidth => 150f;
+
+        public override void OnGUI(Rect rect)
+        {
+            ExtendedToolbar.DoToolbarBackground(rect);
+            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
+            space.x += 14;
+            space.y += 1;
+            TimeControls.DoTimeControlsGUI(space);
         }
 
         private static class CustomTimeControls
