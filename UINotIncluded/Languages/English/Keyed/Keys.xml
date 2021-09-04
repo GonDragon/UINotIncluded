@@ -2,6 +2,8 @@
 <LanguageData>
 <UINotIncluded.Setting.tabsOnTop>Tabs On Top</UINotIncluded.Setting.tabsOnTop>
 <UINotIncluded.Setting.tabsOnTop.Description>If checked, the bar with the main tabs and the clock will be on top, instead of on the bottom.</UINotIncluded.Setting.tabsOnTop.Description>
+<UINotIncluded.Setting.togglersOnTop>Play Settings on Top</UINotIncluded.Setting.togglersOnTop>
+<UINotIncluded.Setting.togglersOnTop.Description>If checked, the bar with the togglers for in-game view settings will be on top, instead of on the bottom.</UINotIncluded.Setting.togglersOnTop.Description>
 <UINotIncluded.Setting.barOnRight>Extended bar on the right side</UINotIncluded.Setting.barOnRight>
 <UINotIncluded.Setting.barOnRight.Description>If checked, the bar with the clima and date widgets will be on the right side, instead of on the left.</UINotIncluded.Setting.barOnRight.Description>
 <UINotIncluded.Setting.designationsOnLeft>Designator bar on the left side</UINotIncluded.Setting.designationsOnLeft>

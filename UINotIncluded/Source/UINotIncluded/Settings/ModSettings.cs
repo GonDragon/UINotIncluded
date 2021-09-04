@@ -19,6 +19,7 @@ namespace UINotIncluded
         public static bool vanillaArchitect = false;
         public static bool vanillaAnimals = false;
         public static bool useDesignatorBar = true;
+        public static bool togglersOnTop = true;
         public static GameFont fontSize = GameFont.Tiny;
 
         public static List<String> hiddenDesignations = new List<String>();
@@ -31,6 +32,7 @@ namespace UINotIncluded
         public override void ExposeData()
         {
             Scribe_Values.Look(ref tabsOnTop, "tabsOnTop", true);
+            Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref barOnRight, "barOnRight", false);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
             Scribe_Values.Look(ref altInspectActive, "altInspectActive", true);
@@ -198,6 +200,7 @@ namespace UINotIncluded
             listingStandard.End();
 
             listingStandard.Begin(column2);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref UINotIncludedSettings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref UINotIncludedSettings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
             if (UINotIncludedSettings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref UINotIncludedSettings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
             listingStandard.End();

@@ -16,12 +16,14 @@ namespace UINotIncluded
     {
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GlobalControlsUtility.DoPlaySettings))]
-        static bool DoPlaySettingsPatch(WidgetRow rowVisibility, bool worldView)
+        static bool DoPlaySettingsPatch(WidgetRow rowVisibility, bool worldView, ref float curBaseY)
         {
+            if (worldView && !UINotIncludedSettings.togglersOnTop) curBaseY -= 35;
             float borderGap = 4f;
-            float gapY = UINotIncludedSettings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap;
-            rowVisibility.Init((float)UI.screenWidth - borderGap, gapY, UIDirection.LeftThenDown, 250f);
+            float initialY = UINotIncludedSettings.togglersOnTop ? (UINotIncludedSettings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
+            rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, UINotIncludedSettings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, 250f);
             Find.PlaySettings.DoPlaySettingsGlobalControls(rowVisibility, worldView);
+            if (!UINotIncludedSettings.togglersOnTop) curBaseY = rowVisibility.FinalY;
             return false;
         }
 
