@@ -66,23 +66,29 @@ namespace UINotIncluded.Widget
             actualSizes[n_widgets - 1] = totalAvaibleWidth - occupiedSpace;
 
             GUI.BeginGroup(rect);
-
             float curX = margin;
             int cur = 0;
-            foreach(ExtendedWidget widget in widgets)
+
+            try
             {
-                widget.OnGUI(new Rect(curX, 0, actualSizes[cur], rect.height));
-                curX += actualSizes[cur] + margin;
-                cur++;
+                foreach (ExtendedWidget widget in widgets)
+                {
+                    widget.OnGUI(new Rect(curX, 0, actualSizes[cur], rect.height));
+                    curX += actualSizes[cur] + margin;
+                    cur++;
+                }
+            }
+            catch (Exception e)
+            {
+                UINotIncludedStatic.ErrorOnce(String.Format("Error catched on the widget {0} named {1}. The error was: {2}.\nStack trace:\n{3}",cur.ToString(),widgets[cur].GetType().ToString(),e.ToString(),e.StackTrace),"Rendering Widgets");
+            }
+            finally
+            {
+                GUI.EndGroup();
             }
 
-            //for (int k = 0; 0 < n_widgets; k++)
-            //{
-            //    widgets[0].OnGUI(new Rect(curX, 0, 100f, rect.height));
-            //    curX += 100f;
-            //}
-
-            GUI.EndGroup();
+            
+            
         }
 
         public static void DoToolbarBackground(Rect rect)

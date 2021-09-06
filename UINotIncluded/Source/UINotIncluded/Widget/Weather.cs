@@ -24,7 +24,7 @@ namespace UINotIncluded.Widget
             Rect space = rect.ContractedBy(ExtendedToolbar.padding);
 
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;
-            Texture2D icon = ModTextures.WeatherIcon(weatherPerceived.GetModExtension<WeatherDefExtension>().icon);
+            Texture2D icon = ModTextures.WeatherIcon(weatherPerceived.GetModExtension<WeatherDefExtension>()?.icon ?? "GD/UI/Icons/Weather/Unknown");
 
             Rect iconSpace;
             if (!weatherPerceived.description.NullOrEmpty())
