@@ -29,7 +29,7 @@ namespace UINotIncluded
             if (!UINotIncludedSettings.tabsOnTop) posY -= UIManager.ExtendedBarHeight;
             if (UINotIncludedSettings.useDesignatorBar && !UINotIncludedSettings.designationsOnLeft) posY -= 80f;
 
-            GenUI.DrawTextWinterShadow(new Rect((float)(UI.screenWidth - 270), (float)(UI.screenHeight - 450), 270f, 450f));
+            //GenUI.DrawTextWinterShadow(new Rect((float)(UI.screenWidth - 270), (float)(UI.screenHeight - 450), 270f, 450f));
             
             posY -= 4f;
             GlobalControlsUtility.DoPlaySettings(___rowVisibility, false, ref posY);

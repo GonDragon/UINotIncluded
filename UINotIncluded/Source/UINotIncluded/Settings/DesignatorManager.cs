@@ -12,11 +12,12 @@ namespace UINotIncluded
     static class DesignatorManager
     {
         private static bool updated = false;
-        private static List<Designator>[] CacheJobs;
+        private static List<Designator>[] CacheJobs = new List<Designator>[] { new List<Designator>(), new List<Designator>(), new List<Designator>(), new List<Designator>() };
 
         public static List<Designator>[] GetDesignationConfigs()
         {
             if (updated) return CacheJobs;
+            foreach (List<Designator> designatorslist in CacheJobs) designatorslist.Clear();
             CacheJobs = UINotIncludedSettings.GetDesignationConfigs();
             updated = true;
             return CacheJobs;

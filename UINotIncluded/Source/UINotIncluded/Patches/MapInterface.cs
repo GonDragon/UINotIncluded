@@ -16,10 +16,7 @@ namespace UINotIncluded
     {
         static void Prefix()
         {
-            if (!(Find.CurrentMap == null) && (!WorldRendererUtility.WorldRenderedNow))
-            {
-                UIManager.Before_MainUIOnGUI();
-            }
+            UIManager.Before_MainUIOnGUI();
         }
     }
 
