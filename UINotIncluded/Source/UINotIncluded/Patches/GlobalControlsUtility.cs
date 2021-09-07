@@ -21,7 +21,7 @@ namespace UINotIncluded
             if (worldView && !UINotIncludedSettings.togglersOnTop) curBaseY -= 35;
             float borderGap = 4f;
             float initialY = UINotIncludedSettings.togglersOnTop ? (UINotIncludedSettings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
-            rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, UINotIncludedSettings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, 250f);
+            rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, UINotIncludedSettings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, UINotIncludedSettings.togglersOnTop ? 250f : 180f);
             Find.PlaySettings.DoPlaySettingsGlobalControls(rowVisibility, worldView);
             if (!UINotIncludedSettings.togglersOnTop) curBaseY = rowVisibility.FinalY;
             return false;
