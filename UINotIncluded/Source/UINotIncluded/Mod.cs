@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 using HarmonyLib;
 using RimWorld;
@@ -13,10 +11,19 @@ namespace UINotIncluded
     [StaticConstructorOnStartup]
     public static class UINotIncludedStatic
     {
-        public const string Name = "UINotIncluded";
-        public const string Author = "GonDragon";
-        public const string Id = Author + "." + Name;
-        public const string Version = "1.0.4.0";
+        public static string Author => "GonDragon";
+        public static string Name => Assembly.GetName().Name;
+        public static string Id => Author + "." + Name;
+
+        public static string Version => Assembly.GetName().Version.ToString();
+
+        private static Assembly Assembly
+        {
+            get
+            {
+                return Assembly.GetAssembly(typeof(UINotIncludedStatic));
+            }
+        }
 
         public static readonly Harmony Harmony;
         static UINotIncludedStatic()
