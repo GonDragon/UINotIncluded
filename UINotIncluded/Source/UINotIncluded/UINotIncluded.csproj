@@ -96,14 +96,13 @@
     <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Widget\MouseReadoutWidget.cs" />
     <Compile Include="Patches\Game.cs" />
-    <Compile Include="Patches\GlobalControlsUtility.cs" />
+    <Compile Include="Patches\NotificationBarPatches.cs" />
     <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />
     <Compile Include="Patches\MouseoverReadout.cs" />
     <Compile Include="Patches\PlaySettings.cs" />
     <Compile Include="Settings\DateFormat.cs" />
     <Compile Include="Settings\ModSettings.cs" />
-    <Compile Include="Patches\GlobalControls.cs" />
     <Compile Include="Patches\MainButtonsRoot.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Patches\MapInterface.cs" />
