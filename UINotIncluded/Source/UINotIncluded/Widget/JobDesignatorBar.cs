@@ -10,7 +10,7 @@ namespace UINotIncluded.Widget
 {
     public class JobDesignatorBar
     {
-        private static readonly float posX = (float)UI.screenWidth - 15f;
+        private static readonly float posX = (float)UI.screenWidth;
 
         public static List<Designator>[] Jobs => DesignatorManager.GetDesignationConfigs();
 
