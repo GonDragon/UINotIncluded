@@ -17,7 +17,7 @@ namespace UINotIncluded
     {
         [HarmonyPrefix]
         [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.Low)]
-        static bool TemperatureString_Patch()
+        public static bool TemperatureString_Patch()
         {
             return false;
         }
@@ -76,6 +76,22 @@ namespace UINotIncluded
         {
             rect.height = 0;
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(PlaySettings), "DoPlaySettingsGlobalControls")]
+    class DoPlaySettingsGlobalControlsPatch
+    {
+        public static void Postfix(WidgetRow row, bool worldView)
+        {
+            if (worldView)
+            {
+
+            }
+            else
+            {
+                row.ToggleableIcon(ref UINotIncludedSettings.altInspectActive, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
+            }
         }
     }
 }

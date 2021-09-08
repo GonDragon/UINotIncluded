@@ -14,7 +14,7 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(Messages), "MessagesDoGUI")]
     class MessagesDoGUIPatch
     {
-        static bool Prefix(ref List<Verse.Message> ___liveMessages)
+        public static bool Prefix(ref List<Verse.Message> ___liveMessages)
         {
             Text.Font = GameFont.Small;
             int x = (int)Messages.MessagesTopLeftStandard.x;

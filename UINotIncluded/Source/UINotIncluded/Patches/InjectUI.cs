@@ -9,10 +9,28 @@ using UnityEngine;
 
 namespace UINotIncluded
 {
+    [HarmonyPatch(typeof(MapInterface), "MapInterfaceOnGUI_BeforeMainTabs")]
+    class MapInterfaceOnGUI_BeforeMainTabsPatch
+    {
+        public static void Prefix()
+        {
+            UIManager.Before_MainUIOnGUI();
+        }
+    }
+
+    [HarmonyPatch(typeof(MapInterface), "MapInterfaceOnGUI_AfterMainTabs")]
+    class MapInterfaceOnGUI_AfterMainTabsPatch
+    {
+        public static void Postfix()
+        {
+            UIManager.After_MainUIOnGUI();
+        }
+    }
+
     [HarmonyPatch(typeof(MainButtonsRoot), "MainButtonsOnGUI")]
     class MainButtonRootPatch
     {
-        static void Postfix()
+        public static void Postfix()
         {
             UIManager.MainUIOnGUI();
         }
@@ -21,7 +39,7 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(MainButtonsRoot), "DoButtons")]
     class DoButtonsPatch
     {
-        static bool Prefix(List<MainButtonDef> ___allButtonsInOrder)
+        public static bool Prefix(List<MainButtonDef> ___allButtonsInOrder)
         {
             var allButtonsInOrder = ___allButtonsInOrder;
             int height = 35;
