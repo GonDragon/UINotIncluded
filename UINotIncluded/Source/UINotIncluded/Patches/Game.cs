@@ -17,9 +17,7 @@ namespace UINotIncluded
         static void Prefix()
         {
             if (!UINotIncludedSettings.altInspectActive) { MouseReadoutWidget.AltInspector = false; return; }
-            if (!(Event.current.type == EventType.KeyDown || Event.current.type == EventType.KeyUp)) return;
-            if (Event.current.keyCode != KeyCode.LeftAlt) return;
-            MouseReadoutWidget.AltInspector = Event.current.type == EventType.KeyDown;
+            MouseReadoutWidget.AltInspector = Event.current.alt;
             Event.current.Use();
         }
     }
