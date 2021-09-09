@@ -16,7 +16,7 @@ namespace UINotIncluded
     {
         static void Prefix()
         {
-            if (!UINotIncludedSettings.altInspectActive) { MouseReadoutWidget.AltInspector = false; return; }
+            if (!Settings.altInspectActive) { MouseReadoutWidget.AltInspector = false; return; }
             MouseReadoutWidget.AltInspector = Event.current.alt;
             Event.current.Use();
         }

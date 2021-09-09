@@ -31,14 +31,14 @@ namespace UINotIncluded
         static bool DoPlaySettingsPatch(WidgetRow rowVisibility, bool worldView, ref float curBaseY)
         {
             
-            if (!UINotIncludedSettings.tabsOnTop) curBaseY -= UIManager.ExtendedBarHeight;
-            if (UINotIncludedSettings.useDesignatorBar && !UINotIncludedSettings.designationsOnLeft) curBaseY -= 88f;
-            if (worldView && !UINotIncludedSettings.togglersOnTop) curBaseY -= 35;
+            if (!Settings.tabsOnTop) curBaseY -= UIManager.ExtendedBarHeight;
+            if (Settings.useDesignatorBar && !Settings.designationsOnLeft) curBaseY -= 88f;
+            if (worldView && !Settings.togglersOnTop) curBaseY -= 35;
             float borderGap = 4f;
-            float initialY = UINotIncludedSettings.togglersOnTop ? (UINotIncludedSettings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
-            rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, UINotIncludedSettings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, UINotIncludedSettings.togglersOnTop ? 250f : 180f);
+            float initialY = Settings.togglersOnTop ? (Settings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
+            rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, Settings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, Settings.togglersOnTop ? 250f : 180f);
             Find.PlaySettings.DoPlaySettingsGlobalControls(rowVisibility, worldView);
-            if (!UINotIncludedSettings.togglersOnTop) curBaseY = rowVisibility.FinalY;
+            if (!Settings.togglersOnTop) curBaseY = rowVisibility.FinalY;
             return false;
         }
 
@@ -90,7 +90,7 @@ namespace UINotIncluded
             }
             else
             {
-                row.ToggleableIcon(ref UINotIncludedSettings.altInspectActive, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
+                row.ToggleableIcon(ref Settings.altInspectActive, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
             }
         }
     }

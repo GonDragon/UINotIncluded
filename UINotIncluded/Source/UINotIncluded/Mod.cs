@@ -9,7 +9,7 @@ using Verse;
 namespace UINotIncluded
 {
     [StaticConstructorOnStartup]
-    public static class UINotIncludedStatic
+    public static class UINI
     {
         public static string Author => "GonDragon";
         public static string Name => Assembly.GetName().Name;
@@ -21,12 +21,12 @@ namespace UINotIncluded
         {
             get
             {
-                return Assembly.GetAssembly(typeof(UINotIncludedStatic));
+                return Assembly.GetAssembly(typeof(UINI));
             }
         }
 
         public static readonly Harmony Harmony;
-        static UINotIncludedStatic()
+        static UINI()
         {
             Harmony = new Harmony(Id);
             Harmony.PatchAll();

@@ -17,7 +17,7 @@ namespace UINotIncluded
     {
         public static void Postfix(ref float __result)
         {
-            if (Current.ProgramState == ProgramState.Playing && UINotIncludedSettings.tabsOnTop) __result += 35;
+            if (Current.ProgramState == ProgramState.Playing && Settings.tabsOnTop) __result += 35;
         }
     }
 
@@ -26,7 +26,7 @@ namespace UINotIncluded
     {
         public static void Postfix(ref float __result)
         {
-            if (UINotIncludedSettings.tabsOnTop) __result += 35;
+            if (Settings.tabsOnTop) __result += 35;
         }
     }
 
@@ -38,7 +38,7 @@ namespace UINotIncluded
             if (ID == 76136312)
             {
                 rect.y += 75f;
-                if (UINotIncludedSettings.tabsOnTop) rect.y += UIManager.ExtendedBarHeight;
+                if (Settings.tabsOnTop) rect.y += UIManager.ExtendedBarHeight;
             }
         }
     }
@@ -63,7 +63,7 @@ namespace UINotIncluded
     {
         public static void Postfix(ref Rect ___windowRect, Window __instance)
         {
-            if (!UINotIncludedSettings.tabsOnTop) return;
+            if (!Settings.tabsOnTop) return;
             Type windowType = __instance.GetType();
 
             if (windowType == typeof(MainTabWindow_Inspect))
@@ -83,7 +83,7 @@ namespace UINotIncluded
     {
         public static void Prefix(ref Rect infoRect)
         {
-            if (UINotIncludedSettings.tabsOnTop) infoRect.y += UIManager.ExtendedBarHeight;
+            if (Settings.tabsOnTop) infoRect.y += UIManager.ExtendedBarHeight;
         }
     }
 }

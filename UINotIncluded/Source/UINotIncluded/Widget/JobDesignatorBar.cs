@@ -27,7 +27,7 @@ namespace UINotIncluded.Widget
             float mainWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.main], mainRows);
             float leftWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.left], leftRows);
 
-            float curX = UINotIncludedSettings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth: posX;
+            float curX = Settings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth: posX;
             curX -= (rigthWidth + mainWidth);
 
             CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], mainRows, curX, out Gizmo mousoverGizmo);

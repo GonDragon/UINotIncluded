@@ -12,7 +12,7 @@ namespace UINotIncluded.Widget
 {
     class RealTimeWidget : ExtendedWidget
     {
-        public override float Width => (float)Math.Round(_width + 11.66f * (float)UINotIncludedSettings.fontSize);
+        public override float Width => (float)Math.Round(_width + 11.66f * (float)Settings.fontSize);
 
         private static readonly float _width = 75f;
 

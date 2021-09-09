@@ -43,7 +43,7 @@ namespace UINotIncluded
         {
             var allButtonsInOrder = ___allButtonsInOrder;
             int height = 35;
-            int posY = UINotIncludedSettings.tabsOnTop ? 0 : UI.screenHeight - height;
+            int posY = Settings.tabsOnTop ? 0 : UI.screenHeight - height;
 
             float num1 = 0;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
@@ -53,11 +53,11 @@ namespace UINotIncluded
             }
             GUI.color = Color.white;
             double spaceReserved = UIManager.ExtendedBarWidth;
-            if (!UINotIncludedSettings.vanillaArchitect) spaceReserved += UIManager.archButtonWidth;
+            if (!Settings.vanillaArchitect) spaceReserved += UIManager.archButtonWidth;
             int num2 = (int)(((double)UI.screenWidth - spaceReserved) / (double)num1);
             int num3 = num2 / 2;
             int lastIndex = allButtonsInOrder.FindLastIndex((Predicate<MainButtonDef>)(x => x.buttonVisible));
-            int num4 = UINotIncludedSettings.barOnRight ? (UINotIncludedSettings.vanillaArchitect ? 0 : (int)UIManager.archButtonWidth) : (int)spaceReserved;
+            int num4 = Settings.barOnRight ? (Settings.vanillaArchitect ? 0 : (int)UIManager.archButtonWidth) : (int)spaceReserved;
             for (int index = 0; index < allButtonsInOrder.Count; ++index)
             {
                 if (allButtonsInOrder[index].buttonVisible)
@@ -66,7 +66,7 @@ namespace UINotIncluded
                     if (index == lastIndex)
                     {
                         num5 = UI.screenWidth - num4;
-                        if (UINotIncludedSettings.barOnRight) num5 -= (int)UIManager.ExtendedBarWidth;
+                        if (Settings.barOnRight) num5 -= (int)UIManager.ExtendedBarWidth;
                     }                        
                     Rect rect = new Rect((float)num4, (float)posY, (float)num5, height);
                     allButtonsInOrder[index].Worker.DoButton(rect);

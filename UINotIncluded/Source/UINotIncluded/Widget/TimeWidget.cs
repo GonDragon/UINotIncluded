@@ -13,7 +13,7 @@ namespace UINotIncluded.Widget
 {
     public class TimeWidget : ExtendedWidget
     {
-        public override float Width => (float)Math.Round(_width + 35 * (float)UINotIncludedSettings.fontSize);
+        public override float Width => (float)Math.Round(_width + 35 * (float)Settings.fontSize);
 
         private static readonly float _width = 180f;
 
@@ -34,7 +34,7 @@ namespace UINotIncluded.Widget
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
             string timestamp = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
-            string datestamp = UINotIncludedSettings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+            string datestamp = Settings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float timeWidth = Text.CalcSize(timestamp).x;

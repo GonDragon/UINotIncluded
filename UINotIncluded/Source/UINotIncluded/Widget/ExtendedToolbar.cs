@@ -35,7 +35,7 @@ namespace UINotIncluded.Widget
         private static readonly ExtendedWidget datetime = new TimeWidget();
         private static readonly ExtendedWidget timespeed = new Timespeed();
 
-        public static GameFont FontSize => UINotIncludedSettings.fontSize;
+        public static GameFont FontSize => Settings.fontSize;
 
         public static void ExtendedToolbarOnGUI(float x, float y)
         {
@@ -94,7 +94,7 @@ namespace UINotIncluded.Widget
             }
             catch (Exception e)
             {
-                UINotIncludedStatic.ErrorOnce(String.Format("Error catched on the widget {0} named {1}. The error was: {2}.\nStack trace:\n{3}",cur.ToString(),widgets[cur].GetType().ToString(),e.ToString(),e.StackTrace),"Rendering Widgets");
+                UINI.ErrorOnce(String.Format("Error catched on the widget {0} named {1}. The error was: {2}.\nStack trace:\n{3}",cur.ToString(),widgets[cur].GetType().ToString(),e.ToString(),e.StackTrace),"Rendering Widgets");
             }
             finally
             {

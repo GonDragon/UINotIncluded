@@ -21,7 +21,7 @@ namespace UINotIncluded
 
         public static void Postfix(List<Vector2> ___cachedDrawLocs, bool __state)
         {
-            if (__state && UINotIncludedSettings.tabsOnTop)
+            if (__state && Settings.tabsOnTop)
             {
                 Vector2[] copy = new Vector2[___cachedDrawLocs.Count];
                 ___cachedDrawLocs.CopyTo(copy);

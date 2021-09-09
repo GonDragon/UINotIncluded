@@ -18,7 +18,7 @@ namespace UINotIncluded
         {
             if (updated) return CacheJobs;
             foreach (List<Designator> designatorslist in CacheJobs) designatorslist.Clear();
-            CacheJobs = UINotIncludedSettings.GetDesignationConfigs();
+            CacheJobs = Settings.GetDesignationConfigs();
             updated = true;
             return CacheJobs;
         }

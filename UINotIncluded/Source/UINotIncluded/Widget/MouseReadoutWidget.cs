@@ -31,12 +31,12 @@ namespace UINotIncluded
                 TipSignal tip = new TipSignal(label, uniqueID) { delay = 0 };
                 TooltipHandler.TipRegion(rect, tip);
             }
-            else if (!UINotIncludedSettings.altInspectActive)
+            else if (!Settings.altInspectActive)
             {
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.LowerLeft;
                 GUI.color = new Color(1f, 1f, 1f, 0.8f);
-                float botY = (float)UI.screenHeight - (UINotIncludedSettings.tabsOnTop ? botSpaceTabsOnTop : botSpace);
+                float botY = (float)UI.screenHeight - (Settings.tabsOnTop ? botSpaceTabsOnTop : botSpace);
                 Widgets.Label(new Rect(leftSpace, botY - maxHeight, 999f, maxHeight), label);
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = Color.white;

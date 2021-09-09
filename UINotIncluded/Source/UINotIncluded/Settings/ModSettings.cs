@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace UINotIncluded
 {
-    public class UINotIncludedSettings : ModSettings
+    public class Settings : ModSettings
     {
         public static bool tabsOnTop = true;
         public static bool barOnRight = false;
@@ -92,7 +92,7 @@ namespace UINotIncluded
             SetDefaultList(DesignationConfig.main);
             SetDefaultList(DesignationConfig.right);
             DesignatorManager.Update();
-            UINotIncludedStatic.Log("DesignationConfigs default restored.");
+            UINI.Log("DesignationConfigs default restored.");
         }
 
         private static void SetDefaultList(DesignationConfig designationList)
@@ -132,7 +132,7 @@ namespace UINotIncluded
                     {
                         if (designator.Label == designatorName) { arrayDesignatorConfigs[i].Add(designator); usedDesignators.Add(designator); found = true; break; }
                     }
-                    if (!found) UINotIncludedStatic.Warning(String.Format("The designation named '{0}' was not found.", designatorName));
+                    if (!found) UINI.Warning(String.Format("The designation named '{0}' was not found.", designatorName));
                 }
             }
 
@@ -149,18 +149,18 @@ namespace UINotIncluded
         }
     }
 
-    class UINotIncludedMod : Mod
+    class UINI_Mod : Mod
     {
-        public UINotIncludedSettings settings;
+        public Settings settings;
 
-        public UINotIncludedMod(ModContentPack content) : base(content)
+        public UINI_Mod(ModContentPack content) : base(content)
         {
-            this.settings = GetSettings<UINotIncludedSettings>();
-            if (!UINotIncludedSettings.initializedDesignations)
+            this.settings = GetSettings<Settings>();
+            if (!Settings.initializedDesignations)
             {
-                UINotIncludedStatic.Log("DesigationConfigs never initialized. Initializing.");
-                UINotIncludedSettings.RestoreDesignationLists();
-                UINotIncludedSettings.initializedDesignations = true;
+                UINI.Log("DesigationConfigs never initialized. Initializing.");
+                Settings.RestoreDesignationLists();
+                Settings.initializedDesignations = true;
                 settings.Write();
             }
         }
@@ -174,37 +174,37 @@ namespace UINotIncluded
             Listing_Standard listingStandard = new Listing_Standard();
             
             listingStandard.Begin(column1);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref UINotIncludedSettings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref UINotIncludedSettings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref UINotIncludedSettings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref UINotIncludedSettings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
-            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), UINotIncludedSettings.dateFormat.ToStringHuman()))
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref Settings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
+            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), Settings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (DateFormat dateFormat in Enum.GetValues(typeof(DateFormat)))
                 {
                     DateFormat localFormat = dateFormat;
-                    options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => UINotIncludedSettings.dateFormat = dateFormat)));
+                    options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => Settings.dateFormat = dateFormat)));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
-            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), UINotIncludedSettings.fontSize.ToString()))
+            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), Settings.fontSize.ToString()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (GameFont font in Enum.GetValues(typeof(GameFont)))
                 {
-                    options.Add(new FloatMenuOption(font.ToString(), (Action)(() => { UINotIncludedSettings.fontSize = font; })));
+                    options.Add(new FloatMenuOption(font.ToString(), (Action)(() => { Settings.fontSize = font; })));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
             listingStandard.End();
 
             listingStandard.Begin(column2);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref UINotIncludedSettings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref UINotIncludedSettings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
-            if (UINotIncludedSettings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref UINotIncludedSettings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref Settings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
+            if (Settings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
             listingStandard.End();
-            if (UINotIncludedSettings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
+            if (Settings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
             base.DoSettingsWindowContents(inRect);
         }
 
@@ -217,7 +217,7 @@ namespace UINotIncluded
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
             Text.Anchor = TextAnchor.UpperLeft;
             curY += 25f;
-            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) UINotIncludedSettings.RestoreDesignationLists();
+            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
             curY += 25f;
             for (int i = 0; i < 4; i++)
             {
@@ -227,8 +227,8 @@ namespace UINotIncluded
 
         private void DoJobsDesignatorColumn(Rect rect, String label, DesignationConfig designation)
         {
-            List<String> elements = UINotIncludedSettings.GetDesignationList(designation);
-            int rows = UINotIncludedSettings.GetDesignationRows(designation);
+            List<String> elements = Settings.GetDesignationList(designation);
+            int rows = Settings.GetDesignationRows(designation);
             int rowLength = (int)Math.Ceiling((float)elements.Count() / rows);
             float buttonHeight = 30f;
             float buttonContract = 4f;
@@ -275,7 +275,7 @@ namespace UINotIncluded
 
         private void DoMove(String element, ButtonArrowAction direction, DesignationConfig current)
         {
-            List<String> currentList = UINotIncludedSettings.GetDesignationList(current);
+            List<String> currentList = Settings.GetDesignationList(current);
             int curIndex = currentList.IndexOf(element);
 
             switch (direction)
@@ -292,12 +292,12 @@ namespace UINotIncluded
                     break;
                 case ButtonArrowAction.left:
                     if (current == DesignationConfig.hidden) return;
-                    UINotIncludedSettings.GetDesignationList(current - 1).Add(element);
+                    Settings.GetDesignationList(current - 1).Add(element);
                     currentList.RemoveAt(curIndex);
                     break;
                 case ButtonArrowAction.right:
                     if (current == DesignationConfig.right) return;
-                    UINotIncludedSettings.GetDesignationList(current + 1).Add(element);
+                    Settings.GetDesignationList(current + 1).Add(element);
                     currentList.RemoveAt(curIndex);
                     break;
                 default:
@@ -308,7 +308,7 @@ namespace UINotIncluded
 
         public override string SettingsCategory()
         {
-            return UINotIncludedStatic.Name;
+            return UINI.Name;
         }
     }
 }
