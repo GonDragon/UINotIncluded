@@ -12,13 +12,11 @@ namespace UINotIncluded
 {
     public static class UIManager
     {
-        public static float ExtendedBarHeight => ExtendedToolbar.height;
-        public static float ResourceGap => (vanillaAnimals ? ExtendedToolbar.height : animalsRow.FinalY + 26f);
+        public static float ExtendedBarHeight => ExtendedToolbar.Height;
+        public static float ExtendedBarWidth => ExtendedToolbar.Width;
+        public static float ResourceGap => (vanillaAnimals ? ExtendedToolbar.Height : animalsRow.FinalY + 26f);
 
-        public static float ExtendedBarWidth => currentSize;
-        public static readonly float archButtonWidth = ExtendedToolbar.height;
-
-        private static float currentSize = Math.Min(Math.Max(450f + 60f * (float)UINotIncludedSettings.fontSize, (float)UI.screenWidth / 4), 900f);
+        public static readonly float archButtonWidth = ExtendedToolbar.Height;
 
 
         private static bool tabsOnTop = UINotIncludedSettings.tabsOnTop;
@@ -26,12 +24,6 @@ namespace UINotIncluded
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
         private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
-
-        public static void SetCorrectWidth(GameFont fontsize)
-        {
-            float minSize = 450f + 60f * (float)fontsize;
-            currentSize = Math.Min(Math.Max(minSize, (float)UI.screenWidth / 4), 900f);
-        }
 
         public static void Before_MainUIOnGUI()
         {
@@ -54,12 +46,12 @@ namespace UINotIncluded
         }
         public static void MainUIOnGUI()
         {
-            float toolbarY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.height;
+            float toolbarY = UINotIncludedSettings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
             float toolbarX;
             if (UINotIncludedSettings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = UINotIncludedSettings.vanillaArchitect ? 0 : archButtonWidth; };
-            float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.height : 13f;
+            float animalsY = UINotIncludedSettings.tabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
 
-            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY, ExtendedBarWidth);
+            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY);
             if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);

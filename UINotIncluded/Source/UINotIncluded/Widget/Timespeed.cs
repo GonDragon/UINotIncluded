@@ -14,15 +14,16 @@ namespace UINotIncluded.Widget
 {
     public class Timespeed : ExtendedWidget
     {
-        public override float MinimunWidth => 100f;
+        public override float Width => _width;
 
-        public override float MaximunWidth => 150f;
+        private static float _width = 147f;
 
         private static Action<Rect> cached_DoTimeControlsGUI;
 
         public static void SetSmartspeedMode()
         {
             cached_DoTimeControlsGUI = CustomTimeControls.DoSmartTimeControlsGUI;
+            Timespeed._width = 155f;
         }
         public Timespeed()
         {

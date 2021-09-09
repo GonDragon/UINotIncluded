@@ -9,10 +9,24 @@ namespace UINotIncluded.Widget
 {
     static class ExtendedToolbar
     {
-        public static float height = 35f;
+        public static float Height => 35f;
+        public static float Width
+        {
+            get
+            {
+                float sum = 0;
+                foreach(ExtendedWidget widget in widgetList)
+                {
+                    sum += widget.Width;
+                }
+                return sum;
+            }
+        }
+
         public static float interGap = 0;
         public static float padding = 2;
         public static float margin = 5;
+
 
         private static readonly List<ExtendedWidget> widgetList = new List<ExtendedWidget>();
 
@@ -23,7 +37,7 @@ namespace UINotIncluded.Widget
 
         public static GameFont FontSize => UINotIncludedSettings.fontSize;
 
-        public static void ExtendedToolbarOnGUI(float x, float y, float width)
+        public static void ExtendedToolbarOnGUI(float x, float y)
         {
             widgetList.Clear();
 
@@ -35,8 +49,8 @@ namespace UINotIncluded.Widget
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = FontSize;
 
-            Widgets.DrawAtlas(new Rect(x, y, width, height), ModTextures.toolbarBackground);
-            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, width-2, height-4), widgetList);
+            Widgets.DrawAtlas(new Rect(x, y, Width, Height), ModTextures.toolbarBackground);
+            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, Width-2, Height-4), widgetList);
 
             Text.Anchor = TextAnchor.UpperLeft;
 
@@ -50,7 +64,7 @@ namespace UINotIncluded.Widget
 
             for(int i=0; i < n_widgets; i++)
             {
-                minSizes[i] = (int)Math.Ceiling(widgets[i].MinimunWidth);
+                minSizes[i] = (int)Math.Ceiling(widgets[i].Width);
                 totalMinSize += minSizes[i];
             }
 

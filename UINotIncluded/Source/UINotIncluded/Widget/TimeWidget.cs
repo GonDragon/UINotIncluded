@@ -13,9 +13,9 @@ namespace UINotIncluded.Widget
 {
     public class TimeWidget : ExtendedWidget
     {
-        public override float MinimunWidth => 125f;
+        public override float Width => (float)Math.Round(_width + 35 * (float)UINotIncludedSettings.fontSize);
 
-        public override float MaximunWidth => 200f;
+        private static readonly float _width = 180f;
 
         public override void OnGUI(Rect rect)
         {
@@ -38,10 +38,10 @@ namespace UINotIncluded.Widget
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float timeWidth = Text.CalcSize(timestamp).x;
-            float remainingSpace = space.width - dateWidth - timeWidth - iconSpace.width;
+            float remainingSpace = space.width - dateWidth - timeWidth;
 
-            float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace / 2);
-            float timeLabelWidth = (float)Math.Floor(timeWidth + remainingSpace / 2);
+            float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace / 3);
+            float timeLabelWidth = (float)Math.Floor(timeWidth + remainingSpace * 2 / 3);
 
             row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
             row.Label(timestamp, timeLabelWidth, height: space.height);

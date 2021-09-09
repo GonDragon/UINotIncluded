@@ -13,9 +13,9 @@ namespace UINotIncluded.Widget
 {
     public class Weather : ExtendedWidget
     {
-        public override float MinimunWidth => 45f;
+        public override float Width => (float)Math.Round(_width + 11.66f * (float)UINotIncludedSettings.fontSize);
 
-        public override float MaximunWidth => 100f;
+        private static readonly float _width = 65f;
 
         public override void OnGUI(Rect rect)
         {

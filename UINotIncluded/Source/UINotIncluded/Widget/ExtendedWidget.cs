@@ -11,8 +11,7 @@ namespace UINotIncluded.Widget
 {
     public abstract class ExtendedWidget
     {
-        public abstract float MinimunWidth { get; }
-        public abstract float MaximunWidth { get; }
+        public abstract float Width { get; }
 
         public float iconSize = 24f;
 

@@ -193,7 +193,7 @@ namespace UINotIncluded
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (GameFont font in Enum.GetValues(typeof(GameFont)))
                 {
-                    options.Add(new FloatMenuOption(font.ToString(), (Action)(() => { UINotIncludedSettings.fontSize = font; UIManager.SetCorrectWidth(font); })));
+                    options.Add(new FloatMenuOption(font.ToString(), (Action)(() => { UINotIncludedSettings.fontSize = font; })));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
