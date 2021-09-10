@@ -152,6 +152,7 @@ namespace UINotIncluded
     class UINI_Mod : Mod
     {
         public Settings settings;
+        private readonly SettingPages settingPages = new SettingPages();
 
         public UINI_Mod(ModContentPack content) : base(content)
         {
@@ -167,12 +168,93 @@ namespace UINotIncluded
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            float pageTittleHeight = 26f;
+            float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
+
+
+            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2* pageTittleHeight, pageTittleHeight), settingPages.label);
+            if (Widgets.ButtonImage(new Rect(inRect.x + pageTittleWidth, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronLeft)) settingPages.Prev();
+            if (Widgets.ButtonImage(new Rect(inRect.x + 2 * pageTittleWidth - pageTittleHeight, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronRight)) settingPages.Next();
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            settingPages.DoPage(contentRect);
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        public override string SettingsCategory()
+        {
+            return UINI.Name;
+        }
+    }
+
+    class SettingPages
+    {
+        public string label;
+
+        private int current;
+        private readonly List<Page> pages;
+
+        public SettingPages()
+        {
+            pages = new List<Page>
+            {
+                new Page
+                {
+                    label = "General",
+                    action = inRect => DoGeneralPage(inRect)
+                },
+                new Page
+                {
+                    label = "Test",
+                    action = inRect => DoTestPage(inRect)
+                },
+                new Page
+                {
+                    label = "Void",
+                    action = inRect => { }
+                }
+            };
+
+            current = 0;
+            label = pages[current].label;
+        }
+
+        public void DoPage(Rect inRect)
+        {
+            pages[current].action(inRect);
+        }
+
+        public void Next()
+        {
+            current++;
+            if (current == pages.Count()) current = 0;
+            label = pages[current].label;
+        }
+
+        public void Prev()
+        {
+            current--;
+            if (current < 0) current = pages.Count() - 1;
+            label = pages[current].label;
+        }
+
+        struct Page
+        {
+            public string label;
+            public Action<Rect> action;
+        }
+
+        private void DoGeneralPage(Rect inRect)
+        {
             float columnWidth = inRect.width / 2;
             float heigth = (float)Math.Floor(inRect.height / 3);
             Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
-            
+
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref Settings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
@@ -205,7 +287,11 @@ namespace UINotIncluded
             if (Settings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
             listingStandard.End();
             if (Settings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
-            base.DoSettingsWindowContents(inRect);
+        }
+
+        private void DoTestPage(Rect inRect)
+        {
+            Widget.DragList.DoList("test", inRect);
         }
 
         private void DoJobBarConfigurationWidget(Rect rect)
@@ -217,7 +303,7 @@ namespace UINotIncluded
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
             Text.Anchor = TextAnchor.UpperLeft;
             curY += 25f;
-            if (Widgets.ButtonText(new Rect(rect.x+ (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
+            if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
             curY += 25f;
             for (int i = 0; i < 4; i++)
             {
@@ -240,13 +326,13 @@ namespace UINotIncluded
 
             ScrollInstance scroll = ScrollManager.GetInstance((int)designation);
             Rect scrollviewRect = new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)).ContractedBy(3f);
-            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width -20f, buttonHeight * elements.Count());
+            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonHeight * elements.Count());
 
             Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
             curY = 0;
             bool shouldMove = false; String moveElement = null; ButtonArrowAction moveDirection = ButtonArrowAction.none;
-            
-            for(int i = 0; i < elements.Count(); i++)
+
+            for (int i = 0; i < elements.Count(); i++)
             {
                 String element = elements[i];
                 ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
@@ -257,7 +343,7 @@ namespace UINotIncluded
                     moveDirection = result;
                 }
                 curY += (buttonHeight - (float)Math.Floor(buttonContract / 2));
-                if ((i + 1) % rowLength == 0 && (i+1) < elements.Count() && rows > 1)
+                if ((i + 1) % rowLength == 0 && (i + 1) < elements.Count() && rows > 1)
                 {
                     Text.Anchor = TextAnchor.MiddleCenter;
                     Text.Font = GameFont.Tiny;
@@ -304,11 +390,6 @@ namespace UINotIncluded
                     throw new NotImplementedException();
             }
             DesignatorManager.Update();
-        }
-
-        public override string SettingsCategory()
-        {
-            return UINI.Name;
         }
     }
 }
