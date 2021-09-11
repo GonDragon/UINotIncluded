@@ -11,22 +11,17 @@ namespace UINotIncluded
 {
     public static class CustomButtons
     {
-        private static readonly float arrowWidth = 20f;
-        public static ButtonArrowAction ButtonLabelWithArrows(Rect space, String label)
+        public static Widgets.DraggableResult DraggableButton(Rect space, String label)
         {
-            float labelWidth = space.width - (arrowWidth * 3);
-            float halfbuttonHeight = (float)Math.Floor(space.height / 2);
-            Widgets.ButtonText(new Rect(space.x + arrowWidth, space.y, labelWidth, space.height), label);
 
-            ButtonArrowAction action = ButtonArrowAction.none;
+            Texture2D texture = Mouse.IsOver(space) ? ModTextures.buttonDraggableMouseover : ModTextures.buttonDraggable;
 
-            action = Widgets.ButtonImageWithBG(new Rect(space.x, space.y, arrowWidth, space.height), ModTextures.chevronLeft) ? ButtonArrowAction.left : action;
-            action = Widgets.ButtonImageWithBG(new Rect(space.x + labelWidth + 2*arrowWidth, space.y, arrowWidth, space.height), ModTextures.chevronRight) ? ButtonArrowAction.right : action;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.DrawAtlas(space, texture);
+            Widgets.Label(space, label);
+            Text.Anchor = TextAnchor.UpperLeft;
 
-            action = Widgets.ButtonImageWithBG(new Rect(space.x + labelWidth + arrowWidth, space.y, arrowWidth, halfbuttonHeight), ModTextures.chevronUp) ? ButtonArrowAction.up : action;
-            action = Widgets.ButtonImageWithBG(new Rect(space.x + labelWidth + arrowWidth, space.y + halfbuttonHeight, arrowWidth, space.height - halfbuttonHeight), ModTextures.chevronDown) ? ButtonArrowAction.down : action;
-
-            return action;
+            return Widgets.ButtonInvisibleDraggable(space); ;
         }
     }
 

@@ -316,7 +316,7 @@ namespace UINotIncluded
             List<String> elements = Settings.GetDesignationList(designation);
             int rows = Settings.GetDesignationRows(designation);
             int rowLength = (int)Math.Ceiling((float)elements.Count() / rows);
-            float buttonHeight = 30f;
+            float buttonHeight = 40f;
             float buttonContract = 4f;
 
             float curY = rect.y;
@@ -335,13 +335,7 @@ namespace UINotIncluded
             for (int i = 0; i < elements.Count(); i++)
             {
                 String element = elements[i];
-                ButtonArrowAction result = CustomButtons.ButtonLabelWithArrows(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
-                if (result != ButtonArrowAction.none)
-                {
-                    shouldMove = true;
-                    moveElement = element;
-                    moveDirection = result;
-                }
+                CustomButtons.DraggableButton(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
                 curY += (buttonHeight - (float)Math.Floor(buttonContract / 2));
                 if ((i + 1) % rowLength == 0 && (i + 1) < elements.Count() && rows > 1)
                 {

@@ -42,6 +42,9 @@ namespace UINotIncluded
         public static readonly Texture2D speedTwo = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Superfast");
         public static readonly Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/skip-forward-outline");
 
+        public static readonly Texture2D buttonDraggable = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_drag");
+        public static readonly Texture2D buttonDraggableMouseover = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_dragMousover");
+
         private static readonly Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
         public static Texture2D WeatherIcon(string iconPath)
         {
