@@ -29,24 +29,29 @@ namespace UINotIncluded.Widget
             {
                 Rect innerSpace = widgetSpace.ContractedBy(contraction);
                 DragElement current = new DragElement { pos = n, listname = name, size = innerSpace.size };
+                bool shouldDrawButton = true;
 
-                if (CustomButtons.DraggableButton(innerSpace, getLabel(element)) == Widgets.DraggableResult.Dragged) DragManager.DraggStart(current);
+                Rect spaceBefore = new Rect(innerSpace.x, widgetSpace.y - 13f, innerSpace.width, widgetSpace.height);
+                Rect spaceAfter = new Rect(innerSpace.x, widgetSpace.y + 13f, innerSpace.width, widgetSpace.height);
 
-                //Rect spaceBefore = new Rect(innerSpace.x, widgetSpace.y - 13f, innerSpace.width, widgetSpace.height);
-                //Rect spaceAfter = new Rect(innerSpace.x,widgetSpace.y + 13f, innerSpace.width, widgetSpace.height);
-                //else if (DragAndDropWidget.Dragging)
-                //{
-                //    if (Mouse.IsOver(spaceBefore))
-                //    {
-                //        Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y, widgetSpace.width);
-                //        context.current = current;
-                //    }
-                //    else if (Mouse.IsOver(spaceAfter))
-                //    {
-                //        Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y + buttonspace_heigth, widgetSpace.width);
-                //        context.current = current;
-                //    }
-                //}
+
+                if (DragManager.Dragging)
+                {
+                    if (DragManager.Dragged?.listname == name && DragManager.Dragged?.pos == n) shouldDrawButton = false;
+                    bool beforeDragged = DragManager.Dragged?.pos > n;
+                    if (Mouse.IsOver(spaceBefore))
+                    {
+                        Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y, widgetSpace.width);
+                        DragManager.hoveringOver = current;
+                    }
+                    else if (Mouse.IsOver(spaceAfter))
+                    {
+                        Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y + buttonspace_heigth, widgetSpace.width);
+                        DragManager.hoveringOver = new DragElement { pos = n + 1, listname = name, size = innerSpace.size };
+                    }
+                }
+
+                if (shouldDrawButton && CustomButtons.DraggableButton(innerSpace, getLabel(element)) == Widgets.DraggableResult.Dragged) DragManager.DraggStart(current);
 
                 widgetSpace.y += buttonspace_heigth;
                 n++;
@@ -54,12 +59,5 @@ namespace UINotIncluded.Widget
 
             Widgets.EndScrollView();
         }
-    }
-
-    public struct DragElement
-    {
-        internal int pos;
-        internal string listname;
-        internal Vector2 size;
     }
 }

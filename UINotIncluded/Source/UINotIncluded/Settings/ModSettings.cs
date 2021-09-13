@@ -68,7 +68,7 @@ namespace UINotIncluded
 
             foreach (string key in _avaibleDesignators.Keys)
             {
-                if (!(leftDesignations.Contains(key) || mainDesignations.Contains(key) || rightDesignations.Contains(key))) hiddenDesignations.Add(key);
+                if (!(leftDesignations.Contains(key) || mainDesignations.Contains(key) || rightDesignations.Contains(key) || hiddenDesignations.Contains(key))) hiddenDesignations.Add(key);
             }
         }
 
@@ -78,6 +78,8 @@ namespace UINotIncluded
             SetDefaultList(DesignationConfig.left);
             SetDefaultList(DesignationConfig.main);
             SetDefaultList(DesignationConfig.right);
+            _avaibleDesignators.Clear();
+            InitialiceDesignators();
             DesignatorManager.Pull();
             UINI.Log("DesignationConfigs default restored.");
         }
@@ -174,11 +176,49 @@ namespace UINotIncluded
         }
     }
 
+    internal class UINI_Mod : Mod
+    {
+        public Settings settings;
+        private readonly SettingPages settingPages = new SettingPages();
+
+        public UINI_Mod(ModContentPack content) : base(content)
+        {
+            this.settings = GetSettings<Settings>();
+            if (!Settings.initializedDesignations)
+            {
+                UINI.Log("DesigationConfigs never initialized. Initializing.");
+                Settings.RestoreDesignationLists();
+                Settings.initializedDesignations = true;
+                settings.Write();
+            }
+        }
+
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            float pageTittleHeight = 26f;
+            float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
+
+            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2 * pageTittleHeight, pageTittleHeight), settingPages.label);
+            if (Widgets.ButtonImage(new Rect(inRect.x + pageTittleWidth, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronLeft)) settingPages.Prev();
+            if (Widgets.ButtonImage(new Rect(inRect.x + 2 * pageTittleWidth - pageTittleHeight, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronRight)) settingPages.Next();
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            settingPages.DoPage(contentRect);
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        public override string SettingsCategory()
+        {
+            return UINI.Name;
+        }
+    }
+
     internal class SettingPages
     {
         public string label;
-
-        private readonly Dictionary<int, int> DragID = new Dictionary<int, int>();
         private readonly List<Page> pages;
         private int current;
 
@@ -275,31 +315,19 @@ namespace UINotIncluded
             curY += 25f;
             if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
             curY += 25f;
+
+            DragManager.hoveringOver = null;
             for (int i = 0; i < 4; i++)
             {
-                DoJobsDesignatorColumn(new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), ((DesignationConfig)i).ToStringHuman(), designation_lists[i]);
+                Widget.CustomLists.Draggable(((DesignationConfig)i).ToStringHuman(), new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), designation_lists[i], (object designator) => { return ((Designator)designator).defaultLabel; });
             }
-        }
-
-        private void DoJobsDesignatorColumn(Rect rect, String label, List<Designator> list)
-        {
-            if (!DragID.ContainsKey(0))
-            {
-                if (Event.current.type != EventType.Repaint) return;
-                DragID[0] = DragAndDropWidget.NewGroup();
-            }
-            int dragID = DragID[0];
-            Widget.CustomLists.Draggable(label, rect, list, (object designator) => { return ((Designator)designator).defaultLabel; });
-
+            DragManager.DrawGhost();
             if (DragManager.DraggStops())
             {
-                object draggedObject = DragManager.Dragged;
-                if (draggedObject.GetType() == typeof(Widget.DragElement))
+                if (DragManager.Dragging)
                 {
+                    DragManager.MoveDragged();
                     DragManager.UseDragged();
-                    Widget.DragElement dragged = (Widget.DragElement)draggedObject;
-
-                    UINI.Log(String.Format("Droped - Listname: {0} - Size: {1} - Position: {2}", dragged.listname, dragged.size.ToString(), dragged.pos));
                 }
             }
         }
@@ -308,46 +336,6 @@ namespace UINotIncluded
         {
             public Action<Rect> action;
             public string label;
-        }
-    }
-
-    internal class UINI_Mod : Mod
-    {
-        public Settings settings;
-        private readonly SettingPages settingPages = new SettingPages();
-
-        public UINI_Mod(ModContentPack content) : base(content)
-        {
-            this.settings = GetSettings<Settings>();
-            if (!Settings.initializedDesignations)
-            {
-                UINI.Log("DesigationConfigs never initialized. Initializing.");
-                Settings.RestoreDesignationLists();
-                Settings.initializedDesignations = true;
-                settings.Write();
-            }
-        }
-
-        public override void DoSettingsWindowContents(Rect inRect)
-        {
-            float pageTittleHeight = 26f;
-            float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
-
-            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
-
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2 * pageTittleHeight, pageTittleHeight), settingPages.label);
-            if (Widgets.ButtonImage(new Rect(inRect.x + pageTittleWidth, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronLeft)) settingPages.Prev();
-            if (Widgets.ButtonImage(new Rect(inRect.x + 2 * pageTittleWidth - pageTittleHeight, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronRight)) settingPages.Next();
-            Text.Anchor = TextAnchor.UpperLeft;
-
-            settingPages.DoPage(contentRect);
-            base.DoSettingsWindowContents(inRect);
-        }
-
-        public override string SettingsCategory()
-        {
-            return UINI.Name;
         }
     }
 }
