@@ -233,8 +233,8 @@ namespace UINotIncluded
                 },
                 new Page
                 {
-                    label = "Void",
-                    action = inRect => { }
+                    label = "Designator",
+                    action = inRect => DoDesignatorPage(inRect)
                 }
             };
 
@@ -297,10 +297,23 @@ namespace UINotIncluded
 
             listingStandard.Begin(column2);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref Settings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
-            if (Settings.useDesignatorBar) listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
             listingStandard.End();
-            if (Settings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
+        }
+
+        private void DoDesignatorPage(Rect inRect)
+        {
+            float columnWidth = inRect.width / 2;
+            float heigth = (float)Math.Floor(inRect.height / 4);
+            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Listing_Standard listingStandard = new Listing_Standard();
+            listingStandard.Begin(column1);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref Settings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
+            listingStandard.End();
+            listingStandard.Begin(column2);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
+            listingStandard.End();
+            DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
         }
 
         private void DoJobBarConfigurationWidget(Rect rect)
