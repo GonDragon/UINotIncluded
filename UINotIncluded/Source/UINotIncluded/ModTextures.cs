@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using UnityEngine;
 using Verse;
@@ -46,6 +43,7 @@ namespace UINotIncluded
         public static readonly Texture2D buttonDraggableMouseover = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_dragMousover");
 
         private static readonly Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
+
         public static Texture2D WeatherIcon(string iconPath)
         {
             if (weathers.ContainsKey(iconPath)) return weathers[iconPath];

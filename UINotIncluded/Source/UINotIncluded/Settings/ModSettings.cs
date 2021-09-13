@@ -1,33 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Verse;
 using UnityEngine;
+using Verse;
 
 namespace UINotIncluded
 {
     public class Settings : ModSettings
     {
-        public static bool tabsOnTop = true;
-        public static bool barOnRight = false;
-        public static bool designationsOnLeft = false;
-        public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool altInspectActive = true;
-        public static bool vanillaArchitect = false;
-        public static bool vanillaAnimals = false;
-        public static bool useDesignatorBar = true;
-        public static bool togglersOnTop = true;
+        public static bool barOnRight = false;
+        public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
+        public static bool designationsOnLeft = false;
         public static GameFont fontSize = GameFont.Tiny;
-
-        public static List<String> hiddenDesignations = new List<String>();
-        public static List<String> leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
-        public static List<String> mainDesignations = new List<string> { "Deconstruct", "Cancel", "Harvest", "Chop wood", "Mine" };
-        public static List<String> rightDesignations = new List<string> { "Strip", "Open", "Smooth surface", "Tame", "Haul things", "Slaughter", "Cut plants", "Hunt" };
-
+        public static List<String> hiddenDesignations;
         public static bool initializedDesignations = false;
+        public static List<String> leftDesignations;
+        public static List<String> mainDesignations;
+        public static List<String> rightDesignations;
+        public static bool tabsOnTop = true;
+        public static bool togglersOnTop = true;
+        public static bool useDesignatorBar = true;
+        public static bool vanillaAnimals = false;
+        public static bool vanillaArchitect = false;
+        private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
+
+        public static List<Designator>[] GetDesignationConfigs()
+        {
+            List<Designator>[] arrayDesignatorConfigs = new List<Designator>[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                arrayDesignatorConfigs[i] = GetDesignationList((DesignationConfig)i);
+            }
+            return arrayDesignatorConfigs;
+        }
+
+        public static List<Designator> GetDesignationList(DesignationConfig list)
+        {
+            switch (list)
+            {
+                case DesignationConfig.hidden:
+                    return StringToDesignation(hiddenDesignations);
+
+                case DesignationConfig.left:
+                    return StringToDesignation(leftDesignations);
+
+                case DesignationConfig.main:
+                    return StringToDesignation(mainDesignations);
+
+                case DesignationConfig.right:
+                    return StringToDesignation(rightDesignations);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public static void InitialiceDesignators()
+        {
+            if (_avaibleDesignators.Count() != 0) return;
+
+            foreach (Designator designator in DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators)
+            {
+                _avaibleDesignators[designator.defaultLabel] = designator;
+            }
+
+            foreach (string key in _avaibleDesignators.Keys)
+            {
+                if (!(leftDesignations.Contains(key) || mainDesignations.Contains(key) || rightDesignations.Contains(key))) hiddenDesignations.Add(key);
+            }
+        }
+
+        public static void RestoreDesignationLists()
+        {
+            SetDefaultList(DesignationConfig.hidden);
+            SetDefaultList(DesignationConfig.left);
+            SetDefaultList(DesignationConfig.main);
+            SetDefaultList(DesignationConfig.right);
+            DesignatorManager.Pull();
+            UINI.Log("DesignationConfigs default restored.");
+        }
 
         public override void ExposeData()
         {
@@ -51,50 +104,6 @@ namespace UINotIncluded
             base.ExposeData();
         }
 
-        public static List<String> GetDesignationList(DesignationConfig list)
-        {
-            switch(list)
-            {
-                case DesignationConfig.hidden:
-                    return hiddenDesignations;
-                case DesignationConfig.left:
-                    return leftDesignations;
-                case DesignationConfig.main:
-                    return mainDesignations;
-                case DesignationConfig.right:
-                    return rightDesignations;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public static int GetDesignationRows(DesignationConfig list)
-        {
-            switch (list)
-            {
-                case DesignationConfig.hidden:
-                    return 0;
-                case DesignationConfig.left:
-                    return 2;
-                case DesignationConfig.main:
-                    return 1;
-                case DesignationConfig.right:
-                    return 2;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public static void RestoreDesignationLists()
-        {
-            SetDefaultList(DesignationConfig.hidden);
-            SetDefaultList(DesignationConfig.left);
-            SetDefaultList(DesignationConfig.main);
-            SetDefaultList(DesignationConfig.right);
-            DesignatorManager.Update();
-            UINI.Log("DesignationConfigs default restored.");
-        }
-
         private static void SetDefaultList(DesignationConfig designationList)
         {
             switch (designationList)
@@ -102,100 +111,76 @@ namespace UINotIncluded
                 case DesignationConfig.hidden:
                     hiddenDesignations = new List<string>();
                     return;
+
                 case DesignationConfig.left:
                     leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
                     break;
+
                 case DesignationConfig.main:
                     mainDesignations = new List<string> { "Mine", "Chop wood", "Harvest", "Cancel", "Deconstruct" };
                     break;
+
                 case DesignationConfig.right:
                     rightDesignations = new List<string> { "Haul things", "Smooth surface", "Slaughter", "Cut plants", "Hunt", "Tame" };
                     break;
+
                 default:
                     throw new NotImplementedException();
-
             }
         }
 
-        public static List<Designator>[] GetDesignationConfigs()
+        private static List<Designator> StringToDesignation(List<string> names)
         {
-            List<Designator> avaibleDesignators = DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators;
-            List<Designator> usedDesignators = new List<Designator>();
-            List<Designator>[] arrayDesignatorConfigs = new List<Designator>[] { new List<Designator>(), new List<Designator>(), new List<Designator>(), new List<Designator>() };
+            InitialiceDesignators();
+            List<Designator> result = new List<Designator>();
 
-            for (int i = 0; i < 4; i++)
+            foreach (string designatorName in names)
             {
-                foreach (String designatorName in GetDesignationList((DesignationConfig)i))
-                {
-                    bool found = false;
-                    foreach (Designator designator in avaibleDesignators)
-                    {
-                        if (designator.Label == designatorName) { arrayDesignatorConfigs[i].Add(designator); usedDesignators.Add(designator); found = true; break; }
-                    }
-                    if (!found) UINI.Warning(String.Format("The designation named '{0}' was not found.", designatorName));
-                }
+                if (_avaibleDesignators.ContainsKey(designatorName)) result.Add(_avaibleDesignators[designatorName]);
             }
 
-            foreach (Designator designator in avaibleDesignators)
-            {
-                if (!usedDesignators.Contains(designator))
-                {
-                    arrayDesignatorConfigs[(int)DesignationConfig.hidden].Add(designator);
-                    hiddenDesignations.Add(designator.Label);
-                };
-            }
+            return result;
+        }
 
-            return arrayDesignatorConfigs;
+        public static void UpdateDesignations(List<Designator> designations, DesignationConfig list)
+        {
+            switch (list)
+            {
+                case DesignationConfig.hidden:
+                    Settings.UpdateList(designations, hiddenDesignations);
+                    break;
+
+                case DesignationConfig.left:
+                    Settings.UpdateList(designations, leftDesignations);
+                    break;
+
+                case DesignationConfig.main:
+                    Settings.UpdateList(designations, mainDesignations);
+                    break;
+
+                case DesignationConfig.right:
+                    Settings.UpdateList(designations, rightDesignations);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private static void UpdateList(List<Designator> designations, List<String> names)
+        {
+            names.Clear();
+            foreach (Designator designation in designations) names.Add(designation.defaultLabel);
         }
     }
 
-    class UINI_Mod : Mod
-    {
-        public Settings settings;
-        private readonly SettingPages settingPages = new SettingPages();
-
-        public UINI_Mod(ModContentPack content) : base(content)
-        {
-            this.settings = GetSettings<Settings>();
-            if (!Settings.initializedDesignations)
-            {
-                UINI.Log("DesigationConfigs never initialized. Initializing.");
-                Settings.RestoreDesignationLists();
-                Settings.initializedDesignations = true;
-                settings.Write();
-            }
-        }
-
-        public override void DoSettingsWindowContents(Rect inRect)
-        {
-            float pageTittleHeight = 26f;
-            float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
-
-
-            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
-
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2* pageTittleHeight, pageTittleHeight), settingPages.label);
-            if (Widgets.ButtonImage(new Rect(inRect.x + pageTittleWidth, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronLeft)) settingPages.Prev();
-            if (Widgets.ButtonImage(new Rect(inRect.x + 2 * pageTittleWidth - pageTittleHeight, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronRight)) settingPages.Next();
-            Text.Anchor = TextAnchor.UpperLeft;
-
-            settingPages.DoPage(contentRect);
-            base.DoSettingsWindowContents(inRect);
-        }
-
-        public override string SettingsCategory()
-        {
-            return UINI.Name;
-        }
-    }
-
-    class SettingPages
+    internal class SettingPages
     {
         public string label;
 
-        private int current;
+        private readonly Dictionary<int, int> DragID = new Dictionary<int, int>();
         private readonly List<Page> pages;
+        private int current;
 
         public SettingPages()
         {
@@ -205,11 +190,6 @@ namespace UINotIncluded
                 {
                     label = "General",
                     action = inRect => DoGeneralPage(inRect)
-                },
-                new Page
-                {
-                    label = "Test",
-                    action = inRect => DoTestPage(inRect)
                 },
                 new Page
                 {
@@ -239,12 +219,6 @@ namespace UINotIncluded
             current--;
             if (current < 0) current = pages.Count() - 1;
             label = pages[current].label;
-        }
-
-        struct Page
-        {
-            public string label;
-            public Action<Rect> action;
         }
 
         private void DoGeneralPage(Rect inRect)
@@ -289,15 +263,11 @@ namespace UINotIncluded
             if (Settings.useDesignatorBar) DoJobBarConfigurationWidget(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
         }
 
-        private void DoTestPage(Rect inRect)
-        {
-            Widget.DragList.DoList("test", inRect);
-        }
-
         private void DoJobBarConfigurationWidget(Rect rect)
         {
             float columnWidth = rect.width / 4;
             float curY = rect.y;
+            List<Designator>[] designation_lists = DesignatorManager.GetDesignationConfigs();
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
@@ -307,83 +277,77 @@ namespace UINotIncluded
             curY += 25f;
             for (int i = 0; i < 4; i++)
             {
-                DoJobsDesignatorColumn(new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), ((DesignationConfig)i).ToStringHuman(), (DesignationConfig)i);
+                DoJobsDesignatorColumn(new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), ((DesignationConfig)i).ToStringHuman(), designation_lists[i]);
             }
         }
 
-        private void DoJobsDesignatorColumn(Rect rect, String label, DesignationConfig designation)
+        private void DoJobsDesignatorColumn(Rect rect, String label, List<Designator> list)
         {
-            List<String> elements = Settings.GetDesignationList(designation);
-            int rows = Settings.GetDesignationRows(designation);
-            int rowLength = (int)Math.Ceiling((float)elements.Count() / rows);
-            float buttonHeight = 40f;
-            float buttonContract = 4f;
-
-            float curY = rect.y;
-            Widgets.Label(new Rect(rect.x, curY, rect.width, buttonHeight), new GUIContent(label));
-            curY += 25f;
-            Widgets.DrawMenuSection(new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)));
-
-            ScrollInstance scroll = ScrollManager.GetInstance((int)designation);
-            Rect scrollviewRect = new Rect(rect.x, curY, rect.width, rect.height - (curY - rect.y)).ContractedBy(3f);
-            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonHeight * elements.Count());
-
-            Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
-            curY = 0;
-            bool shouldMove = false; String moveElement = null; ButtonArrowAction moveDirection = ButtonArrowAction.none;
-
-            for (int i = 0; i < elements.Count(); i++)
+            if (!DragID.ContainsKey(0))
             {
-                String element = elements[i];
-                CustomButtons.DraggableButton(new Rect(0, curY, scrollviewInRect.width, buttonHeight).ContractedBy(buttonContract), element);
-                curY += (buttonHeight - (float)Math.Floor(buttonContract / 2));
-                if ((i + 1) % rowLength == 0 && (i + 1) < elements.Count() && rows > 1)
+                if (Event.current.type != EventType.Repaint) return;
+                DragID[0] = DragAndDropWidget.NewGroup();
+            }
+            int dragID = DragID[0];
+            Widget.CustomLists.Draggable(label, rect, list, (object designator) => { return ((Designator)designator).defaultLabel; });
+
+            if (DragManager.DraggStops())
+            {
+                object draggedObject = DragManager.Dragged;
+                if (draggedObject.GetType() == typeof(Widget.DragElement))
                 {
-                    Text.Anchor = TextAnchor.MiddleCenter;
-                    Text.Font = GameFont.Tiny;
-                    Widgets.Label(new Rect(0, curY, scrollviewInRect.width, buttonHeight), "Row Jump");
-                    Widgets.DrawLineHorizontal(0, curY + buttonHeight, scrollviewInRect.width);
-                    curY += buttonHeight + buttonContract;
-                    Text.Anchor = TextAnchor.UpperLeft;
-                    Text.Font = GameFont.Small;
+                    DragManager.UseDragged();
+                    Widget.DragElement dragged = (Widget.DragElement)draggedObject;
+
+                    UINI.Log(String.Format("Droped - Listname: {0} - Size: {1} - Position: {2}", dragged.listname, dragged.size.ToString(), dragged.pos));
                 }
             }
-
-            if (shouldMove) DoMove(moveElement, moveDirection, designation);
-            Widgets.EndScrollView();
         }
 
-        private void DoMove(String element, ButtonArrowAction direction, DesignationConfig current)
+        private struct Page
         {
-            List<String> currentList = Settings.GetDesignationList(current);
-            int curIndex = currentList.IndexOf(element);
+            public Action<Rect> action;
+            public string label;
+        }
+    }
 
-            switch (direction)
+    internal class UINI_Mod : Mod
+    {
+        public Settings settings;
+        private readonly SettingPages settingPages = new SettingPages();
+
+        public UINI_Mod(ModContentPack content) : base(content)
+        {
+            this.settings = GetSettings<Settings>();
+            if (!Settings.initializedDesignations)
             {
-                case ButtonArrowAction.up:
-                    if (curIndex == 0) return;
-                    currentList.RemoveAt(curIndex);
-                    currentList.Insert(curIndex - 1, element);
-                    break;
-                case ButtonArrowAction.down:
-                    if (curIndex == currentList.Count() - 1) return;
-                    currentList.RemoveAt(curIndex);
-                    currentList.Insert(curIndex + 1, element);
-                    break;
-                case ButtonArrowAction.left:
-                    if (current == DesignationConfig.hidden) return;
-                    Settings.GetDesignationList(current - 1).Add(element);
-                    currentList.RemoveAt(curIndex);
-                    break;
-                case ButtonArrowAction.right:
-                    if (current == DesignationConfig.right) return;
-                    Settings.GetDesignationList(current + 1).Add(element);
-                    currentList.RemoveAt(curIndex);
-                    break;
-                default:
-                    throw new NotImplementedException();
+                UINI.Log("DesigationConfigs never initialized. Initializing.");
+                Settings.RestoreDesignationLists();
+                Settings.initializedDesignations = true;
+                settings.Write();
             }
-            DesignatorManager.Update();
+        }
+
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            float pageTittleHeight = 26f;
+            float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
+
+            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2 * pageTittleHeight, pageTittleHeight), settingPages.label);
+            if (Widgets.ButtonImage(new Rect(inRect.x + pageTittleWidth, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronLeft)) settingPages.Prev();
+            if (Widgets.ButtonImage(new Rect(inRect.x + 2 * pageTittleWidth - pageTittleHeight, inRect.y, pageTittleHeight, pageTittleHeight), ModTextures.chevronRight)) settingPages.Next();
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            settingPages.DoPage(contentRect);
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        public override string SettingsCategory()
+        {
+            return UINI.Name;
         }
     }
 }

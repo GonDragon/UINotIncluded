@@ -84,12 +84,13 @@
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
+    <Compile Include="Utility\DragManager.cs" />
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\ArchitectMenuButton.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
-    <Compile Include="Widget\DragList.cs" />
+    <Compile Include="Widget\CustomLists.cs" />
     <Compile Include="Widget\ExtendedWidget.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Widget\MouseReadoutWidget.cs" />

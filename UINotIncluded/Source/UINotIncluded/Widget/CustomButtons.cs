@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using UnityEngine;
 using Verse;
@@ -11,26 +7,49 @@ namespace UINotIncluded
 {
     public static class CustomButtons
     {
-        public static Widgets.DraggableResult DraggableButton(Rect space, String label)
+        public static Widgets.DraggableResult DraggableButton(Rect space, String label, CustomButtonState state = CustomButtonState.enabled)
         {
+            Texture2D texture;
+            bool doMousoverSound;
 
-            Texture2D texture = Mouse.IsOver(space) ? ModTextures.buttonDraggableMouseover : ModTextures.buttonDraggable;
+            switch (state)
+            {
+                case CustomButtonState.enabled:
+                    texture = Mouse.IsOver(space) ? ModTextures.buttonDraggableMouseover : ModTextures.buttonDraggable;
+                    doMousoverSound = true;
+                    break;
+
+                case CustomButtonState.disabled:
+                    texture = ModTextures.buttonDraggable;
+                    doMousoverSound = false;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.DrawAtlas(space, texture);
             Widgets.Label(space, label);
             Text.Anchor = TextAnchor.UpperLeft;
+            return Widgets.ButtonInvisibleDraggable(space, doMousoverSound);
+        }
 
-            return Widgets.ButtonInvisibleDraggable(space); ;
+        public static void DraggableButtonGhost(Rect space, string label)
+        {
+            GUI.color = new Color(1f, 1f, 1f, 0.5f);
+            Texture2D texture = ModTextures.buttonDraggable;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.DrawAtlas(space, texture);
+            Widgets.Label(space, label);
+            Text.Anchor = TextAnchor.UpperLeft;
         }
     }
 
-    public enum ButtonArrowAction
+    public enum CustomButtonState
     {
-        none,
-        up,
-        left,
-        right,
-        down
+        enabled,
+        disabled,
+        ghost
     }
 }
