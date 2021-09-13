@@ -17,11 +17,11 @@ namespace UINotIncluded.Widget
 
             ScrollInstance scroll = ScrollManager.GetInstance(name.GetHashCode());
             Rect scrollviewRect = new Rect(inRect);
-            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonspace_heigth * elements.Count());
+            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonspace_heigth * elements.Count() + contraction * 2);
 
             Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
 
-            Rect widgetSpace = new Rect(0f, 0f, inRect.width, buttonspace_heigth);
+            Rect widgetSpace = new Rect(0f, contraction, inRect.width - contraction, buttonspace_heigth);
             DragManager.ManageList(name, elements);
 
             int n = 0;
