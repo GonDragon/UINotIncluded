@@ -265,12 +265,12 @@ namespace UINotIncluded
         {
             float columnWidth = inRect.width / 2;
             float heigth = (float)Math.Floor(inRect.height / 3);
-            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
-            Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Rect column1 = new Rect(columnWidth - columnWidth/2, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
 
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref Settings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
@@ -293,10 +293,6 @@ namespace UINotIncluded
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
-            listingStandard.End();
-
-            listingStandard.Begin(column2);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.End();
         }
 
