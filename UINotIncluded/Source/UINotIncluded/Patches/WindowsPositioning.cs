@@ -37,7 +37,7 @@ namespace UINotIncluded
         {
             if (ID == 76136312)
             {
-                rect.y += 75f;
+                if (Settings.togglersOnTop) rect.y += 75f;
                 if (Settings.tabsOnTop) rect.y += UIManager.ExtendedBarHeight;
             }
         }
