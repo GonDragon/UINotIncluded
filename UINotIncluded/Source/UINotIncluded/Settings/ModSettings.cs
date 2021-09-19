@@ -172,7 +172,7 @@ namespace UINotIncluded
         private static void UpdateList(List<Designator> designations, List<String> names)
         {
             names.Clear();
-            foreach (Designator designation in designations) names.Add(designation.defaultLabel);
+            foreach (Designator designation in designations) names.Add(designation.GetType().ToString());
         }
     }
 
@@ -330,6 +330,7 @@ namespace UINotIncluded
                 {
                     DragManager.MoveDragged();
                     DragManager.UseDragged();
+                    DesignatorManager.Push();
                 }
             }
         }
