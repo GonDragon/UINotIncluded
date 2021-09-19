@@ -63,7 +63,7 @@ namespace UINotIncluded
 
             foreach (Designator designator in DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators)
             {
-                _avaibleDesignators[designator.defaultLabel] = designator;
+                _avaibleDesignators[designator.GetType().ToString()] = designator;
             }
 
             foreach (string key in _avaibleDesignators.Keys)
@@ -115,15 +115,15 @@ namespace UINotIncluded
                     return;
 
                 case DesignationConfig.left:
-                    leftDesignations = new List<string> { "Forbid", "Uninstall", "Allow", "Claim" };
+                    leftDesignations = new List<string> { "RimWorld.Designator_Forbid", "RimWorld.Designator_Uninstall", "RimWorld.Designator_Unforbid", "RimWorld.Designator_Claim" };
                     break;
 
                 case DesignationConfig.main:
-                    mainDesignations = new List<string> { "Mine", "Chop wood", "Harvest", "Cancel", "Deconstruct" };
+                    mainDesignations = new List<string> { "RimWorld.Designator_Mine", "RimWorld.Designator_PlantsHarvestWood", "RimWorld.Designator_PlantsHarvest", "RimWorld.Designator_Cancel", "RimWorld.Designator_Deconstruct" };
                     break;
 
                 case DesignationConfig.right:
-                    rightDesignations = new List<string> { "Haul things", "Smooth surface", "Slaughter", "Cut plants", "Hunt", "Tame" };
+                    rightDesignations = new List<string> { "RimWorld.Designator_Haul", "RimWorld.Designator_SmoothSurface", "RimWorld.Designator_Slaughter", "RimWorld.Designator_PlantsCut", "RimWorld.Designator_Hunt", "RimWorld.Designator_Tame" };
                     break;
 
                 default:
@@ -131,14 +131,14 @@ namespace UINotIncluded
             }
         }
 
-        private static List<Designator> StringToDesignation(List<string> names)
+        private static List<Designator> StringToDesignation(List<string> classes)
         {
             InitialiceDesignators();
             List<Designator> result = new List<Designator>();
 
-            foreach (string designatorName in names)
+            foreach (string designator_class in classes)
             {
-                if (_avaibleDesignators.ContainsKey(designatorName)) result.Add(_avaibleDesignators[designatorName]);
+                if (_avaibleDesignators.ContainsKey(designator_class)) result.Add(_avaibleDesignators[designator_class]);
             }
 
             return result;
@@ -184,13 +184,6 @@ namespace UINotIncluded
         public UINI_Mod(ModContentPack content) : base(content)
         {
             this.settings = GetSettings<Settings>();
-            if (!Settings.initializedDesignations)
-            {
-                UINI.Log("DesigationConfigs never initialized. Initializing.");
-                Settings.RestoreDesignationLists();
-                Settings.initializedDesignations = true;
-                settings.Write();
-            }
         }
 
         public override void DoSettingsWindowContents(Rect inRect)

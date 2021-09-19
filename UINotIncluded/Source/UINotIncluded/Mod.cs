@@ -31,6 +31,20 @@ namespace UINotIncluded
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
             CompatibilityPatches();
+
+            try
+            {
+                if (!Settings.initializedDesignations)
+                {
+                    UINI.Log("DesigationConfigs never initialized. Initializing.");
+                    Settings.RestoreDesignationLists();
+                    Settings.initializedDesignations = true;
+                    LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
+                }
+            } catch
+            {
+                UINI.Error("Error initializing settings for Designation Bar");
+            }
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));
