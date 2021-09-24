@@ -18,7 +18,6 @@ namespace UINotIncluded
         {
             if (!Settings.altInspectActive) { MouseReadoutWidget.AltInspector = false; return; }
             MouseReadoutWidget.AltInspector = Event.current.alt;
-            Event.current.Use();
         }
     }
 }
