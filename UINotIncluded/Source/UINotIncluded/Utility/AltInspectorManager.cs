@@ -161,7 +161,7 @@ namespace UINotIncluded
                 Rect row = new Rect(inRect.x, curY, inRect.width, 23f);
                 if (n % 2 == 1)
                     Widgets.DrawLightHighlight(row);
-                GUI.Label(row, thingLabel);
+                Widgets.Label(row, thingLabel);
                 curY += 25f;
                 n++;
             }
