@@ -8,7 +8,6 @@ namespace UINotIncluded
 {
     public class Settings : ModSettings
     {
-        public static bool altInspectActive = true;
         public static bool barOnRight = false;
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool designationsOnLeft = false;
@@ -23,6 +22,7 @@ namespace UINotIncluded
         public static bool useDesignatorBar = true;
         public static bool vanillaAnimals = false;
         public static bool vanillaArchitect = false;
+        public static bool vanillaReadout;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
         public static List<Designator>[] GetDesignationConfigs()
@@ -90,10 +90,10 @@ namespace UINotIncluded
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref barOnRight, "barOnRight", false);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
-            Scribe_Values.Look(ref altInspectActive, "altInspectActive", true);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaArchitect, "vanillaArchitect", false);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
+            Scribe_Values.Look(ref vanillaReadout, "vanillaReadout", false);
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
@@ -267,6 +267,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), Settings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();

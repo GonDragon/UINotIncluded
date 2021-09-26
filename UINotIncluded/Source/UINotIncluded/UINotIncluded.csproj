@@ -93,8 +93,7 @@
     <Compile Include="Widget\CustomLists.cs" />
     <Compile Include="Widget\ExtendedWidget.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
-    <Compile Include="Widget\MouseReadoutWidget.cs" />
-    <Compile Include="Patches\Shortcuts.cs" />
+    <Compile Include="Utility\AltInspectorManager.cs" />
     <Compile Include="Patches\NotificationBarPatches.cs" />
     <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />

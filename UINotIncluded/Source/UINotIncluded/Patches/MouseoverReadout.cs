@@ -16,65 +16,29 @@ namespace UINotIncluded
     [HarmonyPatch(typeof(MouseoverReadout))]
     class MouseoverReadoutPatches
     {
-        [HarmonyPrefix]
         [HarmonyPatch(nameof(MouseoverReadout.MouseoverReadoutOnGUI))]
-        static bool MouseoverReadoutOnGUIPrefix(ref TerrainDef ___cachedTerrain, ref string ___cachedTerrainString, string[] ___glowStrings)
+        static bool Prefix(out bool __state)
         {
-            if (Event.current.type != EventType.Repaint || (!MouseReadoutWidget.AltInspector && Find.MainTabsRoot.OpenTab != null)) return false;
-
-            string readout = "";
-
-            IntVec3 c = UI.MouseCell();
-            if (!c.InBounds(Find.CurrentMap))
+            if (!Settings.vanillaReadout)
+            {
+                __state = false;
                 return false;
-            if (c.Fogged(Find.CurrentMap))
-            {
-                MouseReadoutWidget.DrawReadout("Undiscovered".Translate());
             }
-            else
+            __state = true;
+
+            float deltaH = Settings.tabsOnTop ? 35 : 0;
+
+            GUI.BeginGroup(new Rect(0f,0f + deltaH, UI.screenWidth, UI.screenHeight - deltaH));
+            return true;
+        }
+
+        [HarmonyPatch(nameof(MouseoverReadout.MouseoverReadoutOnGUI))]
+        static void Postfix(bool __state)
+        {
+            if(__state)
             {
-                readout = "\n" + ___glowStrings[Mathf.RoundToInt(Find.CurrentMap.glowGrid.GameGlowAt(c) * 100f)] + readout;
-                TerrainDef terrain = c.GetTerrain(Find.CurrentMap);
-                if (terrain != ___cachedTerrain)
-                {
-                    string str = (double)terrain.fertility > 0.0001 ? " " + "FertShort".TranslateSimple() + " " + terrain.fertility.ToStringPercent() : "";
-                    ___cachedTerrainString = (string)(terrain.LabelCap + (terrain.passability != Traversability.Impassable ? " (" + "WalkSpeed".Translate((NamedArgument)MouseReadoutWidget.SpeedPercentString((float)terrain.pathCost )) + str + ")" : (TaggedString)(string)null));
-                    ___cachedTerrain = terrain;
-                }
-                string cachedTerrainString = ___cachedTerrainString;
-                readout = "\n" + cachedTerrainString + readout;
-                Zone zone = c.GetZone(Find.CurrentMap);
-                if (zone != null)
-                {
-                    readout = "\n" + zone.label + readout;
-                }
-                float depth = Find.CurrentMap.snowGrid.GetDepth(c);
-                if ((double)depth > 0.0299999993294477)
-                {
-                    SnowCategory snowCategory = SnowUtility.GetSnowCategory(depth);
-                    string snowLabel = (string)(SnowUtility.GetDescription(snowCategory) + " (" + "WalkSpeed".Translate((NamedArgument)MouseReadoutWidget.SpeedPercentString((float)SnowUtility.MovementTicksAddOn(snowCategory))) + ")");
-                    readout = "\n" + snowLabel + readout;
-                }                
-                /* START Temperature String Inject*/
-                readout = "\n" + MouseoverReadoutHelper.TemperatureString() + readout;
-                /* END */
-                List<Thing> thingList = c.GetThingList(Find.CurrentMap);
-                for (int index = 0; index < thingList.Count; ++index)
-                {
-                    Thing thing = thingList[index];
-                    if (thing.def.category != ThingCategory.Mote)
-                    {
-                        readout = "\n" + thing.LabelMouseover + readout;
-                    }
-                }
-                RoofDef roof = c.GetRoof(Find.CurrentMap);
-                if (roof != null)
-                {
-                    readout = "\n" + roof.LabelCap + readout;
-                }
-                MouseReadoutWidget.DrawReadout(readout);
+                GUI.EndGroup();
             }
-            return false;
         }
     }
 

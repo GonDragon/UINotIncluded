@@ -18,12 +18,15 @@ namespace UINotIncluded
 
         public static readonly float archButtonWidth = ExtendedToolbar.Height;
 
+        public static bool toggleAltInspector = false;
+
 
         private static bool tabsOnTop = Settings.tabsOnTop;
         private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
         private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
+        private static readonly AltInspectorManager altInspectorManager = new AltInspectorManager();
 
         public static void Before_MainUIOnGUI()
         {
@@ -54,13 +57,14 @@ namespace UINotIncluded
             ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY);
             if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
-            if(!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
+            altInspectorManager.AltInspectorOnGUI();
+            if (!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
             if (Settings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
         }
 
         public static void After_MainUIOnGUI()
         {
-
+            
         }
 
         private static void SetMainbuttonVisibility(string name, bool visible)

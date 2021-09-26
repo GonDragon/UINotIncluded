@@ -18,4 +18,14 @@
 <UINotIncluded.Playsetting.altinspect.tooltip>Toggle the Alt Inspector.\n\nWhen the Alt Inspector is active, the cell info in the bottom left will disappear. This info will now appear as a tooltip near the mouse while the "Alt" key is pressed.</UINotIncluded.Playsetting.altinspect.tooltip>
 <UINotIncluded.Setting.DesignatorBar.Description>Designator Bar Config</UINotIncluded.Setting.DesignatorBar.Description>
 <UINotIncluded.Setting.fontSize>Font Size</UINotIncluded.Setting.fontSize>
+
+<UINotIncluded.Setting.vanillaReadout>Use vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
+<UINotIncluded.Setting.vanillaReadout.Description>If checked, the readout of information of the tile the mouse is over will appear on the bottom-left corner of the screen. With this option unchecked, you should only rely on the alt-inspector.</UINotIncluded.Setting.vanillaReadout.Description>
+
+<UINotIncluded.AltInspector.TopLayer>Top Layer</UINotIncluded.AltInspector.TopLayer>
+<UINotIncluded.AltInspector.WalkSpeed>Walk Speed</UINotIncluded.AltInspector.WalkSpeed>
+<UINotIncluded.AltInspector.Fertility>Fertility</UINotIncluded.AltInspector.Fertility>
+<UINotIncluded.AltInspector.Brightness>Brightness</UINotIncluded.AltInspector.Brightness>
+<UINotIncluded.AltInspector.Roof>Roof</UINotIncluded.AltInspector.Roof>
+
 </LanguageData>

@@ -90,7 +90,7 @@ namespace UINotIncluded
             }
             else
             {
-                row.ToggleableIcon(ref Settings.altInspectActive, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
+                row.ToggleableIcon(ref UIManager.toggleAltInspector, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
             }
         }
     }
