@@ -54,6 +54,14 @@ namespace UINotIncluded
             if (ShowDrawReadout())
             {
                 GenerateTileInfoAndThings();
+                if (tileInfo.Count() == 0) return;
+
+                if (Settings.legacyAltInspector)
+                {
+                    TipSignal tooltip = new TipSignal(TileInfoAsString(), uniqueID) { delay = 0f };
+                    TooltipHandler.TipRegion(new Rect(Event.current.mousePosition, cleanSize), tooltip);
+                    return;
+                }
                 Rect windowRect = GetWindowRect();
                 Find.WindowStack.ImmediateWindow(AltInspectorManager.uniqueID, windowRect, WindowLayer.Super, () => {
                     DrawTileInfo(windowRect);
@@ -93,10 +101,12 @@ namespace UINotIncluded
                     tileInfo["UINotIncluded.AltInspector.TopLayer"] = SnowUtility.GetDescription(snowCategory);
                 }
 
+                tileInfo["Temperature"] = TemperatureString(currentCell);
+
                 tileInfo["UINotIncluded.AltInspector.Fertility"] = cachedTerrainFertility;
 
                 tileInfo["UINotIncluded.AltInspector.Brightness"] = glowStrings[Mathf.RoundToInt(Find.CurrentMap.glowGrid.GameGlowAt(currentCell) * 100f)];
-                tileInfo["Temperature"] = TemperatureString(currentCell);
+                
 
                 Zone zone = currentCell.GetZone(Find.CurrentMap);
                 if (zone != null) tileInfo["Zone"] = zone.label;
@@ -166,6 +176,35 @@ namespace UINotIncluded
                 n++;
             }
             Text.WordWrap = true;
+        }
+
+        public string TileInfoAsString()
+        {
+            string singleLabel = "";
+            singleLabel += tileInfo["Terrain"];
+
+            if (tileInfo.Count() == 1) return singleLabel;
+
+            if(tileInfo.ContainsKey("UINotIncluded.AltInspector.WalkSpeed") || tileInfo.ContainsKey("UINotIncluded.AltInspector.Fertility"))
+            {
+                singleLabel += " (";
+                if (tileInfo.ContainsKey("UINotIncluded.AltInspector.WalkSpeed")) singleLabel += String.Format("{0}, ", "WalkSpeed".Translate((NamedArgument)tileInfo["UINotIncluded.AltInspector.WalkSpeed"]));
+                if (tileInfo.ContainsKey("UINotIncluded.AltInspector.Fertility")) singleLabel += "FertShort".TranslateSimple() + tileInfo["UINotIncluded.AltInspector.Fertility"];
+                singleLabel += ")";
+            }
+
+            singleLabel += String.Format("\n{0}\n{1}\n", tileInfo["Temperature"],tileInfo["UINotIncluded.AltInspector.Brightness"]);
+
+            if (tileInfo.ContainsKey("UINotIncluded.AltInspector.TopLayer")) singleLabel += String.Format("{0}\n",tileInfo["UINotIncluded.AltInspector.TopLayer"]);
+            if (tileInfo.ContainsKey("Zone")) singleLabel += String.Format("{0}\n", tileInfo["Zone"]);
+            if (tileInfo.ContainsKey("Roof")) singleLabel += String.Format("{0}\n", tileInfo["Roof"]);
+
+            foreach (string thingLabel in things)
+            {
+                singleLabel += String.Format("{0}\n", thingLabel);
+            }
+
+            return singleLabel.Trim();
         }
 
         private static string TemperatureString(IntVec3 cell)

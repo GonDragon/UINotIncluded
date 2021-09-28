@@ -22,6 +22,10 @@
 <UINotIncluded.Setting.vanillaReadout>Use vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
 <UINotIncluded.Setting.vanillaReadout.Description>If checked, the readout of information of the tile the mouse is over will appear on the bottom-left corner of the screen. With this option unchecked, you should only rely on the alt-inspector.</UINotIncluded.Setting.vanillaReadout.Description>
 
+<UINotIncluded.Setting.legacyAltInspector>Use Tooltip-like AltInspector</UINotIncluded.Setting.legacyAltInspector>
+<UINotIncluded.Setting.legacyAltInspector.Description>If this option is enabled, the Alt Inspector will use it's legacy mode to show the info in a tooltip.</UINotIncluded.Setting.legacyAltInspector.Description>
+
+
 <UINotIncluded.AltInspector.TopLayer>Top Layer</UINotIncluded.AltInspector.TopLayer>
 <UINotIncluded.AltInspector.WalkSpeed>Walk Speed</UINotIncluded.AltInspector.WalkSpeed>
 <UINotIncluded.AltInspector.Fertility>Fertility</UINotIncluded.AltInspector.Fertility>

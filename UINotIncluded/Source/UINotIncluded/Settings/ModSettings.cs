@@ -23,6 +23,7 @@ namespace UINotIncluded
         public static bool vanillaAnimals = false;
         public static bool vanillaArchitect = false;
         public static bool vanillaReadout;
+        public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
         public static List<Designator>[] GetDesignationConfigs()
@@ -97,6 +98,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
+            Scribe_Values.Look(ref legacyAltInspector, "legacyAltInspector", false);
 
             Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations", LookMode.Value);
             Scribe_Collections.Look(ref leftDesignations, "leftDesignations", LookMode.Value);
@@ -268,6 +270,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), Settings.dateFormat.ToStringHuman()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
