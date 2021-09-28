@@ -16,13 +16,15 @@ namespace UINotIncluded.Widget
             Widgets.DrawMenuSection(inRect);
 
             ScrollInstance scroll = ScrollManager.GetInstance(name.GetHashCode());
-            Rect scrollviewRect = new Rect(inRect);
+            Rect scrollviewRect = new Rect(inRect).ContractedBy(1f);
             Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonspace_heigth * elements.Count() + contraction * 2);
 
             Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
 
             Rect widgetSpace = new Rect(0f, contraction, inRect.width - contraction, buttonspace_heigth);
             DragManager.ManageList(name, elements);
+            
+            
 
             int n = 0;
             foreach (object element in elements)
@@ -55,6 +57,13 @@ namespace UINotIncluded.Widget
 
                 widgetSpace.y += buttonspace_heigth;
                 n++;
+            }
+
+            if(DragManager.Dragging && !DragManager.Hovering && Mouse.IsOver(new Rect(0f, 0f, scrollviewRect.width, scrollviewRect.height)))
+            {
+                Rect innerSpace = widgetSpace.ContractedBy(contraction);
+                Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y, widgetSpace.width);
+                DragManager.hoveringOver = new DragElement { pos = n, listname = name, size = innerSpace.size };
             }
 
             Widgets.EndScrollView();
