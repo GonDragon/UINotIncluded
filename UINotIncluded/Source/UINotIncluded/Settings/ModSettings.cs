@@ -322,21 +322,14 @@ namespace UINotIncluded
             if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
             curY += 25f;
 
-            DragManager.hoveringOver = null;
+            DragManager<Designator> manager = new DragManager<Designator>(OnUpdate: DesignatorManager.Push);
+
+            DragMemory.hoveringOver = null;
             for (int i = 0; i < 4; i++)
             {
-                Widget.CustomLists.Draggable(((DesignationConfig)i).ToStringHuman(), new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), designation_lists[i], (object designator) => { return ((Designator)designator).defaultLabel; });
+                Widget.CustomLists.Draggable<Designator>(((DesignationConfig)i).ToStringHuman(), new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), designation_lists[i], (object designator) => { return ((Designator)designator).defaultLabel; }, manager);
             }
-            DragManager.DrawGhost();
-            if (DragManager.DraggStops())
-            {
-                if (DragManager.Dragging)
-                {
-                    DragManager.MoveDragged();
-                    DragManager.UseDragged();
-                    DesignatorManager.Push();
-                }
-            }
+            manager.Update();
         }
 
         private struct Page

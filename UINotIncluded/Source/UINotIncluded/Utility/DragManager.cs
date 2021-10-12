@@ -5,56 +5,74 @@ using Verse;
 
 namespace UINotIncluded
 {
-    public static class DragManager
+    public static class DragMemory
     {
         public static bool Dragging => _dragged != null;
-        private static DragElement? _dragged;
+        public static DragElement? _dragged;
         public static bool Hovering => hoveringOver != null;
         public static DragElement? hoveringOver;
 
-        private static readonly Dictionary<string, List<Designator>> _managed_dragable_lists = new Dictionary<string, List<Designator>>();
+        public static DragElement? Dragged => _dragged;
+    }
+    public class DragManager<T>
+    {
+        public Action OnUpdate;
 
-        public static void ManageList(string name, List<Designator> list)
+        private readonly Dictionary<string, List<T>> _managed_dragable_lists = new Dictionary<string, List<T>>();
+
+        public DragManager(Action OnUpdate)
+        {
+            this.OnUpdate = OnUpdate;
+        }
+
+        public void ManageList(string name, List<T> list)
         {
             _managed_dragable_lists[name] = list;
         }
 
-        public static void DraggStart(DragElement element)
+        public void Update()
         {
-            _dragged = element;
+            //DrawGhost();
+            if (DraggStops())
+            {
+                if (DragMemory.Dragging)
+                {
+                    MoveDragged();
+                    DragMemory._dragged = null;
+                    OnUpdate();
+                }
+            }
         }
 
-        public static bool DraggStops()
+        public void DraggStart(DragElement element)
+        {
+            DragMemory._dragged = element;
+        }
+
+        public bool DraggStops()
         {
             return Event.current.rawType == EventType.MouseUp;
         }
 
-        public static DragElement? Dragged => _dragged;
+        //public void DrawGhost()
+        //{
+        //    if (Event.current.type != EventType.Repaint || !DragMemory.Dragging || !_managed_dragable_lists.ContainsKey(DragMemory.Dragged?.listname)) return;
+        //    float offset = (float)Math.Floor((float)DragMemory.Dragged?.size.y / 2);
+        //    Vector2 pos = Event.current.mousePosition - new Vector2(offset, offset);
+        //    CustomButtons.DraggableButtonGhost(new Rect(pos, (Vector2)DragMemory.Dragged?.size), _managed_dragable_lists[DragMemory.Dragged?.listname][(int)DragMemory.Dragged?.pos].defaultLabel);
+        //}
 
-        public static void UseDragged()
+        public void MoveDragged()
         {
-            _dragged = null;
-        }
-
-        public static void DrawGhost()
-        {
-            if (Event.current.type != EventType.Repaint || !Dragging || !_managed_dragable_lists.ContainsKey(Dragged?.listname)) return;
-            float offset = (float)Math.Floor((float)Dragged?.size.y / 2);
-            Vector2 pos = Event.current.mousePosition - new Vector2(offset, offset);
-            CustomButtons.DraggableButtonGhost(new Rect(pos, (Vector2)Dragged?.size), _managed_dragable_lists[Dragged?.listname][(int)Dragged?.pos].defaultLabel);
-        }
-
-        public static void MoveDragged()
-        {
-            if (!Dragging || !Hovering) return;
-            List<Designator> origin = _managed_dragable_lists[_dragged?.listname];
-            List<Designator> destination = _managed_dragable_lists[hoveringOver?.listname];
+            if (!DragMemory.Dragging || !DragMemory.Hovering) return;
+            List<T> origin = _managed_dragable_lists[DragMemory._dragged?.listname];
+            List<T> destination = _managed_dragable_lists[DragMemory.hoveringOver?.listname];
             
-            bool sameList = _dragged?.listname == hoveringOver?.listname;
-            int removePos = sameList ? ((int)hoveringOver?.pos > (int)_dragged?.pos ? (int)_dragged?.pos : (int)_dragged?.pos+1) : (int)_dragged?.pos;
+            bool sameList = DragMemory._dragged?.listname == DragMemory.hoveringOver?.listname;
+            int removePos = sameList ? ((int)DragMemory.hoveringOver?.pos > (int)DragMemory._dragged?.pos ? (int)DragMemory._dragged?.pos : (int)DragMemory._dragged?.pos+1) : (int)DragMemory._dragged?.pos;
 
-            Designator temp = origin[(int)_dragged?.pos];
-            destination.Insert((int)hoveringOver?.pos, temp);
+            T temp = origin[(int)DragMemory._dragged?.pos];
+            destination.Insert((int)DragMemory.hoveringOver?.pos, temp);
             origin.RemoveAt(removePos);
         }
     }
