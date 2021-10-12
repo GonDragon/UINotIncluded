@@ -17,12 +17,15 @@ namespace UINotIncluded
     public class DragManager<T>
     {
         public Action OnUpdate;
+        public Func<T, string> GetLabel;
 
         private readonly Dictionary<string, List<T>> _managed_dragable_lists = new Dictionary<string, List<T>>();
 
-        public DragManager(Action OnUpdate)
+        public DragManager(Action OnUpdate, Func<T, string> GetLabel)
         {
             this.OnUpdate = OnUpdate;
+            this.GetLabel = GetLabel;
+
         }
 
         public void ManageList(string name, List<T> list)
@@ -32,7 +35,7 @@ namespace UINotIncluded
 
         public void Update()
         {
-            //DrawGhost();
+            DrawGhost();
             if (DraggStops())
             {
                 if (DragMemory.Dragging)
@@ -54,13 +57,13 @@ namespace UINotIncluded
             return Event.current.rawType == EventType.MouseUp;
         }
 
-        //public void DrawGhost()
-        //{
-        //    if (Event.current.type != EventType.Repaint || !DragMemory.Dragging || !_managed_dragable_lists.ContainsKey(DragMemory.Dragged?.listname)) return;
-        //    float offset = (float)Math.Floor((float)DragMemory.Dragged?.size.y / 2);
-        //    Vector2 pos = Event.current.mousePosition - new Vector2(offset, offset);
-        //    CustomButtons.DraggableButtonGhost(new Rect(pos, (Vector2)DragMemory.Dragged?.size), _managed_dragable_lists[DragMemory.Dragged?.listname][(int)DragMemory.Dragged?.pos].defaultLabel);
-        //}
+        public void DrawGhost()
+        {
+            if (Event.current.type != EventType.Repaint || !DragMemory.Dragging || !_managed_dragable_lists.ContainsKey(DragMemory.Dragged?.listname)) return;
+            float offset = (float)Math.Floor((float)DragMemory.Dragged?.size.y / 2);
+            Vector2 pos = Event.current.mousePosition - new Vector2(offset, offset);
+            CustomButtons.DraggableButtonGhost(new Rect(pos, (Vector2)DragMemory.Dragged?.size), GetLabel(_managed_dragable_lists[DragMemory.Dragged?.listname][(int)DragMemory.Dragged?.pos]));
+        }
 
         public void MoveDragged()
         {

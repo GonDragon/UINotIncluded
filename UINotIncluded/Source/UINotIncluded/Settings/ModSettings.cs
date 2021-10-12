@@ -322,7 +322,9 @@ namespace UINotIncluded
             if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
             curY += 25f;
 
-            DragManager<Designator> manager = new DragManager<Designator>(OnUpdate: DesignatorManager.Push);
+            DragManager<Designator> manager = new DragManager<Designator>(
+                OnUpdate: DesignatorManager.Push,
+                GetLabel: (Designator designator) => { return designator.defaultLabel; });
 
             DragMemory.hoveringOver = null;
             for (int i = 0; i < 4; i++)
