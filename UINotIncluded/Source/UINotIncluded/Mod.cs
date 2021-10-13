@@ -58,7 +58,7 @@ namespace UINotIncluded
         {
             try
             {
-                if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Timespeed.SetSmartspeedMode();
+                if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Timespeed_Worker.SetSmartspeedMode();
             }
             catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
         }
