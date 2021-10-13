@@ -55,34 +55,66 @@ namespace UINotIncluded.Widget
         }
     }
 
-    public class ToolbarElementWrapper : IExposable
+    public class ToolbarElementWrapper : IExposable, IEquatable<ToolbarElementWrapper>
     {
         public bool isWidget;
-        ExtendedWidgetDef widget;
-        MainButtonDef button;
-        
+        public string defName;
+        private Def defCache;
+
+        public Def Def
+        {
+            get
+            {
+                if(defCache == null)
+                {
+                    if (isWidget) defCache = DefDatabase<ExtendedWidgetDef>.GetNamed(defName);
+                    else defCache = DefDatabase<MainButtonDef>.GetNamed(defName);
+                }
+                return defCache;
+            }
+        }
+
+        public string LabelCap
+        {
+            get
+            {
+                if (isWidget) return this.defName;
+                return Def.LabelCap;
+            }
+        }
+
+        public ToolbarElementWrapper() { } //So it can be instantiated by the Scribe
+
         public ToolbarElementWrapper(ExtendedWidgetDef widget)
         {
             this.isWidget = true;
-            this.widget = widget;
+            this.defName = widget.defName;
+            defCache = widget;
         }
 
         public ToolbarElementWrapper(MainButtonDef button)
         {
             this.isWidget = false;
-            this.button = button;
+            this.defName = button.defName;
+            defCache = button;
         }
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref isWidget, "isWidget");
-            if(isWidget) { Scribe_Defs.Look(ref widget, "wraped"); } else { Scribe_Defs.Look(ref button, "wraped"); }
+            Scribe_Values.Look(ref defName, "wrapped");
+        }
+
+        public bool Equals(ToolbarElementWrapper other)
+        {
+            return (this.isWidget == other.isWidget) && (this.defName == other.defName);
+
         }
 
         public void OnGUI(Rect rect)
         {
-            if (this.isWidget) this.widget.OnGUI(rect);
-            else button.Worker.DoButton(rect);
+            if (isWidget) ((ExtendedWidgetDef)Def).OnGUI(rect);
+            else ((MainButtonDef)Def).Worker.DoButton(rect);
         }
     }
 }

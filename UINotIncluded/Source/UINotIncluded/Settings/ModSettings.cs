@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 
+using UINotIncluded.Widget;
+using RimWorld;
+
 namespace UINotIncluded
 {
     public class Settings : ModSettings
@@ -25,6 +28,10 @@ namespace UINotIncluded
         public static bool vanillaReadout;
         public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
+
+        public static List<ToolbarElementWrapper> cacheAvaibleElements;
+        public static List<ToolbarElementWrapper> topBar;
+        public static List<ToolbarElementWrapper> bottomBar;
 
         public static List<Designator>[] GetDesignationConfigs()
         {
@@ -104,6 +111,9 @@ namespace UINotIncluded
             Scribe_Collections.Look(ref leftDesignations, "leftDesignations", LookMode.Value);
             Scribe_Collections.Look(ref mainDesignations, "mainDesignations", LookMode.Value);
             Scribe_Collections.Look(ref rightDesignations, "rightDesignations", LookMode.Value);
+
+            Scribe_Collections.Look(ref topBar, "topBar", LookMode.Deep);
+            Scribe_Collections.Look(ref bottomBar, "bottomBar", LookMode.Deep);
 
             base.ExposeData();
         }
@@ -230,6 +240,11 @@ namespace UINotIncluded
                 {
                     label = "Designator",
                     action = inRect => DoDesignatorPage(inRect)
+                },
+                new Page
+                {
+                    label = "Toolbars",
+                    action = inRect => DoToolbarsPages(inRect)
                 }
             };
 
@@ -329,8 +344,68 @@ namespace UINotIncluded
             DragMemory.hoveringOver = null;
             for (int i = 0; i < 4; i++)
             {
-                Widget.CustomLists.Draggable<Designator>(((DesignationConfig)i).ToStringHuman(), new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), designation_lists[i], (object designator) => { return ((Designator)designator).defaultLabel; }, manager);
+                Widget.CustomLists.Draggable<Designator>(((DesignationConfig)i).ToStringHuman(), new Rect(rect.x + columnWidth * i, curY, columnWidth, rect.height - 25f).ContractedBy(3f), designation_lists[i], (Designator designator) => { return ((Designator)designator).defaultLabel; }, manager);
             }
+            manager.Update();
+        }
+
+        private void DoToolbarsPages(Rect inRect)
+        {
+            float columnWidth = inRect.width / 2;
+            float heigth = (float)Math.Floor(inRect.height / 4);
+            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Listing_Standard listingStandard = new Listing_Standard();
+            listingStandard.Begin(column1);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref Settings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
+            listingStandard.End();
+            listingStandard.Begin(column2);
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
+            listingStandard.End();
+            DoToolbarDraggables(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
+        }
+
+        private void DoToolbarDraggables(Rect rect)
+        {
+            float columnWidth = rect.width / 3;
+            float curY = rect.y;
+
+            if(Settings.cacheAvaibleElements == null)
+            {
+                if (Settings.topBar == null) Settings.topBar = new List<ToolbarElementWrapper>();
+                if (Settings.bottomBar == null) Settings.bottomBar = new List<ToolbarElementWrapper>();
+
+                Settings.cacheAvaibleElements = new List<ToolbarElementWrapper>();
+                foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
+                {
+                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
+                    if (!(Settings.topBar.Contains(wrapped) || Settings.bottomBar.Contains(wrapped))) Settings.cacheAvaibleElements.Add(wrapped);
+                }
+
+                foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
+                {
+                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
+                    if (!(Settings.topBar.Contains(wrapped) || Settings.bottomBar.Contains(wrapped))) Settings.cacheAvaibleElements.Add(wrapped);
+                }
+            }            
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
+            Text.Anchor = TextAnchor.UpperLeft;
+            curY += 25f;
+            if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
+            curY += 25f;
+
+            DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(
+                OnUpdate: () => { },
+                GetLabel: (ToolbarElementWrapper wrapper) => { return wrapper.LabelCap; });
+
+            DragMemory.hoveringOver = null;
+
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.topBar, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.bottomBar, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+
             manager.Update();
         }
 

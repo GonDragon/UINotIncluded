@@ -11,7 +11,7 @@ namespace UINotIncluded.Widget
         private static readonly float buttonspace_heigth = 40f;
         private static readonly float contraction = 4f;
 
-        public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<object, string> getLabel, DragManager<T> manager)
+        public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<T, string> getLabel, DragManager<T> manager)
         {
             Widgets.DrawMenuSection(inRect);
 
@@ -27,7 +27,7 @@ namespace UINotIncluded.Widget
             
 
             int n = 0;
-            foreach (object element in elements)
+            foreach (T element in elements)
             {
                 Rect innerSpace = widgetSpace.ContractedBy(contraction);
                 DragElement current = new DragElement { pos = n, listname = name, size = innerSpace.size };
