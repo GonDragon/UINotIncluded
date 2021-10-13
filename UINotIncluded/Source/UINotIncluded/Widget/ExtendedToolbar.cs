@@ -15,7 +15,7 @@ namespace UINotIncluded.Widget
             get
             {
                 float sum = 0;
-                foreach(ExtendedWidget widget in widgetList)
+                foreach(ExtendedWidgetDef widget in widgetList)
                 {
                     sum += widget.Width;
                 }
@@ -28,23 +28,23 @@ namespace UINotIncluded.Widget
         public static float margin = 5;
 
 
-        private static readonly List<ExtendedWidget> widgetList = new List<ExtendedWidget>();
+        private static readonly List<ExtendedWidgetDef> widgetList = DefDatabase<ExtendedWidgetDef>.AllDefs.ToList();
 
-        private static readonly ExtendedWidget weather = new Weather();
-        private static readonly ExtendedWidget realtime = new RealTimeWidget();
-        private static readonly ExtendedWidget datetime = new TimeWidget();
-        private static readonly ExtendedWidget timespeed = new Timespeed();
+        //private static readonly ExtendedWidgetDef weather = new Weather_Worker();
+        //private static readonly ExtendedWidgetDef realtime = new RealTimeWidget();
+        //private static readonly ExtendedWidgetDef datetime = new TimeWidget_Worker();
+        //private static readonly ExtendedWidget timespeed = new Timespeed_Worker();
 
         public static GameFont FontSize => Settings.fontSize;
 
         public static void ExtendedToolbarOnGUI(float x, float y)
         {
-            widgetList.Clear();
+            //widgetList.Clear();
 
-            widgetList.Add(weather);
-            if (Prefs.ShowRealtimeClock) widgetList.Add(realtime);
-            widgetList.Add(datetime);
-            widgetList.Add(timespeed);
+            //widgetList.Add(weather);
+            //if (Prefs.ShowRealtimeClock) widgetList.Add(realtime);
+            //widgetList.Add(datetime);
+            //widgetList.Add(timespeed);
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = FontSize;
@@ -56,7 +56,7 @@ namespace UINotIncluded.Widget
 
         }
 
-        public static void DrawBar(Rect rect, List<ExtendedWidget> widgets)
+        public static void DrawBar(Rect rect, List<ExtendedWidgetDef> widgets)
         {
             int n_widgets = widgets.Count();
             int[] minSizes = new int[n_widgets];
@@ -85,7 +85,7 @@ namespace UINotIncluded.Widget
 
             try
             {
-                foreach (ExtendedWidget widget in widgets)
+                foreach (ExtendedWidgetDef widget in widgets)
                 {
                     widget.OnGUI(new Rect(curX, 0, actualSizes[cur], rect.height));
                     curX += actualSizes[cur] + margin;
@@ -109,5 +109,11 @@ namespace UINotIncluded.Widget
         {
             Widgets.DrawAtlas(rect, ModTextures.toolbarWidgetBackground);
         }
+    }
+
+    public enum ToolbarPosition
+    {
+        top,
+        bottom
     }
 }

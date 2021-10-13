@@ -12,22 +12,27 @@ using UINotIncluded.Utility;
 
 namespace UINotIncluded.Widget
 {
-    public class Timespeed : ExtendedWidget
-    {
-        public override float Width => _width;
+    
 
-        private static float _width = 147f;
+    public class Timespeed_Worker : WidgetWorker
+    {
 
         private static Action<Rect> cached_DoTimeControlsGUI;
+        private static float extraWidth = 0f;
 
         public static void SetSmartspeedMode()
         {
             cached_DoTimeControlsGUI = CustomTimeControls.DoSmartTimeControlsGUI;
-            Timespeed._width = 155f;
+            Timespeed_Worker.extraWidth = 8f;
         }
-        public Timespeed()
+        public Timespeed_Worker()
         {
             cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoTimeControlsGUI;
+        }
+
+        public override float GetWidth()
+        {
+            return def.minWidth + extraWidth;
         }
 
         public override void OnGUI(Rect rect)

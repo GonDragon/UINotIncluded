@@ -10,11 +10,12 @@ using RimWorld;
 
 namespace UINotIncluded.Widget
 {
-    class RealTimeWidget : ExtendedWidget
+    class RealTimeWidget : WidgetWorker
     {
-        public override float Width => (float)Math.Round(_width + 11.66f * (float)Settings.fontSize);
-
-        private static readonly float _width = 75f;
+        public override float GetWidth()
+        {
+            return (float)Math.Round(def.minWidth + 11.66f * (float)Settings.fontSize);
+        }
 
         public override void OnGUI(Rect rect)
         {

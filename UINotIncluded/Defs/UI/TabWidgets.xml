@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <UINotIncluded.Widget.ExtendedWidgetDef>
+    <defName>Weather</defName>
+    <order>1</order>
+    <minWidth>65</minWidth>
+    <workerClass>UINotIncluded.Widget.Weather_Worker</workerClass>
+  </UINotIncluded.Widget.ExtendedWidgetDef>
+
+  <UINotIncluded.Widget.ExtendedWidgetDef>
+    <defName>Time</defName>
+    <order>2</order>
+    <minWidth>180</minWidth>
+    <workerClass>UINotIncluded.Widget.TimeWidget_Worker</workerClass>
+  </UINotIncluded.Widget.ExtendedWidgetDef>
+
+  <UINotIncluded.Widget.ExtendedWidgetDef>
+    <defName>TimeIRL</defName>
+    <order>3</order>
+    <minWidth>75</minWidth>
+    <workerClass>UINotIncluded.Widget.RealTimeWidget</workerClass>
+  </UINotIncluded.Widget.ExtendedWidgetDef>
+
+  <UINotIncluded.Widget.ExtendedWidgetDef>
+    <defName>TimeSpeed</defName>
+    <order>4</order>
+    <minWidth>147</minWidth>
+    <workerClass>UINotIncluded.Widget.Timespeed_Worker</workerClass>
+  </UINotIncluded.Widget.ExtendedWidgetDef>
+
+</Defs>

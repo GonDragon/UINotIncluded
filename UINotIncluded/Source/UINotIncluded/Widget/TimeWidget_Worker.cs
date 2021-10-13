@@ -11,11 +11,12 @@ using RimWorld.Planet;
 
 namespace UINotIncluded.Widget
 {
-    public class TimeWidget : ExtendedWidget
+    public class TimeWidget_Worker : WidgetWorker
     {
-        public override float Width => (float)Math.Round(_width + 35 * (float)Settings.fontSize);
-
-        private static readonly float _width = 180f;
+        public override float GetWidth()
+        {
+            return (float)Math.Round(def.minWidth + 35 * (float)Settings.fontSize);
+        }
 
         public override void OnGUI(Rect rect)
         {
