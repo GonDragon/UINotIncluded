@@ -19,7 +19,7 @@
     <defName>TimeIRL</defName>
     <order>3</order>
     <minWidth>75</minWidth>
-    <workerClass>UINotIncluded.Widget.RealTimeWidget</workerClass>
+    <workerClass>UINotIncluded.Widget.RealTime_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>

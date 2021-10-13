@@ -20,8 +20,10 @@ namespace UINotIncluded.Widget
 
         public override void OnGUI(Rect rect)
         {
+            this.Margins(ref rect);
             ExtendedToolbar.DoToolbarBackground(rect);
-            
+            this.Padding(ref rect);
+
             Rect space = rect.ContractedBy(ExtendedToolbar.padding);
 
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);

@@ -37,10 +37,10 @@ namespace UINotIncluded.Widget
 
         public override void OnGUI(Rect rect)
         {
+            this.Margins(ref rect);
             ExtendedToolbar.DoToolbarBackground(rect);
-            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
-            space.y += 1;
-            cached_DoTimeControlsGUI(space);
+            this.Padding(ref rect);
+            cached_DoTimeControlsGUI(rect);
         }
 
         private static class CustomTimeControls

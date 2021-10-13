@@ -49,13 +49,40 @@ namespace UINotIncluded
         }
         public static void MainUIOnGUI()
         {
-            float toolbarY = Settings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
-            float toolbarX;
-            if (Settings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = Settings.vanillaArchitect ? 0 : archButtonWidth; };
+            //float toolbarY = Settings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
+            //float toolbarX;
+            //if (Settings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = Settings.vanillaArchitect ? 0 : archButtonWidth; };
             float animalsY = Settings.tabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
 
-            ExtendedToolbar.ExtendedToolbarOnGUI(toolbarX, toolbarY);
-            if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
+            GUI.BeginGroup(new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
+            try
+            {
+                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.topBar);
+            }
+            catch (Exception e)
+            {
+                UINI.ErrorOnce(String.Format("Error doing the topbar: {0}.\nStack trace:\n{1}", e.ToString(), e.StackTrace), "topbar");
+            } finally
+            {
+                GUI.EndGroup();
+            }
+
+
+            GUI.BeginGroup(new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
+            try
+            {
+                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.bottomBar);
+            }
+            catch (Exception e)
+            {
+                UINI.ErrorOnce(String.Format("Error doing the bottom bar: {0}.\nStack trace:\n{1}", e.ToString(), e.StackTrace), "bottombar");
+            }
+            finally
+            {
+                GUI.EndGroup();
+            }
+
+            //if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             altInspectorManager.AltInspectorOnGUI();
             if (!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);

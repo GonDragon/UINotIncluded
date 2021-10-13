@@ -10,99 +10,52 @@ namespace UINotIncluded.Widget
     static class ExtendedToolbar
     {
         public static float Height => 35f;
-        public static float Width
-        {
-            get
-            {
-                float sum = 0;
-                foreach(ExtendedWidgetDef widget in widgetList)
-                {
-                    sum += widget.Width;
-                }
-                return sum;
-            }
-        }
+        public static float Width => UI.screenWidth;
 
         public static float interGap = 0;
         public static float padding = 2;
-        public static float margin = 5;
-
-
-        private static readonly List<ExtendedWidgetDef> widgetList = DefDatabase<ExtendedWidgetDef>.AllDefs.ToList();
-
-        //private static readonly ExtendedWidgetDef weather = new Weather_Worker();
-        //private static readonly ExtendedWidgetDef realtime = new RealTimeWidget();
-        //private static readonly ExtendedWidgetDef datetime = new TimeWidget_Worker();
-        //private static readonly ExtendedWidget timespeed = new Timespeed_Worker();
+        public static float margin = 3;
 
         public static GameFont FontSize => Settings.fontSize;
 
-        public static void ExtendedToolbarOnGUI(float x, float y)
+        public static void ExtendedToolbarOnGUI(List<ToolbarElementWrapper> elements)
         {
-            //widgetList.Clear();
+            if (elements.Count() == 0) return;
 
-            //widgetList.Add(weather);
-            //if (Prefs.ShowRealtimeClock) widgetList.Add(realtime);
-            //widgetList.Add(datetime);
-            //widgetList.Add(timespeed);
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = FontSize;
 
-            Widgets.DrawAtlas(new Rect(x, y, Width, Height), ModTextures.toolbarBackground);
-            ExtendedToolbar.DrawBar(new Rect(x+2, y+2, Width-2, Height-4), widgetList);
+            Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
+
+            float fixedWidth = 0f;
+            int elasticElementsAmount = 0;
+
+            foreach(ToolbarElementWrapper element in elements)
+            {
+                if (!element.FixedWidth) elasticElementsAmount++;
+                else fixedWidth += element.Width;
+            }
+
+            float elasticSpaceAvaible = Width - fixedWidth;
+            float elasticElementWidth = elasticSpaceAvaible / elasticElementsAmount;
+
+            float curX = 0;
+            foreach(ToolbarElementWrapper element in elements)
+            {
+                float eWidth = element.Width;
+                if (eWidth < 0) eWidth = elasticElementWidth;
+
+                element.OnGUI(new Rect(curX,0,eWidth,Height));
+                curX += eWidth;
+            }
+
+
+
+            //ExtendedToolbar.DrawBar(new Rect(x+2, y+2, Width-2, Height-4), elements);
 
             Text.Anchor = TextAnchor.UpperLeft;
 
-        }
-
-        public static void DrawBar(Rect rect, List<ExtendedWidgetDef> widgets)
-        {
-            int n_widgets = widgets.Count();
-            int[] minSizes = new int[n_widgets];
-            int totalMinSize = 0;
-
-            for(int i=0; i < n_widgets; i++)
-            {
-                minSizes[i] = (int)Math.Ceiling(widgets[i].Width);
-                totalMinSize += minSizes[i];
-            }
-
-
-            float[] actualSizes = new float[n_widgets];
-            float occupiedSpace = 0;
-            float totalAvaibleWidth = rect.width - (margin * (n_widgets + 1));
-            for (int j=0; j < (n_widgets - 1); j++)
-            {
-                actualSizes[j] = (float)Math.Ceiling((((float)minSizes[j]) / totalMinSize) * totalAvaibleWidth);
-                occupiedSpace += actualSizes[j];
-            }
-            actualSizes[n_widgets - 1] = totalAvaibleWidth - occupiedSpace;
-
-            GUI.BeginGroup(rect);
-            float curX = margin;
-            int cur = 0;
-
-            try
-            {
-                foreach (ExtendedWidgetDef widget in widgets)
-                {
-                    widget.OnGUI(new Rect(curX, 0, actualSizes[cur], rect.height));
-                    curX += actualSizes[cur] + margin;
-                    cur++;
-                }
-            }
-            catch (Exception e)
-            {
-                UINI.ErrorOnce(String.Format("Error catched on the widget {0} named {1}. The error was: {2}.\nStack trace:\n{3}",cur.ToString(),widgets[cur].GetType().ToString(),e.ToString(),e.StackTrace),"Rendering Widgets");
-            }
-            finally
-            {
-                GUI.EndGroup();
-            }
-
-            
-            
         }
 
         public static void DoToolbarBackground(Rect rect)

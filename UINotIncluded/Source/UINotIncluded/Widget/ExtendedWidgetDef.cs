@@ -45,9 +45,21 @@ namespace UINotIncluded.Widget
 
         public virtual float GetWidth() { return def.minWidth; }
 
+        public virtual void Margins(ref Rect rect)
+        {
+
+            rect = rect.ContractedBy(ExtendedToolbar.margin);
+        }
+
+        public virtual void Padding(ref Rect rect)
+        {
+
+            rect = rect.ContractedBy(ExtendedToolbar.padding);
+        }
+
         public Rect DrawIcon(Texture2D icon, float curX, string tooltip = null)
         {
-            Rect rect = new Rect(curX, 4f, iconSize, iconSize);
+            Rect rect = new Rect(curX, 5f, iconSize, iconSize);
             GUI.DrawTexture(rect, icon);
             if (!tooltip.NullOrEmpty())
                 TooltipHandler.TipRegion(rect, (TipSignal)tooltip);
@@ -80,6 +92,23 @@ namespace UINotIncluded.Widget
             {
                 if (isWidget) return this.defName;
                 return Def.LabelCap;
+            }
+        }
+
+        public bool FixedWidth
+        {
+            get
+            {
+                return isWidget;
+            }
+        }
+
+        public float Width
+        {
+            get
+            {
+                if (!isWidget) return -1;
+                return ((ExtendedWidgetDef)Def).Width;
             }
         }
 

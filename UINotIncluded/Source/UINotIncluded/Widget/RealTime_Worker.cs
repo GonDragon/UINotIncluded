@@ -10,7 +10,7 @@ using RimWorld;
 
 namespace UINotIncluded.Widget
 {
-    class RealTimeWidget : WidgetWorker
+    class RealTime_Worker : WidgetWorker
     {
         public override float GetWidth()
         {
@@ -19,17 +19,18 @@ namespace UINotIncluded.Widget
 
         public override void OnGUI(Rect rect)
         {
+            this.Margins(ref rect);
             ExtendedToolbar.DoToolbarBackground(rect);
-            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
+            this.Padding(ref rect);
 
-            Rect iconSpace = DrawIcon(ModTextures.iconWorld, space.x);
-            space.x += iconSpace.width;
-            space.width -= iconSpace.width;
-            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown,gap: ExtendedToolbar.interGap);
+            Rect iconSpace = DrawIcon(ModTextures.iconWorld, rect.x);
+            rect.x += iconSpace.width;
+            rect.width -= iconSpace.width;
+            WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown,gap: ExtendedToolbar.interGap);
 
             String label = DateTime.Now.ToString("HH:mm");
 
-            row.Label(label, space.width, null, space.height);
+            row.Label(label, rect.width, null, rect.height);
         }
     }
 }

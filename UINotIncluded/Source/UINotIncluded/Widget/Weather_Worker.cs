@@ -20,25 +20,25 @@ namespace UINotIncluded.Widget
 
         public override void OnGUI(Rect rect)
         {
-
+            this.Margins(ref rect);
             ExtendedToolbar.DoToolbarBackground(rect);
-            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
+            this.Padding(ref rect);
 
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;
             Texture2D icon = ModTextures.WeatherIcon(weatherPerceived.GetModExtension<WeatherDefExtension>()?.icon ?? "GD/UI/Icons/Weather/Unknown");
 
             Rect iconSpace;
             if (!weatherPerceived.description.NullOrEmpty())
-                iconSpace = DrawIcon(icon,space.x, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
+                iconSpace = DrawIcon(icon, rect.x, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
             else
-                iconSpace = DrawIcon(icon, space.x, weatherPerceived.LabelCap);
-            space.x += iconSpace.width;
-            space.width -= iconSpace.width;
+                iconSpace = DrawIcon(icon, rect.x, weatherPerceived.LabelCap);
+            rect.x += iconSpace.width;
+            rect.width -= iconSpace.width;
 
-            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
+            WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
             float temp = Mathf.RoundToInt(GenTemperature.CelsiusTo(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile), Prefs.TemperatureMode));
 
-            row.Label(temp.ToString() + new string[] { "°C", "°F", "°K" }[(int)Prefs.TemperatureMode], space.width, null, space.height);
+            row.Label(temp.ToString() + new string[] { "°C", "°F", "°K" }[(int)Prefs.TemperatureMode], rect.width, null, rect.height);
         }
     }
 }

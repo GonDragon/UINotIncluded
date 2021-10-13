@@ -108,7 +108,7 @@
     <Compile Include="Utility\TimeSpeedExtension.cs" />
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
-    <Compile Include="Widget\RealTimeWidget.cs" />
+    <Compile Include="Widget\RealTime_Worker.cs" />
     <Compile Include="Widget\TimeWidget_Worker.cs" />
     <Compile Include="Widget\Timespeed_Worker.cs" />
     <Compile Include="Widget\Weather_Worker.cs" />
