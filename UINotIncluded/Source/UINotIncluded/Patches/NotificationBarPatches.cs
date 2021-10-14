@@ -31,7 +31,7 @@ namespace UINotIncluded
         static bool DoPlaySettingsPatch(WidgetRow rowVisibility, bool worldView, ref float curBaseY)
         {
             
-            if (!Settings.TabsOnTop) curBaseY -= UIManager.ExtendedBarHeight;
+            if (Settings.TabsOnBottom) curBaseY -= UIManager.ExtendedBarHeight;
             if (Settings.useDesignatorBar && !Settings.designationsOnLeft) curBaseY -= 88f;
             if (worldView && !Settings.togglersOnTop) curBaseY -= 35;
             float borderGap = 4f;

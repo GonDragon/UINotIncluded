@@ -17,7 +17,7 @@ namespace UINotIncluded
     {
         public static void Postfix(ref float __result)
         {
-            if (Current.ProgramState == ProgramState.Playing && Settings.TabsOnTop) __result += 35;
+            if (Current.ProgramState == ProgramState.Playing && !Settings.TabsOnBottom) __result += 35;
         }
     }
 
@@ -26,7 +26,7 @@ namespace UINotIncluded
     {
         public static void Postfix(ref float __result)
         {
-            if (Settings.TabsOnTop) __result += 35;
+            if (!Settings.TabsOnBottom) __result += 35;
         }
     }
 
@@ -38,7 +38,7 @@ namespace UINotIncluded
             if (ID == 76136312)
             {
                 if (Settings.togglersOnTop) rect.y += 75f;
-                if (Settings.TabsOnTop) rect.y += UIManager.ExtendedBarHeight;
+                if (!Settings.TabsOnBottom) rect.y += UIManager.ExtendedBarHeight;
             }
         }
     }
@@ -48,12 +48,13 @@ namespace UINotIncluded
 
         public static void CenterRectOnScreen(ref Rect rect)
         {
-            float newX = (float)Math.Floor(UI.screenWidth / 2f) - (float)Math.Floor(rect.width / 2f);
-            float newY = (float)Math.Floor(UI.screenHeight / 2f) - (float)Math.Floor(rect.height / 2f);
-
-            rect.x = newX;
-            rect.y = newY;
+            CenterXOnScreen(ref rect);
+            CenterYOnScreen(ref rect);
         }
+
+        public static void CenterXOnScreen(ref Rect rect) => rect.x = (float)Math.Floor(UI.screenWidth / 2f) - (float)Math.Floor(rect.width / 2f);
+
+        public static void CenterYOnScreen(ref Rect rect) => rect.y = (float)Math.Floor(UI.screenHeight / 2f) - (float)Math.Floor(rect.height / 2f);
     }
 
 
@@ -63,16 +64,25 @@ namespace UINotIncluded
     {
         public static void Postfix(ref Rect ___windowRect, Window __instance)
         {
-            if (!Settings.TabsOnTop) return;
             Type windowType = __instance.GetType();
 
-            if (windowType == typeof(MainTabWindow_Inspect))
+            float maxHeight = UI.screenHeight;
+            if (Settings.TabsOnTop) maxHeight -= UIManager.ExtendedBarHeight;
+            if (Settings.TabsOnBottom) maxHeight -= UIManager.ExtendedBarHeight;
+
+            ___windowRect.height = Math.Min(___windowRect.height,maxHeight);
+
+            if (windowType == typeof(MainTabWindow_Inspect) || windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research))
             {
-                ___windowRect.y += 35f;
+                if(!Settings.TabsOnBottom) ___windowRect.y += 35f;
                 return;
             }
 
-            if (windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research)) { ___windowRect.y = UI.screenHeight - ___windowRect.height; return; }
+            if(windowType == typeof(MainTabWindow_Animals) || windowType == typeof(MainTabWindow_Wildlife) || windowType == typeof(MainTabWindow_Ideos))
+            {
+                MainTabWindowPatchHelper.CenterYOnScreen(ref ___windowRect);
+                return;
+            }
 
             MainTabWindowPatchHelper.CenterRectOnScreen(ref ___windowRect);
         }
@@ -83,7 +93,7 @@ namespace UINotIncluded
     {
         public static void Prefix(ref Rect infoRect)
         {
-            if (Settings.TabsOnTop) infoRect.y += UIManager.ExtendedBarHeight;
+            if (!Settings.TabsOnBottom) infoRect.y += UIManager.ExtendedBarHeight;
         }
     }
 }

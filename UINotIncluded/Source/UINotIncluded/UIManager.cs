@@ -54,7 +54,7 @@ namespace UINotIncluded
             //if (Settings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = Settings.vanillaArchitect ? 0 : archButtonWidth; };
             float animalsY = Settings.TabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
 
-            GUI.BeginGroup(new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
+            GUI.BeginGroup(new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
             try
             {
                 ExtendedToolbar.ExtendedToolbarOnGUI(Settings.TopBarElements);
@@ -68,7 +68,7 @@ namespace UINotIncluded
             }
 
 
-            GUI.BeginGroup(new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
+            GUI.BeginGroup(new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
             try
             {
                 ExtendedToolbar.ExtendedToolbarOnGUI(Settings.BottomBarElements);

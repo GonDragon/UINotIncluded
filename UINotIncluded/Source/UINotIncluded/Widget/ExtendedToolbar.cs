@@ -22,10 +22,6 @@ namespace UINotIncluded.Widget
         {
             if (elements.Count() == 0) return;
 
-
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = FontSize;
-
             Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
 
             float fixedWidth = 0f;
@@ -46,16 +42,12 @@ namespace UINotIncluded.Widget
                 float eWidth = element.Width;
                 if (eWidth < 0) eWidth = elasticElementWidth;
 
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = ExtendedToolbar.FontSize;
                 element.OnGUI(new Rect(curX,0,eWidth,Height));
                 curX += eWidth;
             }
-
-
-
-            //ExtendedToolbar.DrawBar(new Rect(x+2, y+2, Width-2, Height-4), elements);
-
             Text.Anchor = TextAnchor.UpperLeft;
-
         }
 
         public static void DoToolbarBackground(Rect rect)
