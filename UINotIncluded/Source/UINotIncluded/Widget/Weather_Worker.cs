@@ -18,6 +18,11 @@ namespace UINotIncluded.Widget
             return (float)Math.Round(def.minWidth + 11.66f * (float)Settings.fontSize);
         }
 
+        public override bool WidgetVisible
+        {
+            get => Find.CurrentMap != null;
+        }
+
         public override void OnGUI(Rect rect)
         {
             this.Margins(ref rect);

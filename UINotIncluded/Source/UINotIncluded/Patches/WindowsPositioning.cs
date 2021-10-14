@@ -35,10 +35,15 @@ namespace UINotIncluded
     {
         public static void Prefix(int ID, ref Rect rect)
         {
-            if (ID == 76136312)
+            if (ID == 76136312) //Learning Readout
             {
                 if (Settings.togglersOnTop) rect.y += 75f;
-                if (!Settings.TabsOnBottom) rect.y += UIManager.ExtendedBarHeight;
+                if (Settings.TabsOnTop) rect.y += UIManager.ExtendedBarHeight;
+            }
+
+            if (ID == 1593759361) //Debug Toolbar
+            {
+                if (Settings.TabsOnTop) rect.y += UIManager.ExtendedBarHeight;
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -32,8 +33,8 @@ namespace UINotIncluded
         {
             
             if (Settings.TabsOnBottom) curBaseY -= UIManager.ExtendedBarHeight;
-            if (Settings.useDesignatorBar && !Settings.designationsOnLeft) curBaseY -= 88f;
-            if (worldView && !Settings.togglersOnTop) curBaseY -= 35;
+            if (Settings.useDesignatorBar && !Settings.designationsOnLeft && !worldView) curBaseY -= 88f;
+            if (Settings.togglersOnTop) curBaseY += 35;
             float borderGap = 4f;
             float initialY = Settings.togglersOnTop ? (Settings.TabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
             rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, Settings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, Settings.togglersOnTop ? 250f : 180f);
@@ -54,7 +55,7 @@ namespace UINotIncluded
         [HarmonyPatch(nameof(GlobalControlsUtility.DoDate)), HarmonyPriority(Priority.Low)]
         static bool DoDate_Patch(ref float curBaseY)
         {
-            curBaseY += 42f;
+            if(!WorldRendererUtility.WorldRenderedNow) curBaseY += 42f;
             return false;
         }
 

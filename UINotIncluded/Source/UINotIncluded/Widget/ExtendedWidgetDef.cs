@@ -34,6 +34,8 @@ namespace UINotIncluded.Widget
                 return this.workerInt;
             }
         }
+
+        public bool WidgetVisible { get => Worker.WidgetVisible; }
     }
 
     public abstract class WidgetWorker
@@ -44,6 +46,8 @@ namespace UINotIncluded.Widget
         public abstract void OnGUI(Rect rect);
 
         public virtual float GetWidth() { return def.minWidth; }
+
+        public virtual bool WidgetVisible { get => true; }
 
         public virtual void Margins(ref Rect rect)
         {
@@ -109,6 +113,15 @@ namespace UINotIncluded.Widget
             {
                 if (!isWidget) return -1;
                 return ((ExtendedWidgetDef)Def).Width;
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                if (!isWidget) return ((MainButtonDef)Def).buttonVisible;
+                return ((ExtendedWidgetDef)Def).WidgetVisible;
             }
         }
 

@@ -29,6 +29,7 @@ namespace UINotIncluded.Widget
 
             foreach(ToolbarElementWrapper element in elements)
             {
+                if (!element.Visible) continue;
                 if (!element.FixedWidth) elasticElementsAmount++;
                 else fixedWidth += element.Width;
             }
@@ -39,6 +40,7 @@ namespace UINotIncluded.Widget
             float curX = 0;
             foreach(ToolbarElementWrapper element in elements)
             {
+                if (!element.Visible) continue;
                 float eWidth = element.Width;
                 if (eWidth < 0) eWidth = elasticElementWidth;
 
