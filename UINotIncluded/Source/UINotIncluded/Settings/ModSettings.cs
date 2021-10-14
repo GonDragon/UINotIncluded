@@ -20,7 +20,6 @@ namespace UINotIncluded
         public static List<String> leftDesignations;
         public static List<String> mainDesignations;
         public static List<String> rightDesignations;
-        public static bool tabsOnTop = true;
         public static bool togglersOnTop = true;
         public static bool useDesignatorBar = true;
         public static bool vanillaAnimals = false;
@@ -29,9 +28,53 @@ namespace UINotIncluded
         public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
-        public static List<ToolbarElementWrapper> cacheAvaibleElements;
-        public static List<ToolbarElementWrapper> topBar;
-        public static List<ToolbarElementWrapper> bottomBar;
+        public static bool TabsOnTop => Settings.TopBarElements.Count() > 0;
+        public static bool TabsOnBottom => Settings.BottomBarElements.Count() > 0;
+
+        private static List<ToolbarElementWrapper> cacheAvaibleElements;
+        private static List<ToolbarElementWrapper> topBar;
+        private static List<ToolbarElementWrapper> bottomBar;
+
+        public static List<ToolbarElementWrapper> AllAvaibleElements
+        {
+            get
+            {
+                if (Settings.cacheAvaibleElements == null)
+                {
+                    Settings.cacheAvaibleElements = new List<ToolbarElementWrapper>();
+                    foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
+                    {
+                        ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
+                        if (!buttonDef.buttonVisible || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
+                        Settings.cacheAvaibleElements.Add(wrapped);
+                    }
+
+                    foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
+                    {
+                        ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
+                        if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
+                        Settings.cacheAvaibleElements.Add(wrapped);
+                    }
+                }
+                return cacheAvaibleElements;
+            }
+        }
+        public static List<ToolbarElementWrapper> TopBarElements
+        {
+            get
+            {
+                if (topBar == null) topBar = new List<ToolbarElementWrapper>();
+                return topBar;
+            }
+        }
+        public static List<ToolbarElementWrapper> BottomBarElements
+        {
+            get
+            {
+                if (bottomBar == null) bottomBar = new List<ToolbarElementWrapper>();
+                return bottomBar;
+            }
+        }
 
         public static List<Designator>[] GetDesignationConfigs()
         {
@@ -94,7 +137,6 @@ namespace UINotIncluded
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref tabsOnTop, "tabsOnTop", true);
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref barOnRight, "barOnRight", false);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
@@ -279,7 +321,6 @@ namespace UINotIncluded
             Listing_Standard listingStandard = new Listing_Standard();
 
             listingStandard.Begin(column1);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.tabsOnTop".Translate(), ref Settings.tabsOnTop, "UINotIncluded.Setting.tabsOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
@@ -370,24 +411,7 @@ namespace UINotIncluded
             float columnWidth = rect.width / 3;
             float curY = rect.y;
 
-            if(Settings.cacheAvaibleElements == null)
-            {
-                if (Settings.topBar == null) Settings.topBar = new List<ToolbarElementWrapper>();
-                if (Settings.bottomBar == null) Settings.bottomBar = new List<ToolbarElementWrapper>();
-
-                Settings.cacheAvaibleElements = new List<ToolbarElementWrapper>();
-                foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
-                {
-                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
-                    if (!(Settings.topBar.Contains(wrapped) || Settings.bottomBar.Contains(wrapped))) Settings.cacheAvaibleElements.Add(wrapped);
-                }
-
-                foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
-                {
-                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
-                    if (!(Settings.topBar.Contains(wrapped) || Settings.bottomBar.Contains(wrapped))) Settings.cacheAvaibleElements.Add(wrapped);
-                }
-            }            
+                        
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
@@ -402,9 +426,9 @@ namespace UINotIncluded
 
             DragMemory.hoveringOver = null;
 
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.topBar, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.bottomBar, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.AllAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
 
             manager.Update();
         }

@@ -26,7 +26,7 @@ namespace UINotIncluded
             }
             __state = true;
 
-            float deltaH = Settings.tabsOnTop ? 35 : 0;
+            float deltaH = Settings.TabsOnTop ? 35 : 0;
 
             GUI.BeginGroup(new Rect(0f,0f + deltaH, UI.screenWidth, UI.screenHeight - deltaH));
             return true;

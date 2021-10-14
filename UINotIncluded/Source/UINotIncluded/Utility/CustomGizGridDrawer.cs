@@ -56,7 +56,7 @@ namespace Verse
                 int[] startYrows = new int[rows];
                 bool simpleButtons = buttonSize < 50;
 
-                if (!Settings.tabsOnTop) startY -= UIManager.ExtendedBarHeight;
+                if (!Settings.TabsOnTop) startY -= UIManager.ExtendedBarHeight;
 
                 for (int i = 0; i < rows; i++)
                 {

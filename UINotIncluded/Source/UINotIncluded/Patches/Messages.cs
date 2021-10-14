@@ -19,7 +19,7 @@ namespace UINotIncluded
             Text.Font = GameFont.Small;
             int x = (int)Messages.MessagesTopLeftStandard.x;
             int y = (int)Messages.MessagesTopLeftStandard.y;
-            if (Settings.tabsOnTop) y += (int)UIManager.ExtendedBarHeight;
+            if (Settings.TabsOnTop) y += (int)UIManager.ExtendedBarHeight;
             if (Current.Game != null && Find.ActiveLesson.ActiveLessonVisible)
                 y += (int)Find.ActiveLesson.Current.MessagesYOffset;
             for (int index = ___liveMessages.Count - 1; index >= 0; --index)

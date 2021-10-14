@@ -21,7 +21,7 @@ namespace UINotIncluded
         public static bool toggleAltInspector = false;
 
 
-        private static bool tabsOnTop = Settings.tabsOnTop;
+        private static bool tabsOnTop = Settings.TabsOnTop;
         private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
@@ -30,9 +30,9 @@ namespace UINotIncluded
 
         public static void Before_MainUIOnGUI()
         {
-            if (tabsOnTop != Settings.tabsOnTop)
+            if (tabsOnTop != Settings.TabsOnTop)
             {
-                tabsOnTop = Settings.tabsOnTop;
+                tabsOnTop = Settings.TabsOnTop;
                 Find.ColonistBar.MarkColonistsDirty();
             }
             if(vanillaArchitect != Settings.vanillaArchitect)
@@ -52,12 +52,12 @@ namespace UINotIncluded
             //float toolbarY = Settings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
             //float toolbarX;
             //if (Settings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = Settings.vanillaArchitect ? 0 : archButtonWidth; };
-            float animalsY = Settings.tabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
+            float animalsY = Settings.TabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
 
             GUI.BeginGroup(new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
             try
             {
-                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.topBar);
+                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.TopBarElements);
             }
             catch (Exception e)
             {
@@ -71,7 +71,7 @@ namespace UINotIncluded
             GUI.BeginGroup(new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
             try
             {
-                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.bottomBar);
+                ExtendedToolbar.ExtendedToolbarOnGUI(Settings.BottomBarElements);
             }
             catch (Exception e)
             {

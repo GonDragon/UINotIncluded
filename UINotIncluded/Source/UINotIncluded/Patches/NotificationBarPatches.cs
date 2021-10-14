@@ -31,11 +31,11 @@ namespace UINotIncluded
         static bool DoPlaySettingsPatch(WidgetRow rowVisibility, bool worldView, ref float curBaseY)
         {
             
-            if (!Settings.tabsOnTop) curBaseY -= UIManager.ExtendedBarHeight;
+            if (!Settings.TabsOnTop) curBaseY -= UIManager.ExtendedBarHeight;
             if (Settings.useDesignatorBar && !Settings.designationsOnLeft) curBaseY -= 88f;
             if (worldView && !Settings.togglersOnTop) curBaseY -= 35;
             float borderGap = 4f;
-            float initialY = Settings.togglersOnTop ? (Settings.tabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
+            float initialY = Settings.togglersOnTop ? (Settings.TabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
             rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, Settings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, Settings.togglersOnTop ? 250f : 180f);
             Find.PlaySettings.DoPlaySettingsGlobalControls(rowVisibility, worldView);
             if (!Settings.togglersOnTop) curBaseY = rowVisibility.FinalY;
