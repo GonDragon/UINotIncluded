@@ -53,7 +53,10 @@ namespace UINotIncluded.Widget
                     }
                 }
 
-                if (shouldDrawButton && CustomButtons.DraggableButton(innerSpace, getLabel(element)) == Widgets.DraggableResult.Dragged) manager.DraggStart(current);
+                Widgets.DraggableResult buttonResult = CustomButtons.DraggableButton(innerSpace, getLabel(element), ConfigActionIcon: true);
+
+                if (buttonResult == Widgets.DraggableResult.Pressed || buttonResult == Widgets.DraggableResult.DraggedThenPressed) manager.OnClick(current);
+                else if (shouldDrawButton && buttonResult == Widgets.DraggableResult.Dragged) manager.DraggStart(current);
 
                 widgetSpace.y += buttonspace_heigth;
                 n++;

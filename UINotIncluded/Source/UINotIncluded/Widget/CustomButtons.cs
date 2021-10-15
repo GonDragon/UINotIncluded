@@ -7,7 +7,7 @@ namespace UINotIncluded
 {
     public static class CustomButtons
     {
-        public static Widgets.DraggableResult DraggableButton(Rect space, String label, CustomButtonState state = CustomButtonState.enabled)
+        public static Widgets.DraggableResult DraggableButton(Rect space, String label, CustomButtonState state = CustomButtonState.enabled, bool ConfigActionIcon = false)
         {
             Texture2D texture;
             bool doMousoverSound;
@@ -28,10 +28,21 @@ namespace UINotIncluded
                     throw new NotImplementedException();
             }
 
+
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.DrawAtlas(space, texture);
             Widgets.Label(space, label);
             Text.Anchor = TextAnchor.UpperLeft;
+
+            GUI.BeginGroup(space);
+            if(ConfigActionIcon)
+            {
+                float configSizef = space.height - 8f;
+                Rect configSpace = new Rect(space.width - configSizef - 4f,4f,configSizef,configSizef);
+                GUI.DrawTexture(configSpace, ModTextures.iconCog);
+            }
+            GUI.EndGroup();
+
             return Widgets.ButtonInvisibleDraggable(space, doMousoverSound);
         }
 

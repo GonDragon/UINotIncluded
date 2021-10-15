@@ -125,6 +125,11 @@ namespace UINotIncluded.Widget
             }
         }
 
+        public void ConfigAction()
+        {
+            UINI.Log("WIP");
+        }
+
         public ToolbarElementWrapper() { } //So it can be instantiated by the Scribe
 
         public ToolbarElementWrapper(ExtendedWidgetDef widget)

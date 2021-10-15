@@ -422,7 +422,8 @@ namespace UINotIncluded
 
             DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(
                 OnUpdate: () => { },
-                GetLabel: (ToolbarElementWrapper wrapper) => { return wrapper.LabelCap; });
+                GetLabel: (ToolbarElementWrapper wrapper) => { return wrapper.LabelCap; },
+                OnClick: (ToolbarElementWrapper wrapper) => { wrapper.ConfigAction(); });
 
             DragMemory.hoveringOver = null;
 

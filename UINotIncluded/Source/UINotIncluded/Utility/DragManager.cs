@@ -18,6 +18,7 @@ namespace UINotIncluded
     {
         public Action OnUpdate;
         public Func<T, string> GetLabel;
+        private readonly Action<T> _OnClick;
 
         private readonly Dictionary<string, List<T>> _managed_dragable_lists = new Dictionary<string, List<T>>();
 
@@ -25,6 +26,14 @@ namespace UINotIncluded
         {
             this.OnUpdate = OnUpdate;
             this.GetLabel = GetLabel;
+            this._OnClick = (T element) => { };
+        }
+
+        public DragManager(Action OnUpdate, Func<T, string> GetLabel, Action<T> OnClick)
+        {
+            this.OnUpdate = OnUpdate;
+            this.GetLabel = GetLabel;
+            this._OnClick = OnClick;
 
         }
 
@@ -55,6 +64,11 @@ namespace UINotIncluded
         public bool DraggStops()
         {
             return Event.current.rawType == EventType.MouseUp;
+        }
+
+        public void OnClick(DragElement element)
+        {
+            this._OnClick(_managed_dragable_lists[element.listname][element.pos]);
         }
 
         public void DrawGhost()
