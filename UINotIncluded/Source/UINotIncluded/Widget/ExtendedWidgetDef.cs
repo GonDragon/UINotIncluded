@@ -77,6 +77,21 @@ namespace UINotIncluded.Widget
         public string defName;
         private Def defCache;
 
+        private bool _configActionLoaded = false;
+        private Action _configAction;
+        public Action ConfigAction
+        {
+            get
+            {
+                if(!_configActionLoaded)
+                {
+                    if (!isWidget) _configAction = () => UINI.Log("Yes. Action loaded");
+                    _configActionLoaded = true;
+                }
+                return _configAction;
+            }
+        }
+
         public Def Def
         {
             get
@@ -123,11 +138,6 @@ namespace UINotIncluded.Widget
                 if (!isWidget) return ((MainButtonDef)Def).buttonVisible;
                 return ((ExtendedWidgetDef)Def).WidgetVisible;
             }
-        }
-
-        public void ConfigAction()
-        {
-            UINI.Log("WIP");
         }
 
         public ToolbarElementWrapper() { } //So it can be instantiated by the Scribe

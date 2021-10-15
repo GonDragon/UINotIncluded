@@ -17,14 +17,15 @@ namespace UINotIncluded.Widget
 
             ScrollInstance scroll = ScrollManager.GetInstance(name.GetHashCode());
             Rect scrollviewRect = new Rect(inRect).ContractedBy(1f);
-            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 20f, buttonspace_heigth * elements.Count() + contraction * 2);
+            Rect scrollviewInRect = new Rect(0, 0, scrollviewRect.width - 21f, buttonspace_heigth * elements.Count() + contraction * 2);
 
             Widgets.BeginScrollView(scrollviewRect, ref scroll.pos, scrollviewInRect);
 
-            Rect widgetSpace = new Rect(0f, contraction, inRect.width - contraction, buttonspace_heigth);
+            float scrollbarWidth = 0f;
+            if (scrollviewInRect.height > scrollviewRect.height) scrollbarWidth = 15f;
+
+            Rect widgetSpace = new Rect(0f, 0f, scrollviewRect.width - scrollbarWidth, buttonspace_heigth);
             manager.ManageList(name, elements);
-            
-            
 
             int n = 0;
             foreach (T element in elements)
@@ -53,9 +54,10 @@ namespace UINotIncluded.Widget
                     }
                 }
 
-                Widgets.DraggableResult buttonResult = CustomButtons.DraggableButton(innerSpace, getLabel(element), ConfigActionIcon: true);
+                bool hasOnClick = manager.HasOnClick(current);
+                Widgets.DraggableResult buttonResult = CustomButtons.DraggableButton(innerSpace, getLabel(element), ConfigActionIcon: hasOnClick);
 
-                if (buttonResult == Widgets.DraggableResult.Pressed || buttonResult == Widgets.DraggableResult.DraggedThenPressed) manager.OnClick(current);
+                if (hasOnClick && (buttonResult == Widgets.DraggableResult.Pressed || buttonResult == Widgets.DraggableResult.DraggedThenPressed)) manager.OnClick(current);
                 else if (shouldDrawButton && buttonResult == Widgets.DraggableResult.Dragged) manager.DraggStart(current);
 
                 widgetSpace.y += buttonspace_heigth;
