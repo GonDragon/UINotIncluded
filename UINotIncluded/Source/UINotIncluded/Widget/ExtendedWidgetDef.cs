@@ -103,7 +103,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                return isWidget;
+                return isWidget || ((MainButtonDef)Def).minimized;
             }
         }
 
@@ -111,7 +111,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (!isWidget) return -1;
+                if (!isWidget) return FixedWidth ? UIManager.ExtendedBarHeight : -1f;
                 return ((ExtendedWidgetDef)Def).Width;
             }
         }
