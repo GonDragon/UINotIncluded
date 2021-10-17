@@ -245,7 +245,7 @@ namespace UINotIncluded
             float pageTittleHeight = 26f;
             float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
 
-            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight);
+            Rect contentRect = new Rect(inRect.x, inRect.y + pageTittleHeight, inRect.width, inRect.height - pageTittleHeight - 30f);
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(inRect.x + pageTittleWidth + pageTittleHeight, inRect.y, pageTittleWidth - 2 * pageTittleHeight, pageTittleHeight), settingPages.label);
@@ -352,7 +352,7 @@ namespace UINotIncluded
         private void DoDesignatorPage(Rect inRect)
         {
             float columnWidth = inRect.width / 2;
-            float heigth = (float)Math.Floor(inRect.height / 4);
+            float heigth = 30f;
             Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
@@ -393,16 +393,9 @@ namespace UINotIncluded
         private void DoToolbarsPages(Rect inRect)
         {
             float columnWidth = inRect.width / 2;
-            float heigth = (float)Math.Floor(inRect.height / 4);
+            float heigth = 10f;
             Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
-            Listing_Standard listingStandard = new Listing_Standard();
-            listingStandard.Begin(column1);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.useDesignatorBar".Translate(), ref Settings.useDesignatorBar, "UINotIncluded.Setting.useDesignatorBar.Description".Translate());
-            listingStandard.End();
-            listingStandard.Begin(column2);
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.designationsOnLeft".Translate(), ref Settings.designationsOnLeft, "UINotIncluded.Setting.designationsOnLeft.Description".Translate());
-            listingStandard.End();
             DoToolbarDraggables(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
         }
 

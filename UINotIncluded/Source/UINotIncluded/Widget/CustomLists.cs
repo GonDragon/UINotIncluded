@@ -13,6 +13,11 @@ namespace UINotIncluded.Widget
 
         public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<T, string> getLabel, DragManager<T> manager)
         {
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(inRect.x, inRect.y,inRect.width,30f), name);
+            Text.Anchor = TextAnchor.UpperLeft;
+            inRect.y += 30f;
+            inRect.height -= 30f;
             Widgets.DrawMenuSection(inRect);
 
             ScrollInstance scroll = ScrollManager.GetInstance(name.GetHashCode());
