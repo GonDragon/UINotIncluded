@@ -49,7 +49,6 @@ namespace UINotIncluded
         public string defaultIconPath;
         public bool defaultMinimized;
 
-        private bool loaded = false;
         private bool initialized = false;
         
         private string defName;
@@ -78,16 +77,11 @@ namespace UINotIncluded
 
         public override void LoadMemory()
         {
-            if (!loaded)
+            if (!initialized)
             {
                 this.defaultLabel = Def.label;
                 this.defaultIconPath = Def.iconPath;
                 this.defaultMinimized = Def.minimized;
-                loaded = true;
-            }
-
-            if (!initialized)
-            {
                 this.Clear();
                 initialized = true;
                 return;
@@ -119,6 +113,10 @@ namespace UINotIncluded
             Scribe_Values.Look(ref iconPath, "iconPath");
             Scribe_Values.Look(ref minimized, "minimized");
             Scribe_Values.Look(ref defName, "button");
+
+            Scribe_Values.Look(ref defaultLabel, "defaultLabel");
+            Scribe_Values.Look(ref defaultIconPath, "defaultIconPath");
+            Scribe_Values.Look(ref defaultMinimized, "defaultMinimized");
         }
 
         public override void Clear()
