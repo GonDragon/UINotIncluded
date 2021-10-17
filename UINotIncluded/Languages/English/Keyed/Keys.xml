@@ -25,11 +25,13 @@
 <UINotIncluded.Setting.legacyAltInspector>Use Tooltip-like AltInspector</UINotIncluded.Setting.legacyAltInspector>
 <UINotIncluded.Setting.legacyAltInspector.Description>If this option is enabled, the Alt Inspector will use it's legacy mode to show the info in a tooltip.</UINotIncluded.Setting.legacyAltInspector.Description>
 
-
 <UINotIncluded.AltInspector.TopLayer>Top Layer</UINotIncluded.AltInspector.TopLayer>
 <UINotIncluded.AltInspector.WalkSpeed>Walk Speed</UINotIncluded.AltInspector.WalkSpeed>
 <UINotIncluded.AltInspector.Fertility>Fertility</UINotIncluded.AltInspector.Fertility>
 <UINotIncluded.AltInspector.Brightness>Brightness</UINotIncluded.AltInspector.Brightness>
 <UINotIncluded.AltInspector.Roof>Roof</UINotIncluded.AltInspector.Roof>
+
+<UINotIncluded.Windows.EditButton>Edit Button</UINotIncluded.Windows.EditButton>
+<UINotIncluded.Windows.Minimize>Minimized</UINotIncluded.Windows.Minimize>
 
 </LanguageData>

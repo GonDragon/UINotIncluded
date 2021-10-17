@@ -29,7 +29,7 @@ namespace UINotIncluded.Windows
         private static readonly Regex ValidSymbolRegex = new Regex("^[\\p{L}0-9 '\\-]*$");
         private const int MaxSymbolLength = 40;
         static private readonly Dictionary<string, Texture2D> cacheIcons = new Dictionary<string, Texture2D>();
-        static private List<string> defaultIconPathList;
+        static private List<string> cacheIconsPath;
 
         public override Vector2 InitialSize => new Vector2(350f, 500f);
 
@@ -50,7 +50,7 @@ namespace UINotIncluded.Windows
             Rect inRect = rect;
             inRect.height -= Window.CloseButSize.y;
             Verse.Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(inRect.x, inRect.y, rect.width, 35f), "Edit Buttons".Translate());
+            Widgets.Label(new Rect(inRect.x, inRect.y, rect.width, 35f), "UINotIncluded.Windows.EditButton".Translate());
             Verse.Text.Font = GameFont.Small;            
             string defaultLabel = (string)"Default".Translate();
             inRect.yMin += 45f;
@@ -76,23 +76,33 @@ namespace UINotIncluded.Windows
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
 
-            Rect minimizedRect = new Rect(inRect.x, curY, width *2 - Widgets.CheckboxSize - 10f, EditMainButton_Window.EditFieldHeight);
+            Rect minimizedRect = new Rect(inRect.x, curY, width *2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
             Rect defaultMinimizedRect = new Rect(minimizedRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
-            Widgets.CheckboxLabeled(minimizedRect,"Minimized".Translate(),ref buttonMemory.minimized);
+            Widgets.CheckboxLabeled(minimizedRect, "UINotIncluded.Windows.Minimize".Translate(),ref buttonMemory.minimized);
 
             if (Widgets.ButtonText(defaultMinimizedRect, defaultLabel))
             {
                 SoundDefOf.Click.PlayOneShotOnCamera();
                 this.buttonMemory.minimized = this.buttonMemory.defaultMinimized;
             }
-
-
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
-            Rect mainRect = inRect;
-            mainRect.yMax -= 4f;
-            Widgets.Label(mainRect.x, ref curY, mainRect.width, (string)"Icon".Translate());
-            mainRect.yMin = curY;
-            this.DoIconSelector(mainRect);
+
+            Rect iconRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
+            Rect defaulticonRect = new Rect(minimizedRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
+            Widgets.Label(iconRect, "Icon".Translate());
+
+            if (Widgets.ButtonText(defaulticonRect, defaultLabel))
+            {
+                SoundDefOf.Click.PlayOneShotOnCamera();
+                this.buttonMemory.iconPath = this.buttonMemory.defaultIconPath;
+            }
+            curY += (EditMainButton_Window.EditFieldHeight + 10f);
+
+            Rect iconSelectorRect = inRect;
+            iconSelectorRect.yMax -= 4f;
+            iconSelectorRect.yMin = curY;
+
+            this.DoIconSelector(iconSelectorRect);
             buttonMemory.Update();
             if (Widgets.ButtonText(new Rect(0.0f, rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"Reset".Translate()))
             {
@@ -140,52 +150,18 @@ namespace UINotIncluded.Windows
 
         private IEnumerable<string> GetAvaibleIcons()
         {
-            if (defaultIconPathList == null)
+            if (cacheIconsPath == null)
             {
-                defaultIconPathList = new List<string>();
+                cacheIconsPath = new List<string>();
                 foreach (MainButtonDef button in DefDatabase<MainButtonDef>.AllDefs)
                 {
-                    if(button.iconPath != null) defaultIconPathList.Add(button.iconPath);
+                    if(button.iconPath != null) cacheIconsPath.Add(button.iconPath);
                 }
+                foreach (MainIconDef icon in DefDatabase<MainIconDef>.AllDefs) cacheIconsPath.Add(icon.path);
             }
             yield return null;
-            foreach (string path in defaultIconPathList) yield return path;
+            foreach (string path in cacheIconsPath) yield return path;
         }
-
-        //private void DoColorSelector(Rect mainRect, ref float curY)
-        //{
-        //    int num1 = 26;
-        //    float num2 = 98f;
-        //    int num3 = Mathf.FloorToInt((mainRect.width - num2) / (float)(num1 + 2));
-        //    int num4 = Mathf.CeilToInt((float)EditMainButton_Window.IdeoColorsSorted.Count / (float)num3);
-        //    GUI.BeginGroup(mainRect);
-        //    GUI.color = this.newColorDef.color;
-        //    GUI.DrawTexture(new Rect(5f, 5f, 88f, 88f), (Texture)this.newIconDef.Icon);
-        //    GUI.color = Color.white;
-        //    curY += num2;
-        //    int num5 = 0;
-        //    foreach (ColorDef colorDef in EditMainButton_Window.IdeoColorsSorted)
-        //    {
-        //        int num6 = num5 / num3;
-        //        int num7 = num5 % num3;
-        //        float num8 = (float)(((double)num2 - (double)(num1 * num4) - 2.0) / 2.0);
-        //        Rect rect = new Rect(num2 + (float)(num7 * num1) + (float)(num7 * 2), num8 + (float)(num6 * num1) + (float)(num6 * 2), (float)num1, (float)num1);
-        //        Widgets.DrawLightHighlight(rect);
-        //        Widgets.DrawHighlightIfMouseover(rect);
-        //        if (this.newColorDef == colorDef)
-        //            Widgets.DrawBox(rect);
-        //        Widgets.DrawBoxSolid(new Rect(rect.x + 2f, rect.y + 2f, 22f, 22f), colorDef.color);
-        //        if (Widgets.ButtonInvisible(rect))
-        //        {
-        //            this.newColorDef = colorDef;
-        //            SoundDefOf.Tick_High.PlayOneShotOnCamera();
-        //        }
-        //        curY = Mathf.Max(curY, mainRect.yMin + rect.yMax);
-        //        ++num5;
-        //    }
-        //    GUI.EndGroup();
-        //    curY += 4f;
-        //}
 
         private void TryAccept()
         {
