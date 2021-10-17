@@ -49,6 +49,8 @@ namespace UINotIncluded.Widget
 
         public virtual bool WidgetVisible { get => true; }
 
+        public virtual BarElementMemory Memory => new EmptyMemory();
+
         public virtual void Margins(ref Rect rect)
         {
 
@@ -77,6 +79,7 @@ namespace UINotIncluded.Widget
         public string defName;
         private Def defCache;
 
+        private BarElementMemory _memory;
         private bool _configActionLoaded = false;
         private Action _configAction;
         public Action ConfigAction
@@ -85,10 +88,24 @@ namespace UINotIncluded.Widget
             {
                 if(!_configActionLoaded)
                 {
-                    if (!isWidget) _configAction = () => UINI.Log("Yes. Action loaded");
+                    if (!isWidget) _configAction = () => Find.WindowStack.Add(new UINotIncluded.Windows.EditMainButton_Window((MainButtonMemory)Memory));
                     _configActionLoaded = true;
                 }
                 return _configAction;
+            }
+        }
+
+        public BarElementMemory Memory
+        {
+            get
+            {
+                if(_memory == null)
+                {
+                    if (isWidget) _memory = ((ExtendedWidgetDef)Def).Worker.Memory;
+                    else _memory = new MainButtonMemory((MainButtonDef)Def);
+                    _memory.LoadMemory();
+                }
+                return _memory;
             }
         }
 
@@ -160,6 +177,7 @@ namespace UINotIncluded.Widget
         {
             Scribe_Values.Look(ref isWidget, "isWidget");
             Scribe_Values.Look(ref defName, "wrapped");
+            Scribe_Deep.Look(ref _memory, "memory");
         }
 
         public bool Equals(ToolbarElementWrapper other)

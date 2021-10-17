@@ -31,6 +31,7 @@ namespace UINotIncluded
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
             CompatibilityPatches();
+            LoadMainButtonsSettings();
 
             try
             {
@@ -61,6 +62,13 @@ namespace UINotIncluded
                 if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Timespeed_Worker.SetSmartspeedMode();
             }
             catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
+        }
+
+        static void LoadMainButtonsSettings()
+        {
+            foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) wrapped.Memory.LoadMemory();
+            foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements) wrapped.Memory.LoadMemory();
+            UINI.Log("All Buttons Loaded from Memory");
         }
     }
 }

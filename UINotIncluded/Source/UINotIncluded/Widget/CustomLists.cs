@@ -57,7 +57,7 @@ namespace UINotIncluded.Widget
                 bool hasOnClick = manager.HasOnClick(current);
                 Widgets.DraggableResult buttonResult = CustomButtons.DraggableButton(innerSpace, getLabel(element), ConfigActionIcon: hasOnClick);
 
-                if (hasOnClick && (buttonResult == Widgets.DraggableResult.Pressed || buttonResult == Widgets.DraggableResult.DraggedThenPressed)) manager.OnClick(current);
+                if (hasOnClick && buttonResult == Widgets.DraggableResult.Pressed) manager.OnClick(current);
                 else if (shouldDrawButton && buttonResult == Widgets.DraggableResult.Dragged) manager.DraggStart(current);
 
                 widgetSpace.y += buttonspace_heigth;

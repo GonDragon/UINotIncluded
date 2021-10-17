@@ -84,6 +84,7 @@
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
+    <Compile Include="Utility\BarElementMemory.cs" />
     <Compile Include="Utility\DragManager.cs" />
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Widget\TimeWidget_Worker.cs" />
     <Compile Include="Widget\Timespeed_Worker.cs" />
     <Compile Include="Widget\Weather_Worker.cs" />
+    <Compile Include="Windows\EditMainButton_Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
