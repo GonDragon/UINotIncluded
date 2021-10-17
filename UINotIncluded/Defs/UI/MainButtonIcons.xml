@@ -109,12 +109,20 @@
     <path>GD/UI/Icons/MainButton/domain</path>
   </UINotIncluded.MainIconDef>
   <UINotIncluded.MainIconDef>
+    <defName>earth</defName>
+    <path>GD/UI/Icons/MainButton/earth</path>
+  </UINotIncluded.MainIconDef>
+  <UINotIncluded.MainIconDef>
     <defName>file-tree</defName>
     <path>GD/UI/Icons/MainButton/file-tree</path>
   </UINotIncluded.MainIconDef>
   <UINotIncluded.MainIconDef>
     <defName>finance</defName>
     <path>GD/UI/Icons/MainButton/finance</path>
+  </UINotIncluded.MainIconDef>
+  <UINotIncluded.MainIconDef>
+    <defName>flag-variant</defName>
+    <path>GD/UI/Icons/MainButton/flag-variant</path>
   </UINotIncluded.MainIconDef>
   <UINotIncluded.MainIconDef>
     <defName>flash</defName>
@@ -153,6 +161,10 @@
     <path>GD/UI/Icons/MainButton/hat-fedora</path>
   </UINotIncluded.MainIconDef>
   <UINotIncluded.MainIconDef>
+    <defName>head-lightbulb</defName>
+    <path>GD/UI/Icons/MainButton/head-lightbulb</path>
+  </UINotIncluded.MainIconDef>
+  <UINotIncluded.MainIconDef>
     <defName>hospital-box</defName>
     <path>GD/UI/Icons/MainButton/hospital-box</path>
   </UINotIncluded.MainIconDef>
@@ -167,6 +179,10 @@
   <UINotIncluded.MainIconDef>
     <defName>library</defName>
     <path>GD/UI/Icons/MainButton/library</path>
+  </UINotIncluded.MainIconDef>
+  <UINotIncluded.MainIconDef>
+    <defName>lightbulb</defName>
+    <path>GD/UI/Icons/MainButton/lightbulb</path>
   </UINotIncluded.MainIconDef>
   <UINotIncluded.MainIconDef>
     <defName>map</defName>
