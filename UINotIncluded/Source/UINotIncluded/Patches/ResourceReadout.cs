@@ -16,7 +16,7 @@ namespace UINotIncluded
     {
         public static void Prefix(ref Rect rect)
         {
-            rect.y += UIManager.ResourceGap;
+            if(Settings.TabsOnTop) rect.y += UIManager.ResourceGap;
         }
     }
 
@@ -25,7 +25,7 @@ namespace UINotIncluded
     {
         public static void Prefix(ref Rect rect)
         {
-            rect.y += UIManager.ResourceGap;
+            if (Settings.TabsOnTop) rect.y += UIManager.ResourceGap;
         }
     }
 }
