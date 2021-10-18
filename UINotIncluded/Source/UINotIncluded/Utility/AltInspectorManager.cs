@@ -114,7 +114,7 @@ namespace UINotIncluded
                 RoofDef roof = currentCell.GetRoof(Find.CurrentMap);
                 if (roof != null)
                 {
-                    tileInfo["Roof"] = roof.LabelCap;
+                    tileInfo["UINotIncluded.AltInspector.Roof"] = roof.LabelCap;
                 }
 
                 List<Thing> thingList = currentCell.GetThingList(Find.CurrentMap);
