@@ -47,7 +47,7 @@ namespace UINotIncluded.Widget
 
         public virtual float GetWidth() { return def.minWidth; }
 
-        public virtual bool WidgetVisible { get => true; }
+        public virtual bool WidgetVisible => true;
 
         public virtual BarElementMemory Memory => new EmptyMemory();
 
@@ -101,8 +101,9 @@ namespace UINotIncluded.Widget
             {
                 if(_memory == null)
                 {
-                    if (isWidget) _memory = ((ExtendedWidgetDef)Def).Worker.Memory;
-                    else _memory = new MainButtonMemory((MainButtonDef)Def);
+                    Def elementDef = this.Def; // Load the Def before checking for if widget to silently catch deleted buttons defs
+                    if (isWidget) _memory = ((ExtendedWidgetDef)elementDef).Worker.Memory;
+                    else _memory = new MainButtonMemory((MainButtonDef)elementDef);
                     _memory.LoadMemory();
                 }
                 return _memory;
@@ -115,8 +116,15 @@ namespace UINotIncluded.Widget
             {
                 if(defCache == null)
                 {
-                    if (isWidget) defCache = DefDatabase<ExtendedWidgetDef>.GetNamed(defName);
-                    else defCache = DefDatabase<MainButtonDef>.GetNamed(defName);
+                    if (isWidget) defCache = DefDatabase<ExtendedWidgetDef>.GetNamedSilentFail(defName);
+                    else defCache = DefDatabase<MainButtonDef>.GetNamedSilentFail(defName);
+                    if(defCache == null)
+                    {
+                        UINI.Warning(string.Format("Error loading {0} def element from database.",defName));
+                        defName = "ErroringWidget";
+                        isWidget = true;
+                        defCache = DefDatabase<ExtendedWidgetDef>.GetNamed(defName);
+                    }
                 }
                 return defCache;
             }
@@ -127,7 +135,7 @@ namespace UINotIncluded.Widget
             get
             {
                 if (isWidget) return this.defName + " (widget)";
-                return Def.LabelCap;
+                return Def.defName;
             }
         }
 
@@ -154,6 +162,15 @@ namespace UINotIncluded.Widget
             {
                 if (!isWidget) return ((MainButtonDef)Def).buttonVisible;
                 return ((ExtendedWidgetDef)Def).WidgetVisible;
+            }
+        }
+
+        public int Order
+        {
+            get
+            {
+                if (!isWidget) return ((MainButtonDef)Def).order;
+                return ((ExtendedWidgetDef)Def).order;
             }
         }
 

@@ -15,13 +15,15 @@ namespace UINotIncluded
         public static bool designationsOnLeft = false;
         public static GameFont fontSize = GameFont.Tiny;
         public static List<String> hiddenDesignations;
-        public static bool initializedDesignations = false;
+        public static bool initializedDesignations;
+        public static bool initializedDefaultBar;
         public static List<String> leftDesignations;
         public static List<String> mainDesignations;
         public static List<String> rightDesignations;
         public static bool togglersOnTop = true;
         public static bool useDesignatorBar = true;
         public static bool vanillaAnimals = false;
+        public static bool settingsChecked;
 
         public static bool vanillaReadout;
         public static bool vanillaControlSpeed;
@@ -39,6 +41,26 @@ namespace UINotIncluded
         private static List<ToolbarElementWrapper> topBar;
         private static List<ToolbarElementWrapper> bottomBar;
 
+        private static BarStyle _barStyle;
+        private static Type _barStyleType;
+        public static BarStyle BarStyle
+        {
+            get
+            {
+                if (_barStyle == null)
+                {
+                    if (_barStyleType == null) _barStyleType = typeof(BarStyle_RustyOrange);
+                    _barStyle = (BarStyle)Activator.CreateInstance(_barStyleType);
+                }
+                return _barStyle;
+            }
+
+            set
+            {
+                _barStyle = value;
+                _barStyleType = value.GetType();
+            }
+        }
         public static List<ToolbarElementWrapper> AllAvaibleElements
         {
             get
@@ -55,6 +77,7 @@ namespace UINotIncluded
 
                     foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
                     {
+                        if (widgetDef.defName == "ErroringWidget") continue;
                         ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
                         if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
                         Settings.cacheAvaibleElements.Add(wrapped);
@@ -139,12 +162,27 @@ namespace UINotIncluded
             UINI.Log("DesignationConfigs default restored.");
         }
 
+        public static void RestoreDefaultMainBar()
+        {
+            TopBarElements.Clear();
+            BottomBarElements.Clear();
+            cacheAvaibleElements = null;
+
+            foreach (ToolbarElementWrapper wrap in AllAvaibleElements.OrderBy<ToolbarElementWrapper, int>((Func<ToolbarElementWrapper, int>)(x => x.Order)))
+            {
+                BottomBarElements.Add(wrap);
+            };
+            AllAvaibleElements.Clear();
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
+            
+            Scribe_Values.Look(ref settingsChecked, "settingsChecked", false);
 
             Scribe_Values.Look(ref vanillaReadout, "vanillaReadout", false);
             Scribe_Values.Look(ref vanillaControlSpeed, "vanillaReadout", false);
@@ -154,8 +192,11 @@ namespace UINotIncluded
 
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
+            Scribe_Values.Look(ref initializedDefaultBar, "initializedDefaultBar", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
             Scribe_Values.Look(ref legacyAltInspector, "legacyAltInspector", false);
+
+            Scribe_Values.Look(ref _barStyleType, "StyleType", typeof(BarStyle_RustyOrange));
 
             Scribe_Collections.Look(ref hiddenDesignations, "hiddenDesignations", LookMode.Value);
             Scribe_Collections.Look(ref leftDesignations, "leftDesignations", LookMode.Value);
@@ -250,6 +291,7 @@ namespace UINotIncluded
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            Settings.settingsChecked = true;
             float pageTittleHeight = 26f;
             float pageTittleWidth = (float)Math.Floor(inRect.width / 3);
 
@@ -294,7 +336,7 @@ namespace UINotIncluded
                 new Page
                 {
                     label = "Toolbars",
-                    action = inRect => DoToolbarsPages(inRect)
+                    action = inRect => DoToolbarDraggables(inRect)
                 }
             };
 
@@ -358,6 +400,18 @@ namespace UINotIncluded
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
+
+            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.style".Translate(), Settings.BarStyle.Name))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (Type styleType in new Type[] { typeof(BarStyle_RustyOrange), typeof(BarStyle_VanillaBlue) })
+                {
+                    BarStyle style = (BarStyle)Activator.CreateInstance(styleType);
+                    options.Add(new FloatMenuOption(style.Name, (Action)(() => Settings.BarStyle = style)));
+                }
+                Find.WindowStack.Add((Window)new FloatMenu(options));
+            }
+
             listingStandard.End();
         }
 
@@ -402,27 +456,16 @@ namespace UINotIncluded
             manager.Update();
         }
 
-        private void DoToolbarsPages(Rect inRect)
-        {
-            float columnWidth = inRect.width / 2;
-            float heigth = 10f;
-            Rect column1 = new Rect(inRect.x, inRect.y, columnWidth, heigth).ContractedBy(2f);
-            Rect column2 = new Rect(inRect.x + columnWidth, inRect.y, columnWidth, heigth).ContractedBy(2f);
-            DoToolbarDraggables(new Rect(inRect.x, inRect.y + heigth, inRect.width, inRect.height - heigth));
-        }
-
         private void DoToolbarDraggables(Rect rect)
         {
             float columnWidth = rect.width / 3;
             float curY = rect.y;
 
-                        
-
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.DesignatorBar.Description".Translate()));
+            Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.Toolbars.Description".Translate()));
             Text.Anchor = TextAnchor.UpperLeft;
             curY += 25f;
-            if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDesignationLists();
+            if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDefaultMainBar();
             curY += 25f;
 
             DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(

@@ -26,7 +26,7 @@ namespace UINotIncluded.Widget
         public override void OnGUI(Rect rect)
         {
             this.Margins(ref rect);
-            ExtendedToolbar.DoToolbarBackground(rect);
+            ExtendedToolbar.DoWidgetBackground(rect);
             this.Padding(ref rect);
 
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;

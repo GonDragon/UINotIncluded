@@ -46,6 +46,21 @@ namespace UINotIncluded
             {
                 UINI.Error("Error initializing settings for Designation Bar");
             }
+
+            try
+            {
+                if (!Settings.initializedDefaultBar)
+                {
+                    UINI.Log("TabsBar never initialized. Initializing.");
+                    Settings.RestoreDefaultMainBar();
+                    Settings.initializedDefaultBar = true;
+                    LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
+                }
+            }
+            catch
+            {
+                UINI.Error("Error initializing settings for TabsBar");
+            }
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));
@@ -67,9 +82,17 @@ namespace UINotIncluded
         static void LoadMainButtonsSettings()
         {
             UINotIncluded.Windows.EditMainButton_Window.InitializeIconsPathCache();
+
             foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) wrapped.Memory.LoadMemory();
             foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements) wrapped.Memory.LoadMemory();
-            UINI.Log("All Buttons Loaded from Memory");
+
+            Settings.TopBarElements.RemoveAll(IsErroring);
+            Settings.BottomBarElements.RemoveAll(IsErroring);
+        }
+
+        static bool IsErroring(Widget.ToolbarElementWrapper wrapper)
+        {
+            return wrapper.defName == "ErroringWidget";
         }
     }
 }

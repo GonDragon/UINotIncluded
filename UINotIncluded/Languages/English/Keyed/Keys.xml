@@ -17,7 +17,9 @@
 <UINotIncluded.Setting.dateFormat>Date format</UINotIncluded.Setting.dateFormat>
 <UINotIncluded.Playsetting.altinspect.tooltip>Toggle the Alt Inspector.\n\nWhen the Alt Inspector is active, the cell info in the bottom left will disappear. This info will now appear as a tooltip near the mouse while the "Alt" key is pressed.</UINotIncluded.Playsetting.altinspect.tooltip>
 <UINotIncluded.Setting.DesignatorBar.Description>Designator Bar Config</UINotIncluded.Setting.DesignatorBar.Description>
-<UINotIncluded.Setting.fontSize>Font Size</UINotIncluded.Setting.fontSize>
+<UINotIncluded.Setting.Toolbars.Description>Main Buttons Bar Config</UINotIncluded.Setting.Toolbars.Description>
+<UINotIncluded.Setting.fontSize>Widgets Font Size</UINotIncluded.Setting.fontSize>
+<UINotIncluded.Setting.style>Widgets Style</UINotIncluded.Setting.style>
 
 <UINotIncluded.Setting.vanillaReadout>Show Vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
 <UINotIncluded.Setting.vanillaReadout.Description>If checked, the readout of information of the tile the mouse is over will appear on the bottom-left corner of the screen. With this option unchecked, you should only rely on the alt-inspector.</UINotIncluded.Setting.vanillaReadout.Description>
@@ -46,5 +48,8 @@
 
 <UINotIncluded.Windows.EditButton>Edit Button</UINotIncluded.Windows.EditButton>
 <UINotIncluded.Windows.Minimize>Minimized</UINotIncluded.Windows.Minimize>
+
+<UINotIncluded.Alerts.SettingsChecked.Label>Check the UINotIncluded Settings</UINotIncluded.Alerts.SettingsChecked.Label>
+<UINotIncluded.Alerts.SettingsChecked.Description>UINotIncluded is all about customization. The default configuration it will probably not fill your needs.\n\nPlease, check the mod settings and configure the mod.</UINotIncluded.Alerts.SettingsChecked.Description>
 
 </LanguageData>

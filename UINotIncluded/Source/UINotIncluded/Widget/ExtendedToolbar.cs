@@ -22,7 +22,8 @@ namespace UINotIncluded.Widget
         {
             if (elements.Count() == 0) return;
 
-            Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
+            //Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
+            Settings.BarStyle.DoToolbarBackground(new Rect(0, 0, Width, Height));
 
             float fixedWidth = 0f;
             int elasticElementsAmount = 0;
@@ -52,9 +53,9 @@ namespace UINotIncluded.Widget
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        public static void DoToolbarBackground(Rect rect)
+        public static void DoWidgetBackground(Rect rect)
         {
-            Widgets.DrawAtlas(rect, ModTextures.toolbarWidgetBackground);
+            Settings.BarStyle.DoWidgetBackground(rect);
         }
     }
 
