@@ -60,7 +60,7 @@ namespace UINotIncluded
             {
                 if(_def == null)
                 {
-                    _def = DefDatabase<MainButtonDef>.GetNamed(defName);
+                    _def = DefDatabase<MainButtonDef>.GetNamedSilentFail(defName);
                 }
                 return _def;
             }

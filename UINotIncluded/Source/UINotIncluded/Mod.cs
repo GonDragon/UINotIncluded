@@ -83,8 +83,27 @@ namespace UINotIncluded
         {
             UINotIncluded.Windows.EditMainButton_Window.InitializeIconsPathCache();
 
-            foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) wrapped.Memory.LoadMemory();
-            foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements) wrapped.Memory.LoadMemory();
+            foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) 
+            {
+                try
+                {
+                    wrapped.Memory.LoadMemory();
+                } catch
+                {
+                    UINI.Warning(string.Format("Problem loading {0} element from the bar. Skiping",wrapped.defName));
+                }
+            }
+            foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements)
+            {
+                try
+                {
+                    wrapped.Memory.LoadMemory();
+                }
+                catch
+                {
+                    UINI.Warning(string.Format("Problem loading {0} element from the bar. Skiping", wrapped.defName));
+                }
+            }
 
             Settings.TopBarElements.RemoveAll(IsErroring);
             Settings.BottomBarElements.RemoveAll(IsErroring);
@@ -92,7 +111,7 @@ namespace UINotIncluded
 
         static bool IsErroring(Widget.ToolbarElementWrapper wrapper)
         {
-            return wrapper.defName == "ErroringWidget";
+            return (wrapper.defName == "ErroringWidget") || wrapper.Def == null;
         }
     }
 }

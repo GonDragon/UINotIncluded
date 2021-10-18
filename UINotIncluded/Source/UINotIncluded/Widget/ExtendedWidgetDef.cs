@@ -123,7 +123,7 @@ namespace UINotIncluded.Widget
                         UINI.Warning(string.Format("Error loading {0} def element from database.",defName));
                         defName = "ErroringWidget";
                         isWidget = true;
-                        defCache = DefDatabase<ExtendedWidgetDef>.GetNamed(defName);
+                        defCache = DefDatabase<ExtendedWidgetDef>.GetNamed("ErroringWidget");
                     }
                 }
                 return defCache;
