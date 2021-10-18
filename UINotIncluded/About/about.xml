@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <packageId>GonDragon.UINotIncluded</packageId>
-  <name>UINotIncluded</name>
+  <name>UI Not Included: Customizable UI Overhaul</name>
   <author>GonDragon</author>
   <description>Interface Overhaul slightly inspired by Oxygen Not Included UI.</description>
   <supportedVersions>
