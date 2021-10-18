@@ -126,7 +126,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (isWidget) return this.defName;
+                if (isWidget) return this.defName + " (widget)";
                 return Def.LabelCap;
             }
         }

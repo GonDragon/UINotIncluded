@@ -19,8 +19,21 @@
 <UINotIncluded.Setting.DesignatorBar.Description>Designator Bar Config</UINotIncluded.Setting.DesignatorBar.Description>
 <UINotIncluded.Setting.fontSize>Font Size</UINotIncluded.Setting.fontSize>
 
-<UINotIncluded.Setting.vanillaReadout>Use vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
+<UINotIncluded.Setting.vanillaReadout>Show Vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
 <UINotIncluded.Setting.vanillaReadout.Description>If checked, the readout of information of the tile the mouse is over will appear on the bottom-left corner of the screen. With this option unchecked, you should only rely on the alt-inspector.</UINotIncluded.Setting.vanillaReadout.Description>
+
+<UINotIncluded.Setting.vanillaControlSpeed>Show Vanilla Time Speed Controls</UINotIncluded.Setting.vanillaControlSpeed>
+<UINotIncluded.Setting.vanillaControlSpeed.Description>If checked, it will show the time speed controls on the vanilla place.</UINotIncluded.Setting.vanillaControlSpeed.Description>
+
+<UINotIncluded.Setting.vanillaDate>Show Vanilla Date Info</UINotIncluded.Setting.vanillaDate>
+<UINotIncluded.Setting.vanillaDate.Description>If checked, it will show the date information on the vanilla place.</UINotIncluded.Setting.vanillaDate.Description>
+
+<UINotIncluded.Setting.vanillaRealtime>Show Vanilla Real Time Clock</UINotIncluded.Setting.vanillaRealtime>
+<UINotIncluded.Setting.vanillaRealtime.Description>If checked, it will show the Real Time Clock on the vanilla place.</UINotIncluded.Setting.vanillaRealtime.Description>
+
+<UINotIncluded.Setting.vanillaWeather>Show Vanilla Weather and Temperature Info</UINotIncluded.Setting.vanillaWeather>
+<UINotIncluded.Setting.vanillaWeather.Description>If checked, it will show the weather and the temperature information on the vanilla place.</UINotIncluded.Setting.vanillaWeather.Description>
+
 
 <UINotIncluded.Setting.legacyAltInspector>Use Tooltip-like AltInspector</UINotIncluded.Setting.legacyAltInspector>
 <UINotIncluded.Setting.legacyAltInspector.Description>If this option is enabled, the Alt Inspector will use it's legacy mode to show the info in a tooltip.</UINotIncluded.Setting.legacyAltInspector.Description>

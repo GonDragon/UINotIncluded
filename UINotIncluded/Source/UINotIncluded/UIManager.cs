@@ -22,7 +22,6 @@ namespace UINotIncluded
 
 
         private static bool tabsOnTop = Settings.TabsOnTop;
-        private static bool vanillaArchitect = true;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
         private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
@@ -34,11 +33,6 @@ namespace UINotIncluded
             {
                 tabsOnTop = Settings.TabsOnTop;
                 Find.ColonistBar.MarkColonistsDirty();
-            }
-            if(vanillaArchitect != Settings.vanillaArchitect)
-            {
-                vanillaArchitect = Settings.vanillaArchitect;
-                SetMainbuttonVisibility("Architect", vanillaArchitect);
             }
             if (vanillaAnimals != Settings.vanillaAnimals)
             {

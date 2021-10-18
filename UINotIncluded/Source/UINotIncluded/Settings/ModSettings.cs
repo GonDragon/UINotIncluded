@@ -11,7 +11,6 @@ namespace UINotIncluded
 {
     public class Settings : ModSettings
     {
-        public static bool barOnRight = false;
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool designationsOnLeft = false;
         public static GameFont fontSize = GameFont.Tiny;
@@ -23,8 +22,13 @@ namespace UINotIncluded
         public static bool togglersOnTop = true;
         public static bool useDesignatorBar = true;
         public static bool vanillaAnimals = false;
-        public static bool vanillaArchitect = false;
+
         public static bool vanillaReadout;
+        public static bool vanillaControlSpeed;
+        public static bool vanillaDate;
+        public static bool vanillaRealtime;
+        public static bool vanillaWeather;
+
         public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
@@ -138,12 +142,16 @@ namespace UINotIncluded
         public override void ExposeData()
         {
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
-            Scribe_Values.Look(ref barOnRight, "barOnRight", false);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
-            Scribe_Values.Look(ref vanillaArchitect, "vanillaArchitect", false);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
+
             Scribe_Values.Look(ref vanillaReadout, "vanillaReadout", false);
+            Scribe_Values.Look(ref vanillaControlSpeed, "vanillaReadout", false);
+            Scribe_Values.Look(ref vanillaDate, "vanillaReadout", false);
+            Scribe_Values.Look(ref vanillaRealtime, "vanillaReadout", false);
+            Scribe_Values.Look(ref vanillaWeather, "vanillaReadout", false);
+
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
@@ -316,16 +324,20 @@ namespace UINotIncluded
         private void DoGeneralPage(Rect inRect)
         {
             float columnWidth = inRect.width / 2;
-            float heigth = (float)Math.Floor(inRect.height / 3);
+            float heigth = inRect.height;
             Rect column1 = new Rect(columnWidth - columnWidth/2, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
 
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.barOnRight".Translate(), ref Settings.barOnRight, "UINotIncluded.Setting.barOnRight.Description".Translate());
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaArchitect".Translate(), ref Settings.vanillaArchitect, "UINotIncluded.Setting.vanillaArchitect.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
+
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaRealtime".Translate(), ref Settings.vanillaRealtime, "UINotIncluded.Setting.vanillaRealtime.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaWeather".Translate(), ref Settings.vanillaWeather, "UINotIncluded.Setting.vanillaWeather.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaDate".Translate(), ref Settings.vanillaDate, "UINotIncluded.Setting.vanillaDate.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
+
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), Settings.dateFormat.ToStringHuman()))
             {

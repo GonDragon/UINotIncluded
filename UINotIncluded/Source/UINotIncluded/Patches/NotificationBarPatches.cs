@@ -20,7 +20,7 @@ namespace UINotIncluded
         [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.Low)]
         public static bool TemperatureString_Patch()
         {
-            return false;
+            return Settings.vanillaWeather;
         }
     }
 
@@ -47,22 +47,30 @@ namespace UINotIncluded
         [HarmonyPatch(nameof(GlobalControlsUtility.DoTimespeedControls)), HarmonyPriority(Priority.Low)]
         static bool DoTimespeedControls_Patch(ref float curBaseY)
         {
+            if (Settings.vanillaControlSpeed) return true;
             curBaseY += 4f;
             return false;
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GlobalControlsUtility.DoDate)), HarmonyPriority(Priority.Low)]
-        static bool DoDate_Patch(ref float curBaseY)
+        static bool DoDate_Patch()
         {
-            if(!WorldRendererUtility.WorldRenderedNow) curBaseY += 42f;
-            return false;
+            return Settings.vanillaDate;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(GlobalControlsUtility.DoDate))]
+        static void DoDate_PostifxPatch(ref float curBaseY)
+        {
+            if (!Settings.vanillaWeather) curBaseY += 50;
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GlobalControlsUtility.DoRealtimeClock)), HarmonyPriority(Priority.Low)]
         static bool DoRealtimeClock_Patch(ref float curBaseY)
         {
+            if (Settings.vanillaRealtime)return true;
             curBaseY += 4f;
             return false;
         }
@@ -72,11 +80,10 @@ namespace UINotIncluded
     class WeatherManagerPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI)), HarmonyPriority(Priority.Low)]
-        static bool DoWeatherGUI_Patch(Rect rect)
+        [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI))]
+        static bool DoWeatherGUI_PrefixPatch()
         {
-            rect.height = 0;
-            return false;
+            return Settings.vanillaWeather;
         }
     }
 
