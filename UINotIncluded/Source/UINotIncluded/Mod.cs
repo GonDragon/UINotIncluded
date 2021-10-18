@@ -66,6 +66,7 @@ namespace UINotIncluded
 
         static void LoadMainButtonsSettings()
         {
+            UINotIncluded.Windows.EditMainButton_Window.InitializeIconsPathCache();
             foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) wrapped.Memory.LoadMemory();
             foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements) wrapped.Memory.LoadMemory();
             UINI.Log("All Buttons Loaded from Memory");

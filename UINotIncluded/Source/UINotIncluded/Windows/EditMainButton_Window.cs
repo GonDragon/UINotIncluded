@@ -148,17 +148,21 @@ namespace UINotIncluded.Windows
             Widgets.EndScrollView();
         }
 
-        private IEnumerable<string> GetAvaibleIcons()
+        public static void InitializeIconsPathCache()
         {
             if (cacheIconsPath == null)
             {
                 cacheIconsPath = new List<string>();
                 foreach (MainButtonDef button in DefDatabase<MainButtonDef>.AllDefs)
                 {
-                    if(button.iconPath != null) cacheIconsPath.Add(button.iconPath);
+                    if (button.iconPath != null) cacheIconsPath.Add(button.iconPath);
                 }
                 foreach (MainIconDef icon in DefDatabase<MainIconDef>.AllDefs) cacheIconsPath.Add(icon.path);
             }
+        }
+
+        private IEnumerable<string> GetAvaibleIcons()
+        {
             yield return null;
             foreach (string path in cacheIconsPath) yield return path;
         }

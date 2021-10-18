@@ -143,7 +143,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (!isWidget) return FixedWidth ? UIManager.ExtendedBarHeight : -1f;
+                if (!isWidget) return FixedWidth ? (float)Math.Floor((UIManager.ExtendedBarHeight / 2f) * 3f) : -1f;
                 return ((ExtendedWidgetDef)Def).Width;
             }
         }
