@@ -91,6 +91,7 @@ namespace UINotIncluded
                 initialized = true;
                 return;
             }
+            if(ContentFinder<Texture2D>.Get(this.iconPath, false) == null) this.iconPath = this.defaultIconPath;
             this.Update();                
         }
 
