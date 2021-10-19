@@ -404,7 +404,7 @@ namespace UINotIncluded
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.style".Translate(), Settings.BarStyle.Name))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (Type styleType in new Type[] { typeof(BarStyle_RustyOrange), typeof(BarStyle_VanillaBlue) })
+                foreach (Type styleType in new Type[] { typeof(BarStyle_RustyOrange), typeof(BarStyle_VanillaBlue), typeof(BarStyle_VanillaBluePlus) })
                 {
                     BarStyle style = (BarStyle)Activator.CreateInstance(styleType);
                     options.Add(new FloatMenuOption(style.Name, (Action)(() => Settings.BarStyle = style)));

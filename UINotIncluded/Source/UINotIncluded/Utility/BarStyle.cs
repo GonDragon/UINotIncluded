@@ -44,4 +44,19 @@ namespace UINotIncluded
         public override void DoWidgetBackground(Rect rect)
         {}
     }
+
+    public class BarStyle_VanillaBluePlus : BarStyle
+    {
+        public override string Name => "Vanilla Blue Plus";
+
+        public override void DoToolbarBackground(Rect rect)
+        {
+            Widgets.DrawAtlas(rect, Widgets.ButtonSubtleAtlas);
+        }
+
+        public override void DoWidgetBackground(Rect rect)
+        {
+            Widgets.DrawAtlas(rect, ModTextures.toolbarWidgetBackground);
+        }
+    }
 }
