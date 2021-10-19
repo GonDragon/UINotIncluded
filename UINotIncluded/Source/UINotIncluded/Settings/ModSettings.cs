@@ -72,7 +72,7 @@ namespace UINotIncluded
                     foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
                     {
                         ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
-                        if (!buttonDef.buttonVisible || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
+                        if (buttonDef.defName == "Inspect" || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
                         Settings.cacheAvaibleElements.Add(wrapped);
                     }
 

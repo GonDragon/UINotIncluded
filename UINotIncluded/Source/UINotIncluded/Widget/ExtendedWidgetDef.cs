@@ -135,6 +135,7 @@ namespace UINotIncluded.Widget
             get
             {
                 if (isWidget) return this.defName + " (widget)";
+                if (!((MainButtonDef)Def).buttonVisible) return Def.defName + " (hidden)";
                 return Def.defName;
             }
         }
