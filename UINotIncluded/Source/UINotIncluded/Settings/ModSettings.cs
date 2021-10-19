@@ -24,6 +24,7 @@ namespace UINotIncluded
         public static bool useDesignatorBar = true;
         public static bool vanillaAnimals = false;
         public static bool settingsChecked;
+        public static bool centeredWindows;
 
         public static bool vanillaReadout;
         public static bool vanillaControlSpeed;
@@ -181,6 +182,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
+            Scribe_Values.Look(ref centeredWindows, "centeredWindows", false);
             
             Scribe_Values.Look(ref settingsChecked, "settingsChecked", false);
 
@@ -373,6 +375,7 @@ namespace UINotIncluded
             listingStandard.Begin(column1);
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.centeredWindows".Translate(), ref Settings.centeredWindows, "UINotIncluded.Setting.centeredWindows.Description".Translate());
 
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaRealtime".Translate(), ref Settings.vanillaRealtime, "UINotIncluded.Setting.vanillaRealtime.Description".Translate());

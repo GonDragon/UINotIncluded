@@ -83,6 +83,8 @@ namespace UINotIncluded
                 return;
             }
 
+            if (!Settings.centeredWindows) return;
+
             if(windowType == typeof(MainTabWindow_Animals) || windowType == typeof(MainTabWindow_Wildlife) || windowType == typeof(MainTabWindow_Ideos))
             {
                 MainTabWindowPatchHelper.CenterYOnScreen(ref ___windowRect);
