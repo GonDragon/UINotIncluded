@@ -18,12 +18,12 @@ namespace UINotIncluded.Widget
 
         public static GameFont FontSize => Settings.fontSize;
 
-        public static void ExtendedToolbarOnGUI(List<ToolbarElementWrapper> elements)
+        public static void ExtendedToolbarOnGUI(List<ToolbarElementWrapper> elements, Rect inRect)
         {
             if (elements.Count() == 0) return;
 
             //Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
-            Settings.BarStyle.DoToolbarBackground(new Rect(0, 0, Width, Height));
+            Settings.BarStyle.DoToolbarBackground(inRect);
 
             float fixedWidth = 0f;
             int elasticElementsAmount = 0;
@@ -47,7 +47,7 @@ namespace UINotIncluded.Widget
 
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = ExtendedToolbar.FontSize;
-                element.OnGUI(new Rect(curX,0,eWidth,Height));
+                element.OnGUI(new Rect(curX, inRect.y, eWidth,Height));
                 curX += eWidth;
             }
             Text.Anchor = TextAnchor.UpperLeft;

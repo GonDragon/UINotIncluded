@@ -34,9 +34,9 @@ namespace UINotIncluded.Widget
 
             Rect iconSpace;
             if (!weatherPerceived.description.NullOrEmpty())
-                iconSpace = DrawIcon(icon, rect.x, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
+                iconSpace = DrawIcon(icon, rect.x, rect.y, weatherPerceived.LabelCap + "\n" + weatherPerceived.description);
             else
-                iconSpace = DrawIcon(icon, rect.x, weatherPerceived.LabelCap);
+                iconSpace = DrawIcon(icon, rect.x, rect.y, weatherPerceived.LabelCap);
             rect.x += iconSpace.width;
             rect.width -= iconSpace.width;
 

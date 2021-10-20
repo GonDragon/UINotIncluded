@@ -44,10 +44,12 @@ namespace UINotIncluded
         public string label;
         public string iconPath;
         public bool minimized;
+        public bool visible;
 
         public string defaultLabel;
         public string defaultIconPath;
         public bool defaultMinimized;
+        public bool defaultVisible;
 
         private bool initialized = false;
         private bool loaded = false;
@@ -83,6 +85,7 @@ namespace UINotIncluded
                 this.defaultLabel = Def.label;
                 this.defaultIconPath = Def.iconPath;
                 this.defaultMinimized = Def.minimized;
+                this.defaultVisible = Def.buttonVisible;
                 loaded = true;
             }
             if (!initialized)
@@ -98,6 +101,7 @@ namespace UINotIncluded
         public override void Update()
         {
             Def.minimized = this.minimized;
+            Def.buttonVisible = this.visible;
             if(Def.label != this.label)
             {
                 Def.label = this.label;
@@ -117,6 +121,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref iconPath, "iconPath");
             Scribe_Values.Look(ref minimized, "minimized");
             Scribe_Values.Look(ref defName, "button");
+            Scribe_Values.Look(ref visible, "visible", true);
         }
 
         public override void Clear()
@@ -124,6 +129,7 @@ namespace UINotIncluded
             this.label = Def.label;
             this.iconPath = Def.iconPath;
             this.minimized = Def.minimized;
+            this.visible = Def.buttonVisible;
             Update();
         }
 
@@ -132,6 +138,7 @@ namespace UINotIncluded
             this.label = this.defaultLabel;
             this.iconPath = this.defaultIconPath;
             this.minimized = this.defaultMinimized;
+            this.visible = this.defaultVisible;
             Update();
         }
     }

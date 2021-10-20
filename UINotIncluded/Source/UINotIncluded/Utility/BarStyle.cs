@@ -28,7 +28,7 @@ namespace UINotIncluded
 
         public override void DoWidgetBackground(Rect rect)
         {
-            Widgets.DrawAtlas(rect, ModTextures.toolbarWidgetBackground);
+            Widgets.DrawAtlas(rect.ContractedBy(0f,2f), ModTextures.toolbarWidgetBackground);
         }
     }
 
@@ -56,7 +56,7 @@ namespace UINotIncluded
 
         public override void DoWidgetBackground(Rect rect)
         {
-            Widgets.DrawAtlas(rect, ModTextures.toolbarWidgetBackground);
+            Widgets.DrawAtlas(rect.ContractedBy(0f, 2f), ModTextures.toolbarWidgetBackground);
         }
     }
 }

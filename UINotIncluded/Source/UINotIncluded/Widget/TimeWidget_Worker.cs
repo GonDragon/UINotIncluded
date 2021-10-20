@@ -33,7 +33,7 @@ namespace UINotIncluded.Widget
 
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
             Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
-            Rect iconSpace = DrawIcon(season.GetIconTex(), space.x, season.LabelCap());
+            Rect iconSpace = DrawIcon(season.GetIconTex(), space.x, space.y, season.LabelCap());
             space.x += iconSpace.width;
             space.width -= iconSpace.width;
 

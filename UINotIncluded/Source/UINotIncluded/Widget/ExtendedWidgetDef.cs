@@ -63,9 +63,9 @@ namespace UINotIncluded.Widget
             rect = rect.ContractedBy(ExtendedToolbar.padding);
         }
 
-        public Rect DrawIcon(Texture2D icon, float curX, string tooltip = null)
+        public Rect DrawIcon(Texture2D icon, float curX, float curY, string tooltip = null)
         {
-            Rect rect = new Rect(curX, 5f, iconSize, iconSize);
+            Rect rect = new Rect(curX, curY, iconSize, iconSize);
             GUI.DrawTexture(rect, icon);
             if (!tooltip.NullOrEmpty())
                 TooltipHandler.TipRegion(rect, (TipSignal)tooltip);

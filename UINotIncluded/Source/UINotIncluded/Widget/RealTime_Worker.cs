@@ -24,7 +24,7 @@ namespace UINotIncluded.Widget
             ExtendedToolbar.DoWidgetBackground(rect);
             this.Padding(ref rect);
 
-            Rect iconSpace = DrawIcon(ModTextures.iconWorld, rect.x);
+            Rect iconSpace = DrawIcon(ModTextures.iconWorld, rect.x, rect.y);
             rect.x += iconSpace.width;
             rect.width -= iconSpace.width;
             WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown,gap: ExtendedToolbar.interGap);
