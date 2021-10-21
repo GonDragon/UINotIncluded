@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace UINotIncluded
 {
-    [HarmonyPatch(typeof(ResourceReadout), "DoReadoutSimple")]
+    [HarmonyPatch(typeof(ResourceReadout), "DoReadoutSimple"), HarmonyPriority(Priority.High)]
     class DoReadoutSimplePatch
     {
         public static void Prefix(ref Rect rect)
@@ -20,7 +20,7 @@ namespace UINotIncluded
         }
     }
 
-    [HarmonyPatch(typeof(ResourceReadout), "DoReadoutCategorized")]
+    [HarmonyPatch(typeof(ResourceReadout), "DoReadoutCategorized"), HarmonyPriority(Priority.High)]
     class DoReadoutCategorizedPatch
     {
         public static void Prefix(ref Rect rect)

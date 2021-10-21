@@ -37,8 +37,6 @@ namespace UINotIncluded
 
         public static bool TabsOnTop => Settings.TopBarElements.Count() > 0;
         public static bool TabsOnBottom => Settings.BottomBarElements.Count() > 0;
-
-        private static List<ToolbarElementWrapper> cacheAvaibleElements;
         private static List<ToolbarElementWrapper> topBar;
         private static List<ToolbarElementWrapper> bottomBar;
 
@@ -62,31 +60,27 @@ namespace UINotIncluded
                 _barStyleType = value.GetType();
             }
         }
-        public static List<ToolbarElementWrapper> AllAvaibleElements
+        public static IEnumerable<ToolbarElementWrapper> AllAvaibleElements
         {
             get
             {
-                if (Settings.cacheAvaibleElements == null)
+                foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
                 {
-                    Settings.cacheAvaibleElements = new List<ToolbarElementWrapper>();
-                    foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
-                    {
-                        ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
-                        if (buttonDef.defName == "Inspect" || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
-                        Settings.cacheAvaibleElements.Add(wrapped);
-                    }
-
-                    foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
-                    {
-                        if (widgetDef.defName == "ErroringWidget") continue;
-                        ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
-                        if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
-                        Settings.cacheAvaibleElements.Add(wrapped);
-                    }
+                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
+                    if (buttonDef.defName == "Inspect" || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
+                    yield return wrapped;
                 }
-                return cacheAvaibleElements;
+
+                foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
+                {
+                    if (widgetDef.defName == "ErroringWidget") continue;
+                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
+                    if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
+                    yield return wrapped;
+                }
             }
         }
+
         public static List<ToolbarElementWrapper> TopBarElements
         {
             get
@@ -167,13 +161,11 @@ namespace UINotIncluded
         {
             TopBarElements.Clear();
             BottomBarElements.Clear();
-            cacheAvaibleElements = null;
 
             foreach (ToolbarElementWrapper wrap in AllAvaibleElements.OrderBy<ToolbarElementWrapper, int>((Func<ToolbarElementWrapper, int>)(x => x.Order)))
             {
                 BottomBarElements.Add(wrap);
-            };
-            AllAvaibleElements.Clear();
+            }
         }
 
         public override void ExposeData()
@@ -320,6 +312,7 @@ namespace UINotIncluded
         public string label;
         private readonly List<Page> pages;
         private int current;
+        private List<ToolbarElementWrapper> cacheAvaibleElements;
 
         public SettingPages()
         {
@@ -464,6 +457,8 @@ namespace UINotIncluded
             float columnWidth = rect.width / 3;
             float curY = rect.y;
 
+            if (cacheAvaibleElements == null) cacheAvaibleElements = Settings.AllAvaibleElements.ToList();
+
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.Toolbars.Description".Translate()));
             Text.Anchor = TextAnchor.UpperLeft;
@@ -472,13 +467,16 @@ namespace UINotIncluded
             curY += 25f;
 
             DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(
-                OnUpdate: () => { },
+                OnUpdate: () => {
+                    cacheAvaibleElements.Clear();
+                    foreach (ToolbarElementWrapper element in Settings.AllAvaibleElements) cacheAvaibleElements.Add(element);
+                },
                 GetLabel: (ToolbarElementWrapper wrapper) => { return wrapper.LabelCap; },
                 OnClick: (ToolbarElementWrapper wrapper) => { return wrapper.ConfigAction; });
 
             DragMemory.hoveringOver = null;
 
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.AllAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
             Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
             Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
 

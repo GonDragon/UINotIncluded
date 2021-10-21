@@ -8,26 +8,42 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 using HarmonyLib;
+using System.Reflection.Emit;
+using System.Reflection;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(Messages), "MessagesDoGUI")]
     class MessagesDoGUIPatch
     {
-        public static bool Prefix(ref List<Verse.Message> ___liveMessages)
+
+        static FieldInfo vector2_y = AccessTools.Field(typeof(Vector2), "y");
+
+        static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
-            Text.Font = GameFont.Small;
-            int x = (int)Messages.MessagesTopLeftStandard.x;
-            int y = (int)Messages.MessagesTopLeftStandard.y;
-            if (Settings.TabsOnTop) y += (int)UIManager.ExtendedBarHeight;
-            if (Current.Game != null && Find.ActiveLesson.ActiveLessonVisible)
-                y += (int)Find.ActiveLesson.Current.MessagesYOffset;
-            for (int index = ___liveMessages.Count - 1; index >= 0; --index)
+            CodeInstruction prev = instructions.First();
+            bool patched = false;
+
+            foreach (var code in instructions)
             {
-                ___liveMessages[index].Draw(x, y);
-                y += 26;
+                yield return code;
+                if (!patched)
+                {
+                    if (prev.opcode == OpCodes.Ldfld && (FieldInfo)prev.operand == vector2_y)
+                    {
+                        patched = true;
+                        yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MessagesDoGUIPatch), nameof(YOffsetAdjustment)));
+                        yield return new CodeInstruction(OpCodes.Add);
+                    }
+                    prev = code;
+                }
             }
-            return false;
+        }
+
+        static int YOffsetAdjustment()
+        {
+            return Settings.TabsOnTop ? (int)UIManager.ExtendedBarHeight : 0;
         }
     }
+
 }
