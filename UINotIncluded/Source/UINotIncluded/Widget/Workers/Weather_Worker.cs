@@ -13,9 +13,20 @@ namespace UINotIncluded.Widget
 {
     public class Weather_Worker : WidgetWorker
     {
+        float widthCache = -1;
+        GameFont fontCache = GameFont.Tiny;
+        TemperatureDisplayMode cacheMode = Prefs.TemperatureMode;
+        
+
         public override float GetWidth()
         {
-            return (float)Math.Round(def.minWidth + 11.66f * (float)Settings.fontSize);
+            if (widthCache < 0 || fontCache != Settings.fontSize || cacheMode != Prefs.TemperatureMode)
+            {
+                widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f) + 15f));
+                fontCache = Settings.fontSize;
+                cacheMode = Prefs.TemperatureMode;
+            }
+            return widthCache;
         }
 
         public override bool WidgetVisible
@@ -42,8 +53,9 @@ namespace UINotIncluded.Widget
 
             WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
             float temp = Mathf.RoundToInt(GenTemperature.CelsiusTo(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile), Prefs.TemperatureMode));
+            string tempLabel = temp.ToStringTemperature();
 
-            row.Label(temp.ToString() + new string[] { "°C", "°F", "°K" }[(int)Prefs.TemperatureMode], rect.width, null, rect.height);
+            row.Label(tempLabel, rect.width, null, rect.height);
         }
     }
 }

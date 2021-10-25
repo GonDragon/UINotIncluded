@@ -12,7 +12,7 @@ namespace UINotIncluded
     public class Settings : ModSettings
     {
         public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
-        public static bool designationsOnLeft = false;
+        public static bool designationsOnLeft;
         public static GameFont fontSize = GameFont.Tiny;
         public static List<String> hiddenDesignations;
         public static bool initializedDesignations;
@@ -20,9 +20,9 @@ namespace UINotIncluded
         public static List<String> leftDesignations;
         public static List<String> mainDesignations;
         public static List<String> rightDesignations;
-        public static bool togglersOnTop = true;
-        public static bool useDesignatorBar = true;
-        public static bool vanillaAnimals = false;
+        public static bool togglersOnTop;
+        public static bool useDesignatorBar;
+        public static bool vanillaAnimals;
         public static bool settingsChecked;
         public static bool centeredWindows;
 
@@ -75,6 +75,7 @@ namespace UINotIncluded
                 {
                     if (widgetDef.defName == "ErroringWidget") continue;
                     ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
+                    if (((ExtendedWidgetDef)wrapped.Def).multipleInstances) { yield return wrapped; continue; }
                     if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
                     yield return wrapped;
                 }
@@ -162,7 +163,7 @@ namespace UINotIncluded
             TopBarElements.Clear();
             BottomBarElements.Clear();
 
-            foreach (ToolbarElementWrapper wrap in AllAvaibleElements.OrderBy<ToolbarElementWrapper, int>((Func<ToolbarElementWrapper, int>)(x => x.Order)))
+            foreach (ToolbarElementWrapper wrap in AllAvaibleElements.OrderBy<ToolbarElementWrapper, int>((Func<ToolbarElementWrapper, int>)(x => x.Order)).Where(x => !x.MultipleInstances))
             {
                 BottomBarElements.Add(wrap);
             }
@@ -179,10 +180,10 @@ namespace UINotIncluded
             Scribe_Values.Look(ref settingsChecked, "settingsChecked", false);
 
             Scribe_Values.Look(ref vanillaReadout, "vanillaReadout", false);
-            Scribe_Values.Look(ref vanillaControlSpeed, "vanillaReadout", false);
-            Scribe_Values.Look(ref vanillaDate, "vanillaReadout", false);
-            Scribe_Values.Look(ref vanillaRealtime, "vanillaReadout", false);
-            Scribe_Values.Look(ref vanillaWeather, "vanillaReadout", false);
+            Scribe_Values.Look(ref vanillaControlSpeed, "vanillaControlSpeed", false);
+            Scribe_Values.Look(ref vanillaDate, "vanillaDate", false);
+            Scribe_Values.Look(ref vanillaRealtime, "vanillaRealtime", false);
+            Scribe_Values.Look(ref vanillaWeather, "vanillaWeather", false);
 
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);

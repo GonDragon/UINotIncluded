@@ -15,6 +15,7 @@ namespace UINotIncluded.Widget
         public System.Type workerClass;
 
         public float minWidth = 0f;
+        public bool multipleInstances = false;
         public float Width => Worker.GetWidth();
         public int order;
         private WidgetWorker workerInt;
@@ -46,6 +47,8 @@ namespace UINotIncluded.Widget
         public abstract void OnGUI(Rect rect);
 
         public virtual float GetWidth() { return def.minWidth; }
+
+        public virtual bool FixedWidth => true;
 
         public virtual bool WidgetVisible => true;
 
@@ -144,7 +147,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                return isWidget || ((MainButtonDef)Def).minimized;
+                return isWidget ? ((ExtendedWidgetDef)Def).Worker.FixedWidth : ((MainButtonDef)Def).minimized;
             }
         }
 
@@ -172,6 +175,15 @@ namespace UINotIncluded.Widget
             {
                 if (!isWidget) return ((MainButtonDef)Def).order;
                 return ((ExtendedWidgetDef)Def).order;
+            }
+        }
+
+        public bool MultipleInstances
+        {
+            get
+            {
+                if(isWidget) return ((ExtendedWidgetDef)Def).multipleInstances;
+                return false;
             }
         }
 

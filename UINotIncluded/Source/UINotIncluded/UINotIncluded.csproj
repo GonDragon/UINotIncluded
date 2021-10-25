@@ -95,7 +95,8 @@
     <Compile Include="Widget\ArchitectMenuButton.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
-    <Compile Include="Widget\Erroring_Worker.cs" />
+    <Compile Include="Widget\Workers\BlankSpace_Worker.cs" />
+    <Compile Include="Widget\Workers\Erroring_Worker.cs" />
     <Compile Include="Widget\ExtendedWidgetDef.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Utility\AltInspectorManager.cs" />
@@ -113,10 +114,10 @@
     <Compile Include="Utility\TimeSpeedExtension.cs" />
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
-    <Compile Include="Widget\RealTime_Worker.cs" />
-    <Compile Include="Widget\TimeWidget_Worker.cs" />
-    <Compile Include="Widget\Timespeed_Worker.cs" />
-    <Compile Include="Widget\Weather_Worker.cs" />
+    <Compile Include="Widget\Workers\RealTime_Worker.cs" />
+    <Compile Include="Widget\Workers\TimeWidget_Worker.cs" />
+    <Compile Include="Widget\Workers\Timespeed_Worker.cs" />
+    <Compile Include="Widget\Workers\Weather_Worker.cs" />
     <Compile Include="Windows\EditMainButton_Window.cs" />
   </ItemGroup>
   <ItemGroup>
