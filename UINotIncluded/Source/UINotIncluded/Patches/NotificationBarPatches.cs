@@ -17,7 +17,7 @@ namespace UINotIncluded
     class GlobalControlsPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.Low)]
+        [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.High)]
         public static bool TemperatureString_Patch()
         {
             return Settings.vanillaWeather;
