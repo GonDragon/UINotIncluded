@@ -22,7 +22,7 @@ namespace UINotIncluded.Widget
         {
             if (widthCache < 0 || fontCache != Settings.fontSize || cacheMode != Prefs.TemperatureMode)
             {
-                widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f) + 15f));
+                widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f)));
                 fontCache = Settings.fontSize;
                 cacheMode = Prefs.TemperatureMode;
             }
