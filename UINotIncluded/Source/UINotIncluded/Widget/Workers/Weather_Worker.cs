@@ -52,8 +52,7 @@ namespace UINotIncluded.Widget
             rect.width -= iconSpace.width;
 
             WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
-            float temp = Mathf.RoundToInt(GenTemperature.CelsiusTo(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile), Prefs.TemperatureMode));
-            string tempLabel = temp.ToStringTemperature();
+            string tempLabel = Mathf.Round(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile)).ToStringTemperature("F0");
 
             row.Label(tempLabel, rect.width, null, rect.height);
         }
