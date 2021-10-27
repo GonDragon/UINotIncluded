@@ -276,4 +276,8 @@
     <defName>water</defName>
     <path>GD/UI/Icons/MainButton/water</path>
   </UINotIncluded.MainIconDef>
+  <UINotIncluded.MainIconDef>
+    <defName>magnify</defName>
+    <path>GD/UI/Icons/MainButton/magnify</path>
+  </UINotIncluded.MainIconDef>
 </Defs>
