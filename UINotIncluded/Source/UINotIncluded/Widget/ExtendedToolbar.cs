@@ -43,7 +43,7 @@ namespace UINotIncluded.Widget
             {
                 if (!element.Visible) continue;
                 float eWidth = element.Width;
-                if (eWidth < 0) eWidth = elasticElementWidth;
+                if (!element.FixedWidth) eWidth = elasticElementWidth;
 
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = ExtendedToolbar.FontSize;

@@ -16,10 +16,8 @@ namespace UINotIncluded.Widget
 
         public float minWidth = 0f;
         public bool multipleInstances = false;
-        public float Width => Worker.GetWidth();
         public int order;
         private WidgetWorker workerInt;
-
 
         public void OnGUI(Rect rect) => Worker.OnGUI(rect);
 
@@ -42,17 +40,22 @@ namespace UINotIncluded.Widget
     public abstract class WidgetWorker
     {
         public float iconSize = 24f;
-        internal ExtendedWidgetDef def;
+        public ExtendedWidgetDef def;
+        public virtual Action ConfigAction(BarElementMemory memory)
+        {
+            return null;
+        }
 
         public abstract void OnGUI(Rect rect);
 
         public virtual float GetWidth() { return def.minWidth; }
+        public virtual float GetWidth(BarElementMemory memory) { return GetWidth(); }
 
-        public virtual bool FixedWidth => true;
+        public virtual bool FixedWidth(BarElementMemory memory) { return true; }
 
         public virtual bool WidgetVisible => true;
 
-        public virtual BarElementMemory Memory => new EmptyMemory();
+        public virtual BarElementMemory CreateMemory => new EmptyMemory();
 
         public virtual void Margins(ref Rect rect)
         {
@@ -92,6 +95,7 @@ namespace UINotIncluded.Widget
                 if(!_configActionLoaded)
                 {
                     if (!isWidget) _configAction = () => Find.WindowStack.Add(new UINotIncluded.Windows.EditMainButton_Window((MainButtonMemory)Memory));
+                    else _configAction = ((ExtendedWidgetDef)Def).Worker.ConfigAction(Memory);
                     _configActionLoaded = true;
                 }
                 return _configAction;
@@ -105,7 +109,7 @@ namespace UINotIncluded.Widget
                 if(_memory == null)
                 {
                     Def elementDef = this.Def; // Load the Def before checking for if widget to silently catch deleted buttons defs
-                    if (isWidget) _memory = ((ExtendedWidgetDef)elementDef).Worker.Memory;
+                    if (isWidget) _memory = ((ExtendedWidgetDef)elementDef).Worker.CreateMemory;
                     else _memory = new MainButtonMemory((MainButtonDef)elementDef);
                     _memory.LoadMemory();
                 }
@@ -119,7 +123,10 @@ namespace UINotIncluded.Widget
             {
                 if(defCache == null)
                 {
-                    if (isWidget) defCache = DefDatabase<ExtendedWidgetDef>.GetNamedSilentFail(defName);
+                    if (isWidget)
+                    {
+                        defCache = DefDatabase<ExtendedWidgetDef>.GetNamedSilentFail(defName);
+                    }
                     else defCache = DefDatabase<MainButtonDef>.GetNamedSilentFail(defName);
                     if(defCache == null)
                     {
@@ -147,7 +154,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                return isWidget ? ((ExtendedWidgetDef)Def).Worker.FixedWidth : ((MainButtonDef)Def).minimized;
+                return isWidget ? ((ExtendedWidgetDef)Def).Worker.FixedWidth(Memory) : ((MainButtonDef)Def).minimized;
             }
         }
 
@@ -156,7 +163,7 @@ namespace UINotIncluded.Widget
             get
             {
                 if (!isWidget) return FixedWidth ? (float)Math.Floor((UIManager.ExtendedBarHeight / 2f) * 3f) : -1f;
-                return ((ExtendedWidgetDef)Def).Width;
+                return Math.Max(((ExtendedWidgetDef)Def).minWidth,Memory.Width);
             }
         }
 

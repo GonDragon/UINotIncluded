@@ -12,6 +12,8 @@ namespace UINotIncluded
 {
     public abstract class BarElementMemory : IExposable
     {
+        public virtual bool FixedWidth => true;
+        public virtual float Width => 0f;
         public abstract void LoadMemory();
         public abstract void Update();
 
@@ -141,5 +143,37 @@ namespace UINotIncluded
             this.visible = this.defaultVisible;
             Update();
         }
+    }
+
+    public class BlankSpaceMemory : BarElementMemory
+    {
+        public bool fixedWidth = false;
+        public float width = 100f;
+
+        public override bool FixedWidth => fixedWidth;
+        public override float Width => width;
+
+        public BlankSpaceMemory() { }
+
+        public override void Clear()
+        { }
+
+        public override void ExposeData()
+        {
+            Scribe_Values.Look(ref fixedWidth, "fixed");
+            Scribe_Values.Look(ref width, "width");
+        }
+
+        public override void LoadMemory()
+        { }
+
+        public override void Reset()
+        {
+            fixedWidth = false;
+            width = 100f;
+        }
+
+        public override void Update()
+        { }
     }
 }

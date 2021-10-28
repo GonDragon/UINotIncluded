@@ -118,6 +118,7 @@
     <Compile Include="Widget\Workers\TimeWidget_Worker.cs" />
     <Compile Include="Widget\Workers\Timespeed_Worker.cs" />
     <Compile Include="Widget\Workers\Weather_Worker.cs" />
+    <Compile Include="Windows\EditBlankSpace_Window.cs" />
     <Compile Include="Windows\EditMainButton_Window.cs" />
   </ItemGroup>
   <ItemGroup>
