@@ -11,7 +11,7 @@ namespace UINotIncluded.Widget
     class Erroring_Worker : WidgetWorker
     {
         public override bool WidgetVisible => false;
-        public override void OnGUI(Rect rect)
+        public override void OnGUI(Rect rect, BarElementMemory memory)
         {}
     }
 }

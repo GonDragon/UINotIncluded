@@ -23,7 +23,7 @@ namespace UINotIncluded.Widget
             get => Find.CurrentMap != null;
         }
 
-        public override void OnGUI(Rect rect)
+        public override void OnGUI(Rect rect, BarElementMemory memory)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);

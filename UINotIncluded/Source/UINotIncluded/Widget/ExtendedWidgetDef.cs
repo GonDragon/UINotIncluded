@@ -19,7 +19,7 @@ namespace UINotIncluded.Widget
         public int order;
         private WidgetWorker workerInt;
 
-        public void OnGUI(Rect rect) => Worker.OnGUI(rect);
+        public void OnGUI(Rect rect, BarElementMemory memory) => Worker.OnGUI(rect, memory);
 
         public WidgetWorker Worker
         {
@@ -46,7 +46,7 @@ namespace UINotIncluded.Widget
             return null;
         }
 
-        public abstract void OnGUI(Rect rect);
+        public abstract void OnGUI(Rect rect, BarElementMemory memory);
 
         public virtual float GetWidth() { return def.minWidth; }
         public virtual float GetWidth(BarElementMemory memory) { return GetWidth(); }
@@ -225,7 +225,7 @@ namespace UINotIncluded.Widget
 
         public void OnGUI(Rect rect)
         {
-            if (isWidget) ((ExtendedWidgetDef)Def).OnGUI(rect);
+            if (isWidget) ((ExtendedWidgetDef)Def).OnGUI(rect, Memory);
             else ((MainButtonDef)Def).Worker.DoButton(rect);
         }
     }

@@ -26,7 +26,7 @@ namespace UINotIncluded.Widget
                     Find.WindowStack.Add(new UINotIncluded.Windows.EditBlankSpace_Window((BlankSpaceMemory)memory));
                 };
 }
-        public override void OnGUI(Rect rect)
+        public override void OnGUI(Rect rect, BarElementMemory memory)
         { }
     }
 }

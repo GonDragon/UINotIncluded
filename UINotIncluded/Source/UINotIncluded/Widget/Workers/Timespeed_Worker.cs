@@ -35,7 +35,7 @@ namespace UINotIncluded.Widget
             return def.minWidth + extraWidth;
         }
 
-        public override void OnGUI(Rect rect)
+        public override void OnGUI(Rect rect, BarElementMemory memory)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);

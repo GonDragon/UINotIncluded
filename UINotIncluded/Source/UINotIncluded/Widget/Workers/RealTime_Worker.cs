@@ -18,7 +18,7 @@ namespace UINotIncluded.Widget
             return (float)Math.Round(def.minWidth + 11.66f * (float)Settings.fontSize);
         }
 
-        public override void OnGUI(Rect rect)
+        public override void OnGUI(Rect rect, BarElementMemory memory)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);
