@@ -68,11 +68,17 @@ namespace UINotIncluded
                 }
                 return _def;
             }
+            set
+            {
+                _def = value;
+            }
         }
 
 
 
         public MainButtonMemory() { this.initialized = true;  } // Clear initializer for ExposeData
+
+        public override bool FixedWidth => this.minimized;
 
         public MainButtonMemory(MainButtonDef def)
         {

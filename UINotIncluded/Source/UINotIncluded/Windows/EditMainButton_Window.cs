@@ -10,7 +10,7 @@ using Verse.Sound;
 
 namespace UINotIncluded.Windows
 {
-    class EditMainButton_Window : Window
+    public class EditMainButton_Window : Window
     {
         private readonly MainButtonMemory buttonMemory;
         //private string newLabel;
