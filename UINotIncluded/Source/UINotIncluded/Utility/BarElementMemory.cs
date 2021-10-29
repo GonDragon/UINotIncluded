@@ -64,7 +64,7 @@ namespace UINotIncluded
             {
                 if(_def == null)
                 {
-                    _def = DefDatabase<MainButtonDef>.GetNamedSilentFail(defName);
+                    _def = DefDatabase<MainButtonDef>.GetNamedSilentFail(defName ?? "");
                 }
                 return _def;
             }
@@ -102,7 +102,7 @@ namespace UINotIncluded
                 initialized = true;
                 return;
             }
-            if(ContentFinder<Texture2D>.Get(this.iconPath, false) == null) this.iconPath = this.defaultIconPath;
+            if(ContentFinder<Texture2D>.Get(this.iconPath ?? "", false) == null) this.iconPath = this.defaultIconPath;
             this.Update();                
         }
 

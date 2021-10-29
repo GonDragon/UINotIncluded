@@ -56,7 +56,7 @@ namespace UINotIncluded.Windows
             inRect.yMin += 45f;
             float curY = inRect.y;
             float iconX = (float)Math.Floor(inRect.width / 2) - 44f;
-            GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)this.buttonMemory.Def.Icon);
+            if((Texture)this.buttonMemory.Def.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)this.buttonMemory.Def.Icon);
             curY += 93f;
             float x = inRect.x + inRect.width / 3f;
             float width = (float)((double)inRect.xMax - (double)x - (double)EditMainButton_Window.ResetButtonWidth - 10.0);
@@ -169,6 +169,7 @@ namespace UINotIncluded.Windows
 
         private IEnumerable<string> GetAvaibleIcons()
         {
+            InitializeIconsPathCache();
             yield return null;
             foreach (string path in cacheIconsPath) yield return path;
         }

@@ -31,7 +31,7 @@ namespace UINotIncluded
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
             CompatibilityPatches();
-            LoadMainButtonsSettings();
+            //LoadMainButtonsSettings();
 
             try
             {
@@ -77,36 +77,6 @@ namespace UINotIncluded
                 if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Timespeed_Worker.SetSmartspeedMode();
             }
             catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
-        }
-
-        static void LoadMainButtonsSettings()
-        {
-            UINotIncluded.Windows.EditMainButton_Window.InitializeIconsPathCache();
-
-            foreach (Widget.ToolbarElementWrapper wrapped in Settings.TopBarElements) 
-            {
-                try
-                {
-                    wrapped.Memory.LoadMemory();
-                } catch
-                {
-                    UINI.Warning(string.Format("Problem loading {0} element from the bar. Skiping",wrapped.defName));
-                }
-            }
-            foreach (Widget.ToolbarElementWrapper wrapped in Settings.BottomBarElements)
-            {
-                try
-                {
-                    wrapped.Memory.LoadMemory();
-                }
-                catch
-                {
-                    UINI.Warning(string.Format("Problem loading {0} element from the bar. Skiping", wrapped.defName));
-                }
-            }
-
-            Settings.TopBarElements.RemoveAll(IsErroring);
-            Settings.BottomBarElements.RemoveAll(IsErroring);
         }
 
         static bool IsErroring(Widget.ToolbarElementWrapper wrapper)
