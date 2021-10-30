@@ -96,6 +96,7 @@
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
     <Compile Include="Widget\ToolbarElementWrapper.cs" />
+    <Compile Include="Widget\Workers\WidgetWorker.cs" />
     <Compile Include="Widget\Workers\BlankSpace_Worker.cs" />
     <Compile Include="Widget\Workers\Erroring_Worker.cs" />
     <Compile Include="Widget\ExtendedWidgetDef.cs" />

@@ -40,8 +40,6 @@ namespace UINotIncluded
         private static List<ToolbarElementWrapper> topBar;
         private static List<ToolbarElementWrapper> bottomBar;
 
-        private static bool barWrappersLoaded = false;
-
         private static BarStyle _barStyle;
         private static Type _barStyleType;
         public static BarStyle BarStyle
@@ -83,9 +81,8 @@ namespace UINotIncluded
                 }
             }
         }
-        private static void LoadWrappers()
+        public static void LoadWrappers()
         {
-            barWrappersLoaded = true;
             foreach (ToolbarElementWrapper element in TopBarElements)
             {
                 element.Memory.LoadMemory();
@@ -101,7 +98,6 @@ namespace UINotIncluded
             get
             {
                 if (topBar == null) topBar = new List<ToolbarElementWrapper>();
-                if (!barWrappersLoaded) LoadWrappers();
                 return topBar;
             }
         }

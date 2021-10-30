@@ -71,7 +71,7 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (isWidget) return this.defName + " (widget)";
+                if (isWidget) return ((ExtendedWidgetDef)Def).Worker.LabelCap(Memory);
                 if (!((MainButtonDef)Def).buttonVisible) return Def.defName + " (hidden)";
                 return Def.defName;
             }
