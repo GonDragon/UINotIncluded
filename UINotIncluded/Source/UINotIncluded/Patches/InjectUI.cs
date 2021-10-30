@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using RimWorld;
-using Verse;
 using HarmonyLib;
-using UnityEngine;
+using RimWorld;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(MapInterface), "MapInterfaceOnGUI_BeforeMainTabs")]
-    class MapInterfaceOnGUI_BeforeMainTabsPatch
+    internal class MapInterfaceOnGUI_BeforeMainTabsPatch
     {
         public static void Prefix()
         {
@@ -19,7 +13,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(MapInterface), "MapInterfaceOnGUI_AfterMainTabs")]
-    class MapInterfaceOnGUI_AfterMainTabsPatch
+    internal class MapInterfaceOnGUI_AfterMainTabsPatch
     {
         public static void Postfix()
         {
@@ -28,7 +22,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(MainButtonsRoot), "MainButtonsOnGUI")]
-    class MainButtonRootPatch
+    internal class MainButtonRootPatch
     {
         public static void Postfix()
         {
@@ -37,7 +31,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(MainButtonsRoot), "DoButtons")]
-    class DoButtonsPatch
+    internal class DoButtonsPatch
     {
         public static bool Prefix()
         {

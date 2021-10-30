@@ -1,25 +1,19 @@
-﻿using System;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
-using Verse;
-using UnityEngine;
-using HarmonyLib;
-using System.Reflection.Emit;
 using System.Reflection;
+using System.Reflection.Emit;
+using UnityEngine;
+using Verse;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(Messages), "MessagesDoGUI")]
-    class MessagesDoGUIPatch
+    internal class MessagesDoGUIPatch
     {
+        private static FieldInfo vector2_y = AccessTools.Field(typeof(Vector2), "y");
 
-        static FieldInfo vector2_y = AccessTools.Field(typeof(Vector2), "y");
-
-        static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
             CodeInstruction prev = instructions.First();
             bool patched = false;
@@ -40,10 +34,9 @@ namespace UINotIncluded
             }
         }
 
-        static int YOffsetAdjustment()
+        private static int YOffsetAdjustment()
         {
             return Settings.TabsOnTop ? (int)UIManager.ExtendedBarHeight : 0;
         }
     }
-
 }

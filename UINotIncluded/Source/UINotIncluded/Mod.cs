@@ -1,9 +1,8 @@
-﻿using System;
+﻿using HarmonyLib;
+using RimWorld;
+using System;
 using System.Linq;
 using System.Reflection;
-
-using HarmonyLib;
-using RimWorld;
 using Verse;
 
 namespace UINotIncluded
@@ -26,6 +25,7 @@ namespace UINotIncluded
         }
 
         public static readonly Harmony Harmony;
+
         static UINI()
         {
             Harmony = new Harmony(Id);
@@ -42,7 +42,8 @@ namespace UINotIncluded
                     Settings.initializedDesignations = true;
                     LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
                 }
-            } catch
+            }
+            catch
             {
                 UINI.Error("Error initializing settings for Designation Bar");
             }
@@ -64,13 +65,18 @@ namespace UINotIncluded
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));
+
         public static void Warning(string message) => Verse.Log.Warning(PrefixMessage(message));
+
         public static void Error(string message) => Verse.Log.Error(PrefixMessage(message));
+
         public static void ErrorOnce(string message, string key) => Verse.Log.ErrorOnce(PrefixMessage(message), key.GetHashCode());
+
         public static void Message(string message) => Messages.Message(message, MessageTypeDefOf.TaskCompletion, false);
+
         private static string PrefixMessage(string message) => $"[{Name} v{Version}] {message}";
 
-        static void CompatibilityPatches()
+        private static void CompatibilityPatches()
         {
             try
             {
@@ -79,7 +85,7 @@ namespace UINotIncluded
             catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
         }
 
-        static bool IsErroring(Widget.ToolbarElementWrapper wrapper)
+        private static bool IsErroring(Widget.ToolbarElementWrapper wrapper)
         {
             return (wrapper.defName == "ErroringWidget") || wrapper.Def == null;
         }

@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Verse;
+﻿using HarmonyLib;
 using RimWorld;
-using HarmonyLib;
 using UnityEngine;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(ResourceReadout), "DoReadoutSimple"), HarmonyPriority(Priority.High)]
-    class DoReadoutSimplePatch
+    internal class DoReadoutSimplePatch
     {
         public static void Prefix(ref Rect rect)
         {
@@ -21,7 +14,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(ResourceReadout), "DoReadoutCategorized"), HarmonyPriority(Priority.High)]
-    class DoReadoutCategorizedPatch
+    internal class DoReadoutCategorizedPatch
     {
         public static void Prefix(ref Rect rect)
         {

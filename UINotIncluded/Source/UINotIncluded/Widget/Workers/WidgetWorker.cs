@@ -1,39 +1,20 @@
 ﻿using System;
-using Verse;
 using UnityEngine;
+using Verse;
 
 namespace UINotIncluded.Widget
 {
     public abstract class WidgetWorker
     {
-        public float iconSize = 24f;
         public ExtendedWidgetDef def;
-        public virtual Action ConfigAction(BarElementMemory memory)
-        {
-            return null;
-        }
-
-        public abstract void OnGUI(Rect rect, BarElementMemory memory);
-
-        public virtual float GetWidth() { return def.minWidth; }
-        public virtual float GetWidth(BarElementMemory memory) { return GetWidth(); }
-
-        public virtual bool FixedWidth(BarElementMemory memory) { return true; }
+        public float iconSize = 24f;
+        public virtual BarElementMemory CreateMemory => new EmptyMemory();
 
         public virtual bool WidgetVisible => true;
 
-        public virtual BarElementMemory CreateMemory => new EmptyMemory();
-
-        public virtual void Margins(ref Rect rect)
+        public virtual Action ConfigAction(BarElementMemory memory)
         {
-
-            rect = rect.ContractedBy(ExtendedToolbar.margin);
-        }
-
-        public virtual void Padding(ref Rect rect)
-        {
-
-            rect = rect.ContractedBy(ExtendedToolbar.padding);
+            return null;
         }
 
         public Rect DrawIcon(Texture2D icon, float curX, float curY, string tooltip = null)
@@ -45,9 +26,35 @@ namespace UINotIncluded.Widget
             return rect;
         }
 
+        public virtual bool FixedWidth(BarElementMemory memory)
+        {
+            return true;
+        }
+
+        public virtual float GetWidth()
+        {
+            return def.minWidth;
+        }
+
+        public virtual float GetWidth(BarElementMemory memory)
+        {
+            return GetWidth();
+        }
+
         public virtual string LabelCap(BarElementMemory memory)
         {
             return def.LabelCap;
+        }
+
+        public virtual void Margins(ref Rect rect)
+        {
+            rect = rect.ContractedBy(ExtendedToolbar.margin);
+        }
+
+        public abstract void OnGUI(Rect rect, BarElementMemory memory);
+        public virtual void Padding(ref Rect rect)
+        {
+            rect = rect.ContractedBy(ExtendedToolbar.padding);
         }
     }
 }

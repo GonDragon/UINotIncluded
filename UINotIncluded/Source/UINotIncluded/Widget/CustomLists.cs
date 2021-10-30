@@ -14,7 +14,7 @@ namespace UINotIncluded.Widget
         public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<T, string> getLabel, DragManager<T> manager)
         {
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(inRect.x, inRect.y,inRect.width,30f), name);
+            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 30f), name);
             Text.Anchor = TextAnchor.UpperLeft;
             inRect.y += 30f;
             inRect.height -= 30f;
@@ -42,7 +42,6 @@ namespace UINotIncluded.Widget
                 Rect spaceBefore = new Rect(innerSpace.x, widgetSpace.y - 13f, innerSpace.width, widgetSpace.height);
                 Rect spaceAfter = new Rect(innerSpace.x, widgetSpace.y + 13f, innerSpace.width, widgetSpace.height);
 
-
                 if (DragMemory.Dragging)
                 {
                     if (DragMemory.Dragged?.listname == name && DragMemory.Dragged?.pos == n) shouldDrawButton = false;
@@ -69,7 +68,7 @@ namespace UINotIncluded.Widget
                 n++;
             }
 
-            if(DragMemory.Dragging && !DragMemory.Hovering && Mouse.IsOver(new Rect(0f, 0f, scrollviewRect.width, scrollviewRect.height)))
+            if (DragMemory.Dragging && !DragMemory.Hovering && Mouse.IsOver(new Rect(0f, 0f, scrollviewRect.width, scrollviewRect.height)))
             {
                 Rect innerSpace = widgetSpace.ContractedBy(contraction);
                 Widgets.DrawLineHorizontal(innerSpace.x, widgetSpace.y, widgetSpace.width);

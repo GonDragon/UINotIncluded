@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
+using UINotIncluded.Widget;
 using UnityEngine;
 using Verse;
-
-using UINotIncluded.Widget;
 
 namespace UINotIncluded
 {
@@ -48,6 +44,7 @@ namespace UINotIncluded
                 SetMainbuttonVisibility("Wildlife", vanillaAnimals);
             }
         }
+
         public static void MainUIOnGUI()
         {
             //float toolbarY = Settings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
@@ -63,7 +60,6 @@ namespace UINotIncluded
 
         public static void After_MainUIOnGUI()
         {
-            
         }
 
         private static void SetMainbuttonVisibility(string name, bool visible)

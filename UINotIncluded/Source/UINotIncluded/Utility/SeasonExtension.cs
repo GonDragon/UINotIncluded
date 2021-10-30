@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
+﻿using RimWorld;
+using System;
 using UnityEngine;
-using Verse;
 
 namespace UINotIncluded
 {
@@ -18,18 +12,25 @@ namespace UINotIncluded
             {
                 case Season.Undefined:
                     return ModTextures.weatherUnknown;
+
                 case Season.Spring:
                     return ModTextures.seasonSpring;
+
                 case Season.Summer:
                     return ModTextures.seasonSummer;
+
                 case Season.Fall:
                     return ModTextures.seasonFall;
+
                 case Season.Winter:
                     return ModTextures.seasonWinter;
+
                 case Season.PermanentSummer:
                     return ModTextures.seasonPermaSummer;
+
                 case Season.PermanentWinter:
                     return ModTextures.seasonPermaWinter;
+
                 default:
                     throw new NotImplementedException();
             }

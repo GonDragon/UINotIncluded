@@ -1,10 +1,7 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using HarmonyLib;
 using UnityEngine;
 using Verse;
 
@@ -13,7 +10,6 @@ namespace UINotIncluded.Patches
     [HarmonyPatch(typeof(GizmoGridDrawer), "DrawGizmoGrid")]
     public class GizmoGridDrawerPatch
     {
-
         public static bool Prefix(
             IEnumerable<Gizmo> gizmos,
             float startX,

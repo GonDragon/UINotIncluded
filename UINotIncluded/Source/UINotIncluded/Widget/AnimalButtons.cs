@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
+﻿using RimWorld;
+using System;
 using Verse;
-using HarmonyLib;
-using UnityEngine;
 
 namespace UINotIncluded.Widget
 {
-    static class AnimalButtons
+    internal static class AnimalButtons
     {
         private static readonly float width = 90f;
 
@@ -23,6 +16,5 @@ namespace UINotIncluded.Widget
             if (row.ButtonText("Animals", fixedWidth: (float)Math.Floor(width / 2))) Find.MainTabsRoot.ToggleTab(DefDatabase<MainButtonDef>.GetNamed("Animals"));
             if (row.ButtonText("Wildlife", fixedWidth: (float)Math.Floor(width / 2))) Find.MainTabsRoot.ToggleTab(DefDatabase<MainButtonDef>.GetNamed("Wildlife"));
         }
-
     }
 }

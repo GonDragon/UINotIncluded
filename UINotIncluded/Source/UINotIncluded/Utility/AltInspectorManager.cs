@@ -1,13 +1,9 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
-using Verse;
 using UnityEngine;
-using System.Reflection;
+using Verse;
 
 namespace UINotIncluded
 {
@@ -36,6 +32,7 @@ namespace UINotIncluded
         private static TemperatureDisplayMode cachedTemperatureDisplayMode;
 
         public AltInspectorManager() => MakePermaCache();
+
         private void MakePermaCache()
         {
             this.glowStrings = new string[101];
@@ -63,7 +60,8 @@ namespace UINotIncluded
                     return;
                 }
                 Rect windowRect = GetWindowRect();
-                Find.WindowStack.ImmediateWindow(AltInspectorManager.uniqueID, windowRect, WindowLayer.Super, () => {
+                Find.WindowStack.ImmediateWindow(AltInspectorManager.uniqueID, windowRect, WindowLayer.Super, () =>
+                {
                     DrawTileInfo(windowRect);
                 });
                 TooltipHandler.ClearTooltipsFrom(new Rect(Event.current.mousePosition, cleanSize));
@@ -79,7 +77,8 @@ namespace UINotIncluded
             if (currentCell.Fogged(Find.CurrentMap))
             {
                 tileInfo["Terrain"] = "Undiscovered".Translate();
-            } else
+            }
+            else
             {
                 TerrainDef terrain = currentCell.GetTerrain(Find.CurrentMap);
                 if (terrain != cachedTerrain)
@@ -97,7 +96,7 @@ namespace UINotIncluded
                 {
                     SnowCategory snowCategory = SnowUtility.GetSnowCategory(snowDepth);
                     int snowMovementTicks = SnowUtility.MovementTicksAddOn(snowCategory);
-                    if(snowMovementTicks > cachedTerrainWalkspeedInt) tileInfo["UINotIncluded.AltInspector.WalkSpeed"] = this.SpeedPercentString((float)snowMovementTicks);
+                    if (snowMovementTicks > cachedTerrainWalkspeedInt) tileInfo["UINotIncluded.AltInspector.WalkSpeed"] = this.SpeedPercentString((float)snowMovementTicks);
                     tileInfo["UINotIncluded.AltInspector.TopLayer"] = SnowUtility.GetDescription(snowCategory);
                 }
 
@@ -106,7 +105,6 @@ namespace UINotIncluded
                 tileInfo["UINotIncluded.AltInspector.Fertility"] = cachedTerrainFertility;
 
                 tileInfo["UINotIncluded.AltInspector.Brightness"] = glowStrings[Mathf.RoundToInt(Find.CurrentMap.glowGrid.GameGlowAt(currentCell) * 100f)];
-                
 
                 Zone zone = currentCell.GetZone(Find.CurrentMap);
                 if (zone != null) tileInfo["Zone"] = zone.label;
@@ -132,7 +130,7 @@ namespace UINotIncluded
         private Rect GetWindowRect()
         {
             int nRows = tileInfo.Count() + things.Count();
-            Rect rect = new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 250f, 25f * nRows + padding*2);
+            Rect rect = new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 250f, 25f * nRows + padding * 2);
 
             rect.x += 26f;
             rect.y += 26f;
@@ -146,13 +144,13 @@ namespace UINotIncluded
         public void DrawTileInfo(Rect windowRect)
         {
             float curY = padding;
-            Rect inRect = new Rect(padding,curY,windowRect.width - padding*2, 100f);
+            Rect inRect = new Rect(padding, curY, windowRect.width - padding * 2, 100f);
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
             Text.WordWrap = false;
 
             int n = 0;
-            foreach(string infoLabel in tileInfo.Keys)
+            foreach (string infoLabel in tileInfo.Keys)
             {
                 Rect row = new Rect(inRect.x, curY, inRect.width, 23f);
                 if (n % 2 == 1)
@@ -166,7 +164,7 @@ namespace UINotIncluded
                 curY += 25f;
                 n++;
             }
-            foreach(string thingLabel in things)
+            foreach (string thingLabel in things)
             {
                 Rect row = new Rect(inRect.x, curY, inRect.width, 23f);
                 if (n % 2 == 1)
@@ -185,7 +183,7 @@ namespace UINotIncluded
 
             if (tileInfo.Count() == 1) return singleLabel;
 
-            if(tileInfo.ContainsKey("UINotIncluded.AltInspector.WalkSpeed") || tileInfo.ContainsKey("UINotIncluded.AltInspector.Fertility"))
+            if (tileInfo.ContainsKey("UINotIncluded.AltInspector.WalkSpeed") || tileInfo.ContainsKey("UINotIncluded.AltInspector.Fertility"))
             {
                 singleLabel += " (";
                 if (tileInfo.ContainsKey("UINotIncluded.AltInspector.WalkSpeed")) singleLabel += String.Format("{0}, ", "WalkSpeed".Translate((NamedArgument)tileInfo["UINotIncluded.AltInspector.WalkSpeed"]));
@@ -193,9 +191,9 @@ namespace UINotIncluded
                 singleLabel += ")";
             }
 
-            singleLabel += String.Format("\n{0}\n{1}\n", tileInfo["Temperature"],tileInfo["UINotIncluded.AltInspector.Brightness"]);
+            singleLabel += String.Format("\n{0}\n{1}\n", tileInfo["Temperature"], tileInfo["UINotIncluded.AltInspector.Brightness"]);
 
-            if (tileInfo.ContainsKey("UINotIncluded.AltInspector.TopLayer")) singleLabel += String.Format("{0}\n",tileInfo["UINotIncluded.AltInspector.TopLayer"]);
+            if (tileInfo.ContainsKey("UINotIncluded.AltInspector.TopLayer")) singleLabel += String.Format("{0}\n", tileInfo["UINotIncluded.AltInspector.TopLayer"]);
             if (tileInfo.ContainsKey("Zone")) singleLabel += String.Format("{0}\n", tileInfo["Zone"]);
             if (tileInfo.ContainsKey("Roof")) singleLabel += String.Format("{0}\n", tileInfo["Roof"]);
 

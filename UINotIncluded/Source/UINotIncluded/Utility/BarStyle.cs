@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace UINotIncluded
@@ -14,6 +8,7 @@ namespace UINotIncluded
         public virtual string Name => "";
 
         public abstract void DoToolbarBackground(Rect rect);
+
         public abstract void DoWidgetBackground(Rect rect);
     }
 
@@ -28,7 +23,7 @@ namespace UINotIncluded
 
         public override void DoWidgetBackground(Rect rect)
         {
-            Widgets.DrawAtlas(rect.ContractedBy(0f,2f), ModTextures.toolbarWidgetBackground);
+            Widgets.DrawAtlas(rect.ContractedBy(0f, 2f), ModTextures.toolbarWidgetBackground);
         }
     }
 
@@ -42,7 +37,7 @@ namespace UINotIncluded
         }
 
         public override void DoWidgetBackground(Rect rect)
-        {}
+        { }
     }
 
     public class BarStyle_VanillaBluePlus : BarStyle

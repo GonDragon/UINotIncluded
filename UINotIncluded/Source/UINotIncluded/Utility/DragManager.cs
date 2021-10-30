@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Verse;
 
 namespace UINotIncluded
 {
@@ -14,6 +13,7 @@ namespace UINotIncluded
 
         public static DragElement? Dragged => _dragged;
     }
+
     public class DragManager<T>
     {
         public Action OnUpdate;
@@ -28,7 +28,7 @@ namespace UINotIncluded
             this.GetLabel = GetLabel;
         }
 
-        public DragManager(Action OnUpdate, Func<T, string> GetLabel, Func<T,Action> OnClick)
+        public DragManager(Action OnUpdate, Func<T, string> GetLabel, Func<T, Action> OnClick)
         {
             this.OnUpdate = OnUpdate;
             this.GetLabel = GetLabel;
@@ -89,9 +89,9 @@ namespace UINotIncluded
             if (!DragMemory.Dragging || !DragMemory.Hovering) return;
             List<T> origin = _managed_dragable_lists[DragMemory._dragged?.listname];
             List<T> destination = _managed_dragable_lists[DragMemory.hoveringOver?.listname];
-            
+
             bool sameList = DragMemory._dragged?.listname == DragMemory.hoveringOver?.listname;
-            int removePos = sameList ? ((int)DragMemory.hoveringOver?.pos > (int)DragMemory._dragged?.pos ? (int)DragMemory._dragged?.pos : (int)DragMemory._dragged?.pos+1) : (int)DragMemory._dragged?.pos;
+            int removePos = sameList ? ((int)DragMemory.hoveringOver?.pos > (int)DragMemory._dragged?.pos ? (int)DragMemory._dragged?.pos : (int)DragMemory._dragged?.pos + 1) : (int)DragMemory._dragged?.pos;
 
             T temp = origin[(int)DragMemory._dragged?.pos];
             destination.Insert((int)DragMemory.hoveringOver?.pos, temp);

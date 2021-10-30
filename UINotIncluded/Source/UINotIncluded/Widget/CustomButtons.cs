@@ -28,17 +28,16 @@ namespace UINotIncluded
                     throw new NotImplementedException();
             }
 
-
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.DrawAtlas(space, texture);
             Widgets.Label(space, label);
             Text.Anchor = TextAnchor.UpperLeft;
 
             GUI.BeginGroup(space);
-            if(ConfigActionIcon)
+            if (ConfigActionIcon)
             {
                 float configSizef = space.height - 8f;
-                Rect configSpace = new Rect(space.width - configSizef - 4f,4f,configSizef,configSizef);
+                Rect configSpace = new Rect(space.width - configSizef - 4f, 4f, configSizef, configSizef);
                 GUI.DrawTexture(configSpace, ModTextures.iconCog);
             }
             GUI.EndGroup();

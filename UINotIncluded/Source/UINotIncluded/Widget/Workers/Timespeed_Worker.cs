@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using RimWorld;
+using System;
+using UINotIncluded.Utility;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using RimWorld;
-using UINotIncluded.Utility;
 
 namespace UINotIncluded.Widget
 {
-    
-
     public class Timespeed_Worker : WidgetWorker
     {
-
         private static Action<Rect> cached_DoTimeControlsGUI;
         private static float extraWidth = 0f;
 
@@ -25,6 +17,7 @@ namespace UINotIncluded.Widget
             cached_DoTimeControlsGUI = CustomTimeControls.DoSmartTimeControlsGUI;
             Timespeed_Worker.extraWidth = 8f;
         }
+
         public Timespeed_Worker()
         {
             cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoTimeControlsGUI;
@@ -56,15 +49,19 @@ namespace UINotIncluded.Widget
                     case TimeSpeed.Paused:
                         soundDef = SoundDefOf.Clock_Stop;
                         break;
+
                     case TimeSpeed.Normal:
                         soundDef = SoundDefOf.Clock_Normal;
                         break;
+
                     case TimeSpeed.Fast:
                         soundDef = SoundDefOf.Clock_Fast;
                         break;
+
                     case TimeSpeed.Superfast:
                         soundDef = SoundDefOf.Clock_Superfast;
                         break;
+
                     case TimeSpeed.Ultrafast:
                         soundDef = SoundDefOf.Clock_Superfast;
                         break;
@@ -160,8 +157,5 @@ namespace UINotIncluded.Widget
                 TimeControls.DoTimeControlsGUI(timerRect);
             }
         }
-
     }
-
-
 }

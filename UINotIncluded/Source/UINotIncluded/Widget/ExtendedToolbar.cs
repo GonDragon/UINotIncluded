@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace UINotIncluded.Widget
 {
-    static class ExtendedToolbar
+    internal static class ExtendedToolbar
     {
         public static float Height => 35f;
         public static float Width => UI.screenWidth;
@@ -28,7 +26,7 @@ namespace UINotIncluded.Widget
             float fixedWidth = 0f;
             int elasticElementsAmount = 0;
 
-            foreach(ToolbarElementWrapper element in elements)
+            foreach (ToolbarElementWrapper element in elements)
             {
                 if (!element.Visible) continue;
                 if (!element.FixedWidth) elasticElementsAmount++;
@@ -39,7 +37,7 @@ namespace UINotIncluded.Widget
             float elasticElementWidth = elasticSpaceAvaible / elasticElementsAmount;
 
             float curX = 0;
-            foreach(ToolbarElementWrapper element in elements)
+            foreach (ToolbarElementWrapper element in elements)
             {
                 if (!element.Visible) continue;
                 float eWidth = element.Width;
@@ -47,7 +45,7 @@ namespace UINotIncluded.Widget
 
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = ExtendedToolbar.FontSize;
-                element.OnGUI(new Rect(curX, inRect.y, eWidth,Height));
+                element.OnGUI(new Rect(curX, inRect.y, eWidth, Height));
                 curX += eWidth;
             }
             Text.Anchor = TextAnchor.UpperLeft;

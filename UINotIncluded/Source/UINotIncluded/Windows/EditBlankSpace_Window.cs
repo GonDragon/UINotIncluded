@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.Sound;
 
 namespace UINotIncluded.Windows
 {
-    class EditBlankSpace_Window : Window
+    internal class EditBlankSpace_Window : Window
     {
         public BlankSpaceMemory memory;
 
@@ -27,8 +21,8 @@ namespace UINotIncluded.Windows
             Listing_Standard list = new Listing_Standard();
             list.Begin(inRect);
             list.CheckboxLabeled("Fixed Width", ref memory.fixedWidth);
-            list.Label(string.Format("Width ({0}px)",Math.Round(memory.width).ToString()));
-            memory.width = list.Slider(memory.width,0f,1000f);
+            list.Label(string.Format("Width ({0}px)", Math.Round(memory.width).ToString()));
+            memory.width = list.Slider(memory.width, 0f, 1000f);
             list.End();
             if (Widgets.ButtonText(new Rect((inRect.width / 2f) - (EditBlankSpace_Window.ButSize.x / 2f), inRect.height - EditBlankSpace_Window.ButSize.y, EditBlankSpace_Window.ButSize.x, EditBlankSpace_Window.ButSize.y), (string)"DoneButton".Translate())) this.Close();
         }

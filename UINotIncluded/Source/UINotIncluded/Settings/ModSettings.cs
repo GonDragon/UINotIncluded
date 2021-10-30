@@ -1,11 +1,10 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UINotIncluded.Widget;
 using UnityEngine;
 using Verse;
-
-using UINotIncluded.Widget;
-using RimWorld;
 
 namespace UINotIncluded
 {
@@ -42,6 +41,7 @@ namespace UINotIncluded
 
         private static BarStyle _barStyle;
         private static Type _barStyleType;
+
         public static BarStyle BarStyle
         {
             get
@@ -60,6 +60,7 @@ namespace UINotIncluded
                 _barStyleType = value.GetType();
             }
         }
+
         public static IEnumerable<ToolbarElementWrapper> AllAvaibleElements
         {
             get
@@ -81,6 +82,7 @@ namespace UINotIncluded
                 }
             }
         }
+
         public static void LoadWrappers()
         {
             foreach (ToolbarElementWrapper element in TopBarElements)
@@ -93,6 +95,7 @@ namespace UINotIncluded
                 element.Memory.LoadMemory();
             }
         }
+
         public static List<ToolbarElementWrapper> TopBarElements
         {
             get
@@ -101,6 +104,7 @@ namespace UINotIncluded
                 return topBar;
             }
         }
+
         public static List<ToolbarElementWrapper> BottomBarElements
         {
             get
@@ -187,7 +191,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
             Scribe_Values.Look(ref centeredWindows, "centeredWindows", false);
-            
+
             Scribe_Values.Look(ref settingsChecked, "settingsChecked", false);
 
             Scribe_Values.Look(ref vanillaReadout, "vanillaReadout", false);
@@ -374,7 +378,7 @@ namespace UINotIncluded
         {
             float columnWidth = inRect.width / 2;
             float heigth = inRect.height;
-            Rect column1 = new Rect(columnWidth - columnWidth/2, inRect.y, columnWidth, heigth).ContractedBy(2f);
+            Rect column1 = new Rect(columnWidth - columnWidth / 2, inRect.y, columnWidth, heigth).ContractedBy(2f);
             Listing_Standard listingStandard = new Listing_Standard();
 
             listingStandard.Begin(column1);
@@ -479,7 +483,8 @@ namespace UINotIncluded
             curY += 25f;
 
             DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(
-                OnUpdate: () => {
+                OnUpdate: () =>
+                {
                     cacheAvaibleElements.Clear();
                     foreach (ToolbarElementWrapper element in Settings.AllAvaibleElements) cacheAvaibleElements.Add(element);
                 },

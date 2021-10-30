@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using RimWorld;
+using System;
 using System.Text;
-using System.Threading.Tasks;
-
 using UnityEngine;
 using Verse;
-using RimWorld;
-using RimWorld.Planet;
 
 namespace UINotIncluded.Widget
 {
@@ -37,7 +32,7 @@ namespace UINotIncluded.Widget
             space.x += iconSpace.width;
             space.width -= iconSpace.width;
 
-            WidgetRow row = new WidgetRow(space.x, space.y,UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
+            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;

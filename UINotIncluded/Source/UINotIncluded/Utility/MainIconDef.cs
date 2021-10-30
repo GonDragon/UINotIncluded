@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
+﻿using UnityEngine;
 using Verse;
-using UnityEngine;
 
 namespace UINotIncluded
 {
@@ -14,15 +7,17 @@ namespace UINotIncluded
     {
         public string path;
         private Texture2D _icon;
+
         public Texture2D Icon
         {
             get
             {
-                if(_icon == null) _icon = ContentFinder<Texture2D>.Get(path);
+                if (_icon == null) _icon = ContentFinder<Texture2D>.Get(path);
                 return _icon;
             }
         }
+
         public MainIconDef()
-        {   }
+        { }
     }
 }

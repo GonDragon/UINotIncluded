@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Verse;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
 using RimWorld;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(ColonistBar), "CheckRecacheEntries")]
-    class CheckRecacheEntriesPatch
+    internal class CheckRecacheEntriesPatch
     {
-        public static void Prefix(in bool ___entriesDirty,out bool __state)
+        public static void Prefix(in bool ___entriesDirty, out bool __state)
         {
             __state = ___entriesDirty;
         }

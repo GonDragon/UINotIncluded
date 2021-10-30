@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UINotIncluded
 {
@@ -22,10 +18,13 @@ namespace UINotIncluded
             {
                 case DesignationConfig.hidden:
                     return "Hidden";
+
                 case DesignationConfig.left:
                     return "Left Side";
+
                 case DesignationConfig.main:
                     return "Main";
+
                 case DesignationConfig.right:
                     return "Right Side";
 

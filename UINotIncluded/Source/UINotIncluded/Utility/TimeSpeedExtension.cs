@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Verse;
 using UnityEngine;
+using Verse;
 
 namespace UINotIncluded.Utility
 {
@@ -16,19 +11,22 @@ namespace UINotIncluded.Utility
             switch (timespeed)
             {
                 case TimeSpeed.Paused:
-                    return selected ? ModTextures.pause: ModTextures.pause_outl;
+                    return selected ? ModTextures.pause : ModTextures.pause_outl;
+
                 case TimeSpeed.Normal:
-                    return selected ? ModTextures.play: ModTextures.play_outl;
+                    return selected ? ModTextures.play : ModTextures.play_outl;
+
                 case TimeSpeed.Fast:
                     return selected ? ModTextures.speedOne : ModTextures.speedOne_outl;
+
                 case TimeSpeed.Superfast:
                     return selected ? ModTextures.speedTwo : ModTextures.speedTwo_outl;
+
                 case TimeSpeed.Ultrafast:
-                    return selected ? ModTextures.speedTwo: ModTextures.speedTwo_outl;
+                    return selected ? ModTextures.speedTwo : ModTextures.speedTwo_outl;
 
                 default:
                     throw new NotImplementedException();
-
             }
         }
     }

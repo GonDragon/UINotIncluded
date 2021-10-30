@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using UnityEngine;
 using Verse;
-using RimWorld;
-using HarmonyLib;
 
 namespace UINotIncluded.Widget
 {
     public class Weather_Worker : WidgetWorker
     {
-        float widthCache = -1;
-        GameFont fontCache = GameFont.Tiny;
-        TemperatureDisplayMode cacheMode = Prefs.TemperatureMode;
-        
+        private float widthCache = -1;
+        private GameFont fontCache = GameFont.Tiny;
+        private TemperatureDisplayMode cacheMode = Prefs.TemperatureMode;
 
         public override float GetWidth()
         {

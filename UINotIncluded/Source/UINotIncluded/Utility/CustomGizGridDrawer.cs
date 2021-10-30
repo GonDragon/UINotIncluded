@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnityEngine;
-using RimWorld;
 using UINotIncluded;
+using UnityEngine;
 
 namespace Verse
 {
@@ -85,7 +81,7 @@ namespace Verse
                     }
                 }
                 CustomGizmoGridDrawer.firstGizmos.Clear();
-                
+
                 for (int index3 = 0; index3 < CustomGizmoGridDrawer.gizmoGroups.Count; ++index3)
                 {
                     List<Gizmo> gizmoGroup = CustomGizmoGridDrawer.gizmoGroups[index3];
@@ -129,7 +125,7 @@ namespace Verse
                 }
                 CustomGizmoGridDrawer.customActivator = customActivatorFunc;
                 Text.Font = GameFont.Tiny;
-                
+
                 mouseoverGizmo = (Gizmo)null;
                 Gizmo interactedGiz = (Gizmo)null;
                 Event interactedEvent = (Event)null;
@@ -141,9 +137,7 @@ namespace Verse
                     Gizmo firstGizmo = CustomGizmoGridDrawer.firstGizmos[index];
                     if (firstGizmo.Visible)
                     {
-
                         Rect buttonSpace = new Rect(curX, startYrows[curRow - 1], buttonSize, buttonSize);
-                       
 
                         CustomGizmoGridDrawer.heightDrawnFrame = Time.frameCount;
                         CustomGizmoGridDrawer.heightDrawn = (float)UI.screenHeight - startYrows[curRow - 1];

@@ -1,10 +1,8 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using RimWorld;
 using Verse;
-using Verse.Sound;
 
 namespace UINotIncluded.Widget
 {
@@ -27,7 +25,7 @@ namespace UINotIncluded.Widget
             float mainWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.main], mainRows);
             float leftWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.left], leftRows);
 
-            float curX = Settings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth: posX;
+            float curX = Settings.designationsOnLeft ? 15f + rigthWidth + mainWidth + leftWidth : posX;
             curX -= (rigthWidth + mainWidth);
 
             CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], mainRows, curX, out Gizmo mousoverGizmo);
@@ -38,10 +36,11 @@ namespace UINotIncluded.Widget
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
 
             curX += mainWidth + leftWidth;
-            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.right], rigthRows, curX,out mousoverGizmo,true);
+            CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.right], rigthRows, curX, out mousoverGizmo, true);
             if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, true);
             CustomGizmoGridDrawer.Clean();
         }
+
         public static void DrawTooltip(Designator instance, bool detailed)
         {
             KeyCode k = instance.hotKey == null ? KeyCode.None : instance.hotKey.MainKey;
@@ -61,7 +60,6 @@ namespace UINotIncluded.Widget
             Rect rect = new Rect(mousePos, size);
             TipSignal tip = new TipSignal(tipText, 24637);
             TooltipHandler.TipRegion(rect, tip);
-
         }
     }
 }

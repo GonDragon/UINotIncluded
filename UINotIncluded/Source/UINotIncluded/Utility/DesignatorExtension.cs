@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using RimWorld;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using RimWorld;
 using UnityEngine;
 using Verse.Sound;
 
-
 namespace Verse
 {
-    static class DesignatorExtension
+    internal static class DesignatorExtension
     {
         public static GizmoResult DoCustomGuizmoOnGUI(this Designator instance, Rect butRect, GizmoRenderParms parms, bool simplified = false)
         {
-
             MethodInfo DrawIconMethod = HarmonyLib.AccessTools.Method(typeof(Designator), "DrawIcon");
 
             Text.Font = GameFont.Tiny;
@@ -46,7 +39,7 @@ namespace Verse
             {
                 Vector2 vector2 = parms.shrunk ? new Vector2(3f, 0.0f) : new Vector2(5f, 3f);
                 Widgets.Label(new Rect(butRect.x + vector2.x, butRect.y + vector2.y, butRect.width - 10f, 18f), k.ToStringReadable());
-                CustomGizmoGridDrawer.drawnHotKeys.Add(k,instance);
+                CustomGizmoGridDrawer.drawnHotKeys.Add(k, instance);
                 if (instance.hotKey.KeyDownEvent)
                 {
                     flag2 = true;

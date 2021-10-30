@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Verse;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
-using RimWorld;
-using System.Reflection.Emit;
-using System.Reflection;
+using Verse;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(MouseoverReadout))]
-    class MouseoverReadoutPatches
+    internal class MouseoverReadoutPatches
     {
         [HarmonyPatch(nameof(MouseoverReadout.MouseoverReadoutOnGUI))]
-        static bool Prefix(out bool __state)
+        private static bool Prefix(out bool __state)
         {
             if (!Settings.vanillaReadout)
             {
@@ -28,14 +19,14 @@ namespace UINotIncluded
 
             float deltaH = Settings.TabsOnBottom ? 0 : 35;
 
-            GUI.BeginGroup(new Rect(0f,0f + deltaH, UI.screenWidth, UI.screenHeight - deltaH));
+            GUI.BeginGroup(new Rect(0f, 0f + deltaH, UI.screenWidth, UI.screenHeight - deltaH));
             return true;
         }
 
         [HarmonyPatch(nameof(MouseoverReadout.MouseoverReadoutOnGUI))]
-        static void Postfix(bool __state)
+        private static void Postfix(bool __state)
         {
-            if(__state)
+            if (__state)
             {
                 GUI.EndGroup();
             }

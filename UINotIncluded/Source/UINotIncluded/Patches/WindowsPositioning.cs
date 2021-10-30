@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
+using System;
+using UnityEngine;
 using Verse;
 
 namespace UINotIncluded
 {
     [HarmonyPatch(typeof(WorldInspectPane), "PaneTopY", MethodType.Getter)]
-    class WorldInspectPanePatches
+    internal class WorldInspectPanePatches
     {
         public static void Postfix(ref float __result)
         {
@@ -22,7 +17,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(MainTabWindow_Inspect), "PaneTopY", MethodType.Getter)]
-    class MainTabWindow_InspectPatches
+    internal class MainTabWindow_InspectPatches
     {
         public static void Postfix(ref float __result)
         {
@@ -31,7 +26,7 @@ namespace UINotIncluded
     }
 
     [HarmonyPatch(typeof(Verse.WindowStack), "ImmediateWindow")]
-    class WindowStackPatch
+    internal class WindowStackPatch
     {
         public static void Prefix(int ID, ref Rect rect)
         {
@@ -50,7 +45,6 @@ namespace UINotIncluded
 
     public static class MainTabWindowPatchHelper
     {
-
         public static void CenterRectOnScreen(ref Rect rect)
         {
             CenterXOnScreen(ref rect);
@@ -61,8 +55,6 @@ namespace UINotIncluded
 
         public static void CenterYOnScreen(ref Rect rect) => rect.y = (float)Math.Floor(UI.screenHeight / 2f) - (float)Math.Floor(rect.height / 2f);
     }
-
-
 
     [HarmonyPatch(typeof(MainTabWindow), "SetInitialSizeAndPosition")]
     public class MainTabWindowPatch
@@ -75,17 +67,17 @@ namespace UINotIncluded
             if (Settings.TabsOnTop) maxHeight -= UIManager.ExtendedBarHeight;
             if (Settings.TabsOnBottom) maxHeight -= UIManager.ExtendedBarHeight;
 
-            ___windowRect.height = Math.Min(___windowRect.height,maxHeight);
+            ___windowRect.height = Math.Min(___windowRect.height, maxHeight);
 
             if (windowType == typeof(MainTabWindow_Inspect) || windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research))
             {
-                if(!Settings.TabsOnBottom) ___windowRect.y += 35f;
+                if (!Settings.TabsOnBottom) ___windowRect.y += 35f;
                 return;
             }
 
             if (!Settings.centeredWindows) return;
 
-            if(windowType == typeof(MainTabWindow_Animals) || windowType == typeof(MainTabWindow_Wildlife) || windowType == typeof(MainTabWindow_Ideos))
+            if (windowType == typeof(MainTabWindow_Animals) || windowType == typeof(MainTabWindow_Wildlife) || windowType == typeof(MainTabWindow_Ideos))
             {
                 MainTabWindowPatchHelper.CenterYOnScreen(ref ___windowRect);
                 return;

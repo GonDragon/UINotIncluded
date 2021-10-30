@@ -1,9 +1,8 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
-using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -13,10 +12,12 @@ namespace UINotIncluded.Windows
     public class EditMainButton_Window : Window
     {
         private readonly MainButtonMemory buttonMemory;
+
         //private string newLabel;
         //private string iconPath;
         //private bool newMinimized;
         private Vector2 scrollPos;
+
         private float viewHeight;
         private const int IconSize = 40;
         private const int IconPadding = 5;
@@ -51,19 +52,18 @@ namespace UINotIncluded.Windows
             inRect.height -= Window.CloseButSize.y;
             Verse.Text.Font = GameFont.Medium;
             Widgets.Label(new Rect(inRect.x, inRect.y, rect.width, 35f), "UINotIncluded.Windows.EditButton".Translate());
-            Verse.Text.Font = GameFont.Small;            
+            Verse.Text.Font = GameFont.Small;
             string defaultLabel = (string)"Default".Translate();
             inRect.yMin += 45f;
             float curY = inRect.y;
             float iconX = (float)Math.Floor(inRect.width / 2) - 44f;
-            if((Texture)this.buttonMemory.Def.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)this.buttonMemory.Def.Icon);
+            if ((Texture)this.buttonMemory.Def.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)this.buttonMemory.Def.Icon);
             curY += 93f;
             float x = inRect.x + inRect.width / 3f;
             float width = (float)((double)inRect.xMax - (double)x - (double)EditMainButton_Window.ResetButtonWidth - 10.0);
             float labelY = curY;
             Widgets.Label(inRect.x, ref labelY, inRect.width, (string)"Name".Translate());
             this.buttonMemory.label = Widgets.TextField(new Rect(x, curY, width, EditMainButton_Window.EditFieldHeight), this.buttonMemory.label, 40, EditMainButton_Window.ValidSymbolRegex);
-
 
             Rect labelRect = new Rect(x, curY, width, EditMainButton_Window.EditFieldHeight);
             Rect defaultLabelRect = new Rect(labelRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
@@ -75,10 +75,9 @@ namespace UINotIncluded.Windows
             }
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
-
-            Rect minimizedRect = new Rect(inRect.x, curY, width *2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
+            Rect minimizedRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
             Rect defaultMinimizedRect = new Rect(minimizedRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
-            Widgets.CheckboxLabeled(minimizedRect, "UINotIncluded.Windows.Minimize".Translate(),ref buttonMemory.minimized);
+            Widgets.CheckboxLabeled(minimizedRect, "UINotIncluded.Windows.Minimize".Translate(), ref buttonMemory.minimized);
 
             if (Widgets.ButtonText(defaultMinimizedRect, defaultLabel))
             {
@@ -86,7 +85,6 @@ namespace UINotIncluded.Windows
                 this.buttonMemory.minimized = this.buttonMemory.defaultMinimized;
             }
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
-
 
             Rect forceVisibleRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
             Widgets.CheckboxLabeled(forceVisibleRect, "UINotIncluded.Windows.forceVisible".Translate(), ref buttonMemory.visible);
