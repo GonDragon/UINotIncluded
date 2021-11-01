@@ -85,14 +85,55 @@ namespace UINotIncluded
 
         public static void LoadWrappers()
         {
+            List<int> errors = new List<int>();
+            int current = 0;
             foreach (ToolbarElementWrapper element in TopBarElements)
             {
-                element.Memory.LoadMemory();
+                try
+                {
+                    element.Memory.LoadMemory();
+                } catch
+                {
+                    UINI.Warning(string.Format("Problem loading {0} element on the topbar. Skiping.",element.defName));
+                    errors.Add(current);
+                } finally
+                {
+                    current++;
+                }
+            }
+            errors.Reverse();
+
+            foreach(int errorIndex in errors)
+            {
+                TopBarElements.RemoveAt(errorIndex);
+                UINI.Warning(string.Format("Removed {0} elements from the Topbar.", errors.Count()));
             }
 
+
+            errors.Clear();
+            current = 0;
             foreach (ToolbarElementWrapper element in BottomBarElements)
             {
-                element.Memory.LoadMemory();
+                try
+                {
+                    element.Memory.LoadMemory();
+                }
+                catch
+                {
+                    UINI.Warning(string.Format("Problem loading {0} element on the bottombar. Skiping.", element.defName));
+                    errors.Add(current);
+                }
+                finally
+                {
+                    current++;
+                }
+            }
+            errors.Reverse();
+
+            foreach (int errorIndex in errors)
+            {
+                BottomBarElements.RemoveAt(errorIndex);
+                UINI.Warning(string.Format("Removed {0} elements from the bottombar.",errors.Count()));
             }
         }
 
