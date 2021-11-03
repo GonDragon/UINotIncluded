@@ -68,6 +68,7 @@ namespace UINotIncluded
             if (Settings.TabsOnBottom) maxHeight -= UIManager.ExtendedBarHeight;
 
             ___windowRect.height = Math.Min(___windowRect.height, maxHeight);
+            ___windowRect.y = maxHeight == ___windowRect.height ? (Settings.TabsOnTop ? UIManager.ExtendedBarHeight : 0) : ___windowRect.y;
 
             if (windowType == typeof(MainTabWindow_Inspect) || windowType == typeof(MainTabWindow_Architect) || windowType == typeof(MainTabWindow_Research))
             {
