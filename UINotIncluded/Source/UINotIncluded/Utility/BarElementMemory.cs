@@ -136,7 +136,6 @@ namespace UINotIncluded
 
         public override void LoadMemory()
         {
-            if (Def == null) throw new NotImplementedException();
             if (!loaded)
             {
                 this.defaultLabel = Def.label;

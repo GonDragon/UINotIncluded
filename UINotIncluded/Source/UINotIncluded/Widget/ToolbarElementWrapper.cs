@@ -62,9 +62,8 @@ namespace UINotIncluded.Widget
                     {
                         UINI.Warning(string.Format("Error loading {0} def element from database.", defName));
                         markedForDeletion = true;
-                        defName = "ErroringWidget";
                         isWidget = true;
-                        defCache = DefDatabase<ExtendedWidgetDef>.GetNamed("ErroringWidget");
+                        defCache = null;
                     }
                 }
                 return defCache;
@@ -123,13 +122,8 @@ namespace UINotIncluded.Widget
 
         public void LoadMemory()
         {
-            try
-            {
-                Memory.LoadMemory();
-            } catch
-            {
-                markedForDeletion = true;
-            }
+            if (Def == null) markedForDeletion = true;
+            else Memory.LoadMemory();
         }
 
         public bool Visible
@@ -164,7 +158,8 @@ namespace UINotIncluded.Widget
                 string label = "memory";
                 if (Scribe.mode == LoadSaveMode.LoadingVars)
                 {
-                    Type memoryType = Type.GetType(Scribe.loader.curXmlParent[label].Attributes.GetNamedItem("Class").Value);
+                    string typeName = Scribe.loader.curXmlParent[label].Attributes.GetNamedItem("Class").Value;
+                    Type memoryType = Type.GetType(typeName);
                     if(memoryType == null)
                     {
                         _memory = new BarElementMemory();

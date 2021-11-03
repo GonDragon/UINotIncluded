@@ -63,8 +63,6 @@ namespace UINotIncluded
             {
                 UINI.Error("Error initializing settings for TabsBar");
             }
-
-            Settings.LoadWrappers();
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));

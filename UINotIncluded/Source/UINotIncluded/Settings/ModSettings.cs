@@ -37,7 +37,9 @@ namespace UINotIncluded
         public static bool TabsOnTop => Settings.TopBarElements.Count() > 0;
         public static bool TabsOnBottom => Settings.BottomBarElements.Count() > 0;
         private static List<ToolbarElementWrapper> topBar;
+        private static bool topBarInitialized = false;
         private static List<ToolbarElementWrapper> bottomBar;
+        private static bool bottomBarInitialized = false;
 
         private static BarStyle _barStyle;
         private static Type _barStyleType;
@@ -83,21 +85,17 @@ namespace UINotIncluded
             }
         }
 
-        public static void LoadWrappers()
-        {
-
-            foreach (ToolbarElementWrapper element in TopBarElements) element.LoadMemory();
-            foreach (ToolbarElementWrapper element in BottomBarElements) element.LoadMemory();
-
-            Settings.CleanElementLists();
-
-        }
-
         public static List<ToolbarElementWrapper> TopBarElements
         {
             get
             {
                 if (topBar == null) topBar = new List<ToolbarElementWrapper>();
+                else if (!topBarInitialized)
+                {
+                    topBarInitialized = true;
+                    foreach (ToolbarElementWrapper element in topBar) element.LoadMemory();
+                    topBar = topBar.Where(NotMarkedForDeletion).ToList();
+                }
                 return topBar;
             }
         }
@@ -107,14 +105,14 @@ namespace UINotIncluded
             get
             {
                 if (bottomBar == null) bottomBar = new List<ToolbarElementWrapper>();
+                else if (!bottomBarInitialized)
+                {
+                    bottomBarInitialized = true;
+                    foreach (ToolbarElementWrapper element in bottomBar) element.LoadMemory();
+                    bottomBar = bottomBar.Where(NotMarkedForDeletion).ToList();
+                }
                 return bottomBar;
             }
-        }
-
-        internal static void CleanElementLists()
-        {
-            bottomBar = BottomBarElements.Where(NotMarkedForDeletion).ToList();
-            topBar = TopBarElements.Where(NotMarkedForDeletion).ToList();
         }
 
         private static bool NotMarkedForDeletion(ToolbarElementWrapper element)
