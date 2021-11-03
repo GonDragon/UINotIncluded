@@ -85,56 +85,12 @@ namespace UINotIncluded
 
         public static void LoadWrappers()
         {
-            List<int> errors = new List<int>();
-            int current = 0;
-            foreach (ToolbarElementWrapper element in TopBarElements)
-            {
-                try
-                {
-                    element.Memory.LoadMemory();
-                } catch
-                {
-                    UINI.Warning(string.Format("Problem loading {0} element on the topbar. Skiping.",element.defName));
-                    errors.Add(current);
-                } finally
-                {
-                    current++;
-                }
-            }
-            errors.Reverse();
 
-            foreach(int errorIndex in errors)
-            {
-                TopBarElements.RemoveAt(errorIndex);
-                UINI.Warning(string.Format("Removed {0} elements from the Topbar.", errors.Count()));
-            }
+            foreach (ToolbarElementWrapper element in TopBarElements) element.LoadMemory();
+            foreach (ToolbarElementWrapper element in BottomBarElements) element.LoadMemory();
 
+            Settings.CleanElementLists();
 
-            errors.Clear();
-            current = 0;
-            foreach (ToolbarElementWrapper element in BottomBarElements)
-            {
-                try
-                {
-                    element.Memory.LoadMemory();
-                }
-                catch
-                {
-                    UINI.Warning(string.Format("Problem loading {0} element on the bottombar. Skiping.", element.defName));
-                    errors.Add(current);
-                }
-                finally
-                {
-                    current++;
-                }
-            }
-            errors.Reverse();
-
-            foreach (int errorIndex in errors)
-            {
-                BottomBarElements.RemoveAt(errorIndex);
-                UINI.Warning(string.Format("Removed {0} elements from the bottombar.",errors.Count()));
-            }
         }
 
         public static List<ToolbarElementWrapper> TopBarElements
@@ -153,6 +109,19 @@ namespace UINotIncluded
                 if (bottomBar == null) bottomBar = new List<ToolbarElementWrapper>();
                 return bottomBar;
             }
+        }
+
+        internal static void CleanElementLists()
+        {
+            bottomBar = BottomBarElements.Where(NotMarkedForDeletion).ToList();
+            topBar = TopBarElements.Where(NotMarkedForDeletion).ToList();
+        }
+
+        private static bool NotMarkedForDeletion(ToolbarElementWrapper element)
+        {
+            bool marked = element.markedForDeletion;
+            if (marked) UINI.Warning(string.Format("Element {0} marked for deletion from the mainbar. Deleting.",element.defName));
+            return !marked;
         }
 
         public static List<Designator>[] GetDesignationConfigs()

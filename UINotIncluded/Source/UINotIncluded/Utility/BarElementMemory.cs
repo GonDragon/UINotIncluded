@@ -1,23 +1,24 @@
 ﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
 namespace UINotIncluded
 {
-    public abstract class BarElementMemory : IExposable
+    public class BarElementMemory : IExposable
     {
         public virtual bool FixedWidth => true;
         public virtual float Width => 0f;
 
-        public abstract void Clear();
+        public virtual void Clear() { }
 
-        public abstract void ExposeData();
+        public virtual void ExposeData() { }
 
-        public abstract void LoadMemory();
+        public virtual void LoadMemory() { }
 
-        public abstract void Reset();
+        public virtual void Reset() { }
 
-        public abstract void Update();
+        public virtual void Update() { }
     }
 
     public class BlankSpaceMemory : BarElementMemory
@@ -53,7 +54,7 @@ namespace UINotIncluded
         { }
     }
 
-    public class EmptyMemory : BarElementMemory
+    public class EmptyMemory : BarElementMemory // Legacy usseless memory
     {
         public override void Clear()
         { }
@@ -135,6 +136,7 @@ namespace UINotIncluded
 
         public override void LoadMemory()
         {
+            if (Def == null) throw new NotImplementedException();
             if (!loaded)
             {
                 this.defaultLabel = Def.label;

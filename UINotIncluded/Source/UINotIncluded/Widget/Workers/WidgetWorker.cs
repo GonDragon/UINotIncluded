@@ -8,7 +8,7 @@ namespace UINotIncluded.Widget
     {
         public ExtendedWidgetDef def;
         public float iconSize = 24f;
-        public virtual BarElementMemory CreateMemory => new EmptyMemory();
+        public virtual BarElementMemory CreateMemory => new BarElementMemory();
 
         public virtual bool WidgetVisible => true;
 

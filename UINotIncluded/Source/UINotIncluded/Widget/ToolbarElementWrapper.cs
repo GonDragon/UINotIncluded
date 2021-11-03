@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Runtime.Serialization;
 using UnityEngine;
 using Verse;
 
@@ -12,6 +13,7 @@ namespace UINotIncluded.Widget
         private Action _configAction;
         private bool _configActionLoaded = false;
         private BarElementMemory _memory;
+        public bool markedForDeletion = false;
         private Def defCache;
         public ToolbarElementWrapper()
         {
@@ -24,7 +26,6 @@ namespace UINotIncluded.Widget
             defCache = widget;
         }
 
-        //So it can be instantiated by the Scribe
         public ToolbarElementWrapper(MainButtonDef button)
         {
             this.isWidget = false;
@@ -60,6 +61,7 @@ namespace UINotIncluded.Widget
                     if (defCache == null)
                     {
                         UINI.Warning(string.Format("Error loading {0} def element from database.", defName));
+                        markedForDeletion = true;
                         defName = "ErroringWidget";
                         isWidget = true;
                         defCache = DefDatabase<ExtendedWidgetDef>.GetNamed("ErroringWidget");
@@ -119,6 +121,17 @@ namespace UINotIncluded.Widget
             }
         }
 
+        public void LoadMemory()
+        {
+            try
+            {
+                Memory.LoadMemory();
+            } catch
+            {
+                markedForDeletion = true;
+            }
+        }
+
         public bool Visible
         {
             get
@@ -145,7 +158,31 @@ namespace UINotIncluded.Widget
         {
             Scribe_Values.Look(ref isWidget, "isWidget");
             Scribe_Values.Look(ref defName, "wrapped");
-            Scribe_Deep.Look(ref _memory, "memory");
+
+            try
+            {
+                string label = "memory";
+                if (Scribe.mode == LoadSaveMode.LoadingVars)
+                {
+                    Type memoryType = Type.GetType(Scribe.loader.curXmlParent[label].Attributes.GetNamedItem("Class").Value);
+                    if(memoryType == null)
+                    {
+                        _memory = new BarElementMemory();
+                        this.markedForDeletion = true;
+                        throw new NotImplementedException();
+                    } else
+                    {
+                        Scribe_Deep.Look(ref _memory, label);
+                    }
+                } else
+                {
+                    Scribe_Deep.Look(ref _memory, label);
+                }                
+            } catch
+            {
+                UINI.Warning(string.Format("Could not load memory of widget {0}. Memory class non existent.",defName));
+            }
+            
         }
         public void OnGUI(Rect rect)
         {

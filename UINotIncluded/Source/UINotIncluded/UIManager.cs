@@ -16,7 +16,6 @@ namespace UINotIncluded
 
         public static bool toggleAltInspector = false;
 
-        private static bool toolbarsLoaded = false;
         private static bool tabsOnTop = Settings.TabsOnTop;
         private static bool vanillaAnimals = true;
         private static readonly WidgetRow animalsRow = new WidgetRow();
@@ -25,7 +24,6 @@ namespace UINotIncluded
 
         internal static void BarsOnGUI()
         {
-            if (!toolbarsLoaded) { Settings.LoadWrappers(); toolbarsLoaded = true; };
             ExtendedToolbar.ExtendedToolbarOnGUI(Settings.TopBarElements, new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
             ExtendedToolbar.ExtendedToolbarOnGUI(Settings.BottomBarElements, new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
         }
