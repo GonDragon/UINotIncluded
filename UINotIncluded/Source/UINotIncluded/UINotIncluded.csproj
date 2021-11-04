@@ -85,6 +85,7 @@
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
+    <Compile Include="Utility\AssemblyChecker.cs" />
     <Compile Include="Utility\BarElementMemory.cs" />
     <Compile Include="Utility\BarStyle.cs" />
     <Compile Include="Utility\DragManager.cs" />

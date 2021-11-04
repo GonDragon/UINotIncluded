@@ -159,15 +159,14 @@ namespace UINotIncluded.Widget
                 if (Scribe.mode == LoadSaveMode.LoadingVars)
                 {
                     string typeName = Scribe.loader.curXmlParent[label].Attributes.GetNamedItem("Class").Value;
-                    Type memoryType = Type.GetType(typeName);
-                    if(memoryType == null)
+                    if(UINotIncluded.Utility.AssemblyChecker.TypeLoaded(typeName))
+                    {
+                        Scribe_Deep.Look(ref _memory, label);
+                    } else
                     {
                         _memory = new BarElementMemory();
                         this.markedForDeletion = true;
                         throw new NotImplementedException();
-                    } else
-                    {
-                        Scribe_Deep.Look(ref _memory, label);
                     }
                 } else
                 {
