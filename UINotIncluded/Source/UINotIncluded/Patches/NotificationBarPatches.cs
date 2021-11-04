@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace UINotIncluded
 {
@@ -70,9 +71,10 @@ namespace UINotIncluded
     internal class WeatherManagerPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI))]
-        private static bool DoWeatherGUI_PrefixPatch()
+        [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI)), HarmonyPriority(Priority.High)]
+        private static bool DoWeatherGUI_PrefixPatch(ref Rect rect)
         {
+            rect.width = Settings.vanillaWeather ? rect.width : 0;
             return Settings.vanillaWeather;
         }
     }
