@@ -44,10 +44,10 @@ namespace UINotIncluded
             switch (format)
             {
                 case DateFormat.MMDDYYYY:
-                    return String.Format("{0:D2}/{1:D2}/{2}", day, (int)quadrum + 1, year);
+                    return String.Format("{1:D2}/{0:D2}/{2}", day, (int)quadrum + 1, year);
 
                 case DateFormat.DDMMYYYY:
-                    return String.Format("{1:D2}/{0:D2}/{2}", day, (int)quadrum + 1, year);
+                    return String.Format("{0:D2}/{1:D2}/{2}", day, (int)quadrum + 1, year);
 
                 case DateFormat.DDmmmYYYY:
                     return String.Format("{0:D2}-{1}-{2}", day, quadrum.LabelShort(), year);
@@ -80,5 +80,12 @@ namespace UINotIncluded
                     throw new NotImplementedException();
             }
         }
+    }
+
+    public enum RoundHour : byte
+    {
+        hour,
+        tenMinute,
+        minute,
     }
 }

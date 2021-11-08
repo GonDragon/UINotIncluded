@@ -8,6 +8,8 @@ namespace UINotIncluded.Widget
 {
     public class TimeWidget_Worker : WidgetWorker
     {
+        public override BarElementMemory CreateMemory => new TimeWidgetMemory();
+
         public override float GetWidth()
         {
             return (float)Math.Round(def.minWidth + 35 * (float)Settings.fontSize);
@@ -16,6 +18,11 @@ namespace UINotIncluded.Widget
         public override bool WidgetVisible
         {
             get => Find.CurrentMap != null;
+        }
+
+        public override Action ConfigAction(BarElementMemory memory)
+        {
+            return () => Find.WindowStack.Add(new UINotIncluded.Windows.EditTimeWidget_Window((TimeWidgetMemory) memory));
         }
 
         public override void OnGUI(Rect rect, BarElementMemory memory)
@@ -35,9 +42,26 @@ namespace UINotIncluded.Widget
             WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
-            int minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
+            int minutes;
+            switch (((TimeWidgetMemory)memory).roundHour)
+            {
+                case RoundHour.hour:
+                    minutes = 0;
+                    break;
+                case RoundHour.tenMinute:
+                    minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
+                    break;
+                case RoundHour.minute:
+                    minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 60);
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    
+            }
+            
+            //= (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
             string timestamp = Math.Floor(hour).ToString() + ":" + minutes.ToString("D2") + " hs";
-            string datestamp = Settings.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+            string datestamp = ((TimeWidgetMemory)memory).dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float timeWidth = Text.CalcSize(timestamp).x;

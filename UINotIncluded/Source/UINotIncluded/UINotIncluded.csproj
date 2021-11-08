@@ -93,7 +93,6 @@
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Utility\MainIconDef.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
-    <Compile Include="Widget\ArchitectMenuButton.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
     <Compile Include="Widget\ToolbarElementWrapper.cs" />
@@ -107,7 +106,7 @@
     <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />
     <Compile Include="Patches\MouseoverReadout.cs" />
-    <Compile Include="Settings\DateFormat.cs" />
+    <Compile Include="Utility\DateFormat.cs" />
     <Compile Include="Settings\ModSettings.cs" />
     <Compile Include="Patches\InjectUI.cs" />
     <Compile Include="Mod.cs" />
@@ -123,6 +122,7 @@
     <Compile Include="Widget\Workers\Weather_Worker.cs" />
     <Compile Include="Windows\EditBlankSpace_Window.cs" />
     <Compile Include="Windows\EditMainButton_Window.cs" />
+    <Compile Include="Windows\EditTimeWidget_Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

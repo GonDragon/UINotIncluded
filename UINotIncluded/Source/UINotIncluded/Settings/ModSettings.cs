@@ -10,7 +10,6 @@ namespace UINotIncluded
 {
     public class Settings : ModSettings
     {
-        public static DateFormat dateFormat = DateFormat.ddmmmYYYY;
         public static bool designationsOnLeft;
         public static GameFont fontSize = GameFont.Tiny;
         public static List<String> hiddenDesignations;
@@ -196,7 +195,7 @@ namespace UINotIncluded
         {
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
-            Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
+            
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
             Scribe_Values.Look(ref centeredWindows, "centeredWindows", false);
 
@@ -401,16 +400,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
 
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
-            if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.dateFormat".Translate(), Settings.dateFormat.ToStringHuman()))
-            {
-                List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (DateFormat dateFormat in Enum.GetValues(typeof(DateFormat)))
-                {
-                    DateFormat localFormat = dateFormat;
-                    options.Add(new FloatMenuOption(localFormat.ToStringHuman(), (Action)(() => Settings.dateFormat = dateFormat)));
-                }
-                Find.WindowStack.Add((Window)new FloatMenu(options));
-            }
+            
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), Settings.fontSize.ToString()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();

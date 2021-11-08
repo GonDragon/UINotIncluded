@@ -179,4 +179,16 @@ namespace UINotIncluded
             }
         }
     }
+
+    public class TimeWidgetMemory : BarElementMemory
+    {
+        public DateFormat dateFormat;
+        public RoundHour roundHour;
+
+        public override void ExposeData()
+        {
+            Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
+            Scribe_Values.Look(ref roundHour, "roundHour", RoundHour.tenMinute);
+        }
+    }
 }
