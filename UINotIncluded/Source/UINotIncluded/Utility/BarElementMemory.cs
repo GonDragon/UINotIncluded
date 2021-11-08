@@ -182,9 +182,9 @@ namespace UINotIncluded
 
     public class TimeWidgetMemory : BarElementMemory
     {
-        public DateFormat dateFormat;
-        public RoundHour roundHour;
-        public ClockFormat clockFormat;
+        public DateFormat dateFormat = DateFormat.MMDDYYYY;
+        public RoundHour roundHour = RoundHour.tenMinute;
+        public ClockFormat clockFormat = ClockFormat.twentyfourHours;
 
         public override float Width
         {
