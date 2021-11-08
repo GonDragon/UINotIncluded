@@ -45,11 +45,7 @@ namespace UINotIncluded
 
         public static void MainUIOnGUI()
         {
-            //float toolbarY = Settings.tabsOnTop ? 0f : UI.screenHeight - ExtendedToolbar.Height;
-            //float toolbarX;
-            //if (Settings.barOnRight) { toolbarX = UI.screenWidth - ExtendedBarWidth; } else { toolbarX = Settings.vanillaArchitect ? 0 : archButtonWidth; };
             float animalsY = Settings.TabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
-            //if (!vanillaArchitect) ArchitectMenuButton.ArchitectButtonOnGUI(0f, toolbarY, archButtonWidth);
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
             altInspectorManager.AltInspectorOnGUI();
             if (!vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
