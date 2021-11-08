@@ -184,11 +184,34 @@ namespace UINotIncluded
     {
         public DateFormat dateFormat;
         public RoundHour roundHour;
+        public ClockFormat clockFormat;
+
+        public override float Width
+        {
+            get
+            {
+                float difference;
+                switch (Settings.fontSize)
+                {
+                    case GameFont.Small:
+                        difference = 35;
+                        break;
+                    case GameFont.Medium:
+                        difference = 75;
+                        break;
+                    default:
+                        difference = 0;
+                        break;
+                }
+                return (float)Math.Round(180 + difference);
+            }
+        }
 
         public override void ExposeData()
         {
             Scribe_Values.Look(ref dateFormat, "dateFormat", DateFormat.MMDDYYYY);
             Scribe_Values.Look(ref roundHour, "roundHour", RoundHour.tenMinute);
+            Scribe_Values.Look(ref clockFormat, "clockFormat", ClockFormat.twentyfourHours);
         }
     }
 }

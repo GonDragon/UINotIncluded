@@ -11,7 +11,7 @@ namespace UINotIncluded
     public class Settings : ModSettings
     {
         public static bool designationsOnLeft;
-        public static GameFont fontSize = GameFont.Tiny;
+        public static GameFont fontSize;
         public static List<String> hiddenDesignations;
         public static bool initializedDesignations;
         public static bool initializedDefaultBar;

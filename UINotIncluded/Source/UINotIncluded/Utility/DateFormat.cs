@@ -88,4 +88,11 @@ namespace UINotIncluded
         tenMinute,
         minute,
     }
+
+    public enum ClockFormat : byte
+    {
+        vanilla,
+        twelveHours,
+        twentyfourHours,
+    }
 }

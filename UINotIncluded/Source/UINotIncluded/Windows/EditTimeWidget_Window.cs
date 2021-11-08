@@ -43,6 +43,16 @@ namespace UINotIncluded.Windows
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
 
+            if (list.ButtonTextLabeled("UINotIncluded.Setting.clockFormat".Translate(), ((TimeWidgetMemory)memory).clockFormat.ToString()))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (ClockFormat clockFormat in Enum.GetValues(typeof(ClockFormat)))
+                {
+                    options.Add(new FloatMenuOption(clockFormat.ToString(), (Action)(() => ((TimeWidgetMemory)memory).clockFormat = clockFormat)));
+                }
+                Find.WindowStack.Add((Window)new FloatMenu(options));
+            }
+
             list.End();
             if (Widgets.ButtonText(new Rect((inRect.width / 2f) - (EditTimeWidget_Window.ButSize.x / 2f), inRect.height - EditTimeWidget_Window.ButSize.y, EditTimeWidget_Window.ButSize.x, EditTimeWidget_Window.ButSize.y), (string)"DoneButton".Translate())) this.Close();
         }
