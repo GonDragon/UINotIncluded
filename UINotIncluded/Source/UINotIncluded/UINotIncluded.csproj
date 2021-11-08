@@ -80,6 +80,7 @@
     <Compile Include="Alerts\Alert_SettingsChecked.cs" />
     <Compile Include="DefExtensions.cs" />
     <Compile Include="ModTextures.cs" />
+    <Compile Include="Patches\DebugWindowsOpener.cs" />
     <Compile Include="Patches\WindowsPositioning.cs" />
     <Compile Include="Patches\GizmoGridDrawer.cs" />
     <Compile Include="Settings\DesignationConfig.cs" />
