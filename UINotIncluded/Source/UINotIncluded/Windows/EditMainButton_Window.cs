@@ -32,7 +32,7 @@ namespace UINotIncluded.Windows
         static private readonly Dictionary<string, Texture2D> cacheIcons = new Dictionary<string, Texture2D>();
         static private List<string> cacheIconsPath;
 
-        public override Vector2 InitialSize => new Vector2(350f, 500f);
+        public override Vector2 InitialSize => new Vector2(350f, 600f);
 
         public EditMainButton_Window(MainButtonMemory buttonMemory)
         {
