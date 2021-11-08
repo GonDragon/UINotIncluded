@@ -491,7 +491,7 @@ namespace UINotIncluded
 
             DragMemory.hoveringOver = null;
 
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Avaible", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Available", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
             Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
             Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
 
