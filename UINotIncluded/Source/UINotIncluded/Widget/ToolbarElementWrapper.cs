@@ -123,6 +123,7 @@ namespace UINotIncluded.Widget
         public void LoadMemory()
         {
             if (Def == null) markedForDeletion = true;
+            else if (isWidget && Memory.GetType() != ((ExtendedWidgetDef)Def).Worker.CreateMemory.GetType()) _memory = ((ExtendedWidgetDef)Def).Worker.CreateMemory;
             else Memory.LoadMemory();
         }
 
