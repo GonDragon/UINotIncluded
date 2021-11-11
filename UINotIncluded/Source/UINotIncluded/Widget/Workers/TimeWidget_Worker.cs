@@ -120,6 +120,7 @@ namespace UINotIncluded.Widget
                 default:
                     throw new NotImplementedException();
             }
+            Text.WordWrap = true;
         }
 
         private static string GetDateDescription(Vector2 pos, Season season)
