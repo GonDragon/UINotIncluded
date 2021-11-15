@@ -2,19 +2,93 @@
 using RimWorld;
 using Verse;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Reflection.Emit;
+using System.Linq;
+using System.Reflection;
 
 namespace UINotIncluded
 {
-    [HarmonyPatch(typeof(GlobalControls))]
-    internal class GlobalControlsPatches
+    [HarmonyPatch(typeof(GlobalControls), "GlobalControlsOnGUI")]
+    internal class GlobalControl_TranspilerPatch
     {
-        [HarmonyPrefix]
-        [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.High)]
-        public static bool TemperatureString_Patch()
+        private static readonly MethodInfo utility_DoDate = AccessTools.Method(typeof(GlobalControlsUtility), "DoDate");
+        private static readonly MethodInfo weather_DoWeather = AccessTools.Method(typeof(WeatherManager), "DoWeatherGUI");
+
+        private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
-            return Settings.vanillaWeather;
+            CodeInstruction prev = instructions.First();
+            bool patchWeater = false;
+            bool patchWeater_finish = false;
+            bool patchedTemp = false;
+
+            foreach (var code in instructions)
+            {
+                if (!patchWeater)
+                {
+                    if (prev.opcode == OpCodes.Call && (MethodInfo)prev.operand == utility_DoDate)
+                    {
+                        patchWeater = true;
+
+                        yield return new CodeInstruction(OpCodes.Ldloc_0);
+                        yield return new CodeInstruction(OpCodes.Ldloca_S, 1);
+                        yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GlobalControl_TranspilerPatch), nameof(DoWeather)));
+                        continue;
+                    }
+                    yield return code;
+                    prev = code;
+                } else if (!patchWeater_finish)
+                {
+                    if (prev.opcode == OpCodes.Stloc_1)
+                    {
+                        yield return code;
+                        patchWeater_finish = true;
+                    }
+                    prev = code;
+                } else
+                {
+                    yield return code;
+                }
+                
+                
+                //if (!patchedTemp)
+                //{
+
+                //    prev = code;
+                //}
+            }
         }
+
+        private static void DoWeather(float x, ref float y)
+        {
+            if (!Settings.vanillaWeather) return;
+            y -= 26f;
+            Rect rect = new Rect(x - 22f, y,230f,26f);
+            Find.CurrentMap.weatherManager.DoWeatherGUI(rect);
+        }
+
+        private static void DoTemperature(float x, ref float y,string label)
+        {
+            if (!Settings.vanillaWeather) return;
+            y -= 26f;
+            Rect rect = new Rect(x - 100f, y, 293f, 26f);
+            Widgets.Label(rect, label);
+        }
+
+
+
     }
+
+    //[HarmonyPatch(typeof(GlobalControls))]
+    //internal class GlobalControlsPatches
+    //{
+    //    [HarmonyPrefix]
+    //    [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.High)]
+    //    public static bool TemperatureString_Patch()
+    //    {
+    //        return Settings.vanillaWeather;
+    //    }
+    //}
 
     [HarmonyPatch(typeof(GlobalControlsUtility))]
     internal class GlobalControlsUtilityPatches
@@ -50,12 +124,12 @@ namespace UINotIncluded
             return Settings.vanillaDate;
         }
 
-        [HarmonyPostfix]
-        [HarmonyPatch(nameof(GlobalControlsUtility.DoDate))]
-        private static void DoDate_PostifxPatch(ref float curBaseY)
-        {
-            if (!Settings.vanillaWeather) curBaseY += 50;
-        }
+        //[HarmonyPostfix]
+        //[HarmonyPatch(nameof(GlobalControlsUtility.DoDate))]
+        //private static void DoDate_PostifxPatch(ref float curBaseY)
+        //{
+        //    if (!Settings.vanillaWeather) curBaseY += 50;
+        //}
 
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GlobalControlsUtility.DoRealtimeClock)), HarmonyPriority(Priority.Low)]
@@ -67,17 +141,17 @@ namespace UINotIncluded
         }
     }
 
-    [HarmonyPatch(typeof(WeatherManager))]
-    internal class WeatherManagerPatches
-    {
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI)), HarmonyPriority(Priority.High)]
-        private static bool DoWeatherGUI_PrefixPatch(ref Rect rect)
-        {
-            rect.width = Settings.vanillaWeather ? rect.width : 0;
-            return Settings.vanillaWeather;
-        }
-    }
+    //[HarmonyPatch(typeof(WeatherManager))]
+    //internal class WeatherManagerPatches
+    //{
+    //    [HarmonyPrefix]
+    //    [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI)), HarmonyPriority(Priority.High)]
+    //    private static bool DoWeatherGUI_PrefixPatch(ref Rect rect)
+    //    {
+    //        rect.width = Settings.vanillaWeather ? rect.width : 0;
+    //        return Settings.vanillaWeather;
+    //    }
+    //}
 
     [HarmonyPatch(typeof(PlaySettings), "DoPlaySettingsGlobalControls")]
     internal class DoPlaySettingsGlobalControlsPatch
