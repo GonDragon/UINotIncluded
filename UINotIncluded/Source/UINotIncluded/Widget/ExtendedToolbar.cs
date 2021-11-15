@@ -14,8 +14,6 @@ namespace UINotIncluded.Widget
         public static float padding = 2;
         public static float margin = 3;
 
-        public static GameFont FontSize => Settings.fontSize;
-
         public static void ExtendedToolbarOnGUI(List<ToolbarElementWrapper> elements, Rect inRect)
         {
             if (elements.Count() == 0) return;
@@ -44,10 +42,11 @@ namespace UINotIncluded.Widget
                 if (!element.FixedWidth) eWidth = elasticElementWidth;
 
                 Text.Anchor = TextAnchor.MiddleCenter;
-                Text.Font = ExtendedToolbar.FontSize;
+                Text.Font = Settings.fontSize;
                 element.OnGUI(new Rect(curX, inRect.y, eWidth, Height));
                 curX += eWidth;
             }
+            Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
