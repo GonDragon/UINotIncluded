@@ -75,7 +75,7 @@ namespace UINotIncluded
 
         private static void DoTemperature(string label, float x, ref float y)
         {
-            if (!Settings.vanillaWeather) return;
+            if (!Settings.vanillaTemperature) return;
             y -= 26f;
             Rect rect = new Rect(x - 100f, y, 293f, 26f);
             Widgets.Label(rect, label);
@@ -84,17 +84,6 @@ namespace UINotIncluded
 
 
     }
-
-    //[HarmonyPatch(typeof(GlobalControls))]
-    //internal class GlobalControlsPatches
-    //{
-    //    [HarmonyPrefix]
-    //    [HarmonyPatch("TemperatureString"), HarmonyPriority(Priority.High)]
-    //    public static bool TemperatureString_Patch()
-    //    {
-    //        return Settings.vanillaWeather;
-    //    }
-    //}
 
     [HarmonyPatch(typeof(GlobalControlsUtility))]
     internal class GlobalControlsUtilityPatches
@@ -130,13 +119,6 @@ namespace UINotIncluded
             return Settings.vanillaDate;
         }
 
-        //[HarmonyPostfix]
-        //[HarmonyPatch(nameof(GlobalControlsUtility.DoDate))]
-        //private static void DoDate_PostifxPatch(ref float curBaseY)
-        //{
-        //    if (!Settings.vanillaWeather) curBaseY += 50;
-        //}
-
         [HarmonyPrefix]
         [HarmonyPatch(nameof(GlobalControlsUtility.DoRealtimeClock)), HarmonyPriority(Priority.Low)]
         private static bool DoRealtimeClock_Patch(ref float curBaseY)
@@ -146,18 +128,6 @@ namespace UINotIncluded
             return false;
         }
     }
-
-    //[HarmonyPatch(typeof(WeatherManager))]
-    //internal class WeatherManagerPatches
-    //{
-    //    [HarmonyPrefix]
-    //    [HarmonyPatch(nameof(WeatherManager.DoWeatherGUI)), HarmonyPriority(Priority.High)]
-    //    private static bool DoWeatherGUI_PrefixPatch(ref Rect rect)
-    //    {
-    //        rect.width = Settings.vanillaWeather ? rect.width : 0;
-    //        return Settings.vanillaWeather;
-    //    }
-    //}
 
     [HarmonyPatch(typeof(PlaySettings), "DoPlaySettingsGlobalControls")]
     internal class DoPlaySettingsGlobalControlsPatch

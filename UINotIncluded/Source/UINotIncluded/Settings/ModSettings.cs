@@ -29,6 +29,7 @@ namespace UINotIncluded
         public static bool vanillaDate;
         public static bool vanillaRealtime;
         public static bool vanillaWeather;
+        public static bool vanillaTemperature;
 
         public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
@@ -206,6 +207,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref vanillaDate, "vanillaDate", false);
             Scribe_Values.Look(ref vanillaRealtime, "vanillaRealtime", false);
             Scribe_Values.Look(ref vanillaWeather, "vanillaWeather", false);
+            Scribe_Values.Look(ref vanillaTemperature, "vanillaTemperature", false);
 
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
@@ -396,6 +398,8 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaRealtime".Translate(), ref Settings.vanillaRealtime, "UINotIncluded.Setting.vanillaRealtime.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaWeather".Translate(), ref Settings.vanillaWeather, "UINotIncluded.Setting.vanillaWeather.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaTemperature".Translate(), ref Settings.vanillaTemperature, "UINotIncluded.Setting.vanillaTemperature.Description".Translate());
+
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaDate".Translate(), ref Settings.vanillaDate, "UINotIncluded.Setting.vanillaDate.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
 
