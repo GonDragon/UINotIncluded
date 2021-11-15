@@ -13,7 +13,7 @@ namespace UINotIncluded
     internal class GlobalControl_TranspilerPatch
     {
         private static readonly MethodInfo utility_DoDate = AccessTools.Method(typeof(GlobalControlsUtility), "DoDate");
-        private static readonly MethodInfo weather_DoWeather = AccessTools.Method(typeof(WeatherManager), "DoWeatherGUI");
+        private static readonly MethodInfo globalControls_Temperaturestring = AccessTools.Method(typeof(GlobalControls), "TemperatureString");
 
         private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
@@ -39,23 +39,29 @@ namespace UINotIncluded
                     prev = code;
                 } else if (!patchWeater_finish)
                 {
-                    if (prev.opcode == OpCodes.Stloc_1)
+                    if (prev.opcode == OpCodes.Newobj)
                     {
                         yield return code;
                         patchWeater_finish = true;
                     }
                     prev = code;
+                } else if (!patchedTemp)
+                {
+                    if (prev.opcode == OpCodes.Call && (MethodInfo)prev.operand == globalControls_Temperaturestring)
+                    {
+                        patchedTemp = true;
+
+                        yield return new CodeInstruction(OpCodes.Ldloc_0);
+                        yield return new CodeInstruction(OpCodes.Ldloca_S, 1);
+                        yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GlobalControl_TranspilerPatch), nameof(DoTemperature)));
+                        continue;
+                    }
+                    yield return code;
+                    prev = code;
                 } else
                 {
                     yield return code;
                 }
-                
-                
-                //if (!patchedTemp)
-                //{
-
-                //    prev = code;
-                //}
             }
         }
 
@@ -67,7 +73,7 @@ namespace UINotIncluded
             Find.CurrentMap.weatherManager.DoWeatherGUI(rect);
         }
 
-        private static void DoTemperature(float x, ref float y,string label)
+        private static void DoTemperature(string label, float x, ref float y)
         {
             if (!Settings.vanillaWeather) return;
             y -= 26f;
