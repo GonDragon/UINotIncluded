@@ -7,27 +7,31 @@ namespace UINotIncluded.Widget
 {
     public class Weather_Worker : WidgetWorker
     {
+        public ExtendedWidgetDef def;
         private float widthCache = -1;
         private GameFont fontCache = GameFont.Tiny;
         private TemperatureDisplayMode cacheMode = Prefs.TemperatureMode;
 
-        public override float GetWidth()
+        public override float Width
         {
-            if (widthCache < 0 || fontCache != Settings.fontSize || cacheMode != Prefs.TemperatureMode)
+            get
             {
-                widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f)));
-                fontCache = Settings.fontSize;
-                cacheMode = Prefs.TemperatureMode;
+                if (widthCache < 0 || fontCache != Settings.fontSize || cacheMode != Prefs.TemperatureMode)
+                {
+                    widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f)));
+                    fontCache = Settings.fontSize;
+                    cacheMode = Prefs.TemperatureMode;
+                }
+                return widthCache;
             }
-            return widthCache;
         }
 
-        public override bool WidgetVisible
+        public override bool Visible
         {
             get => Find.CurrentMap != null;
         }
 
-        public override void OnGUI(Rect rect, BarElementMemory memory)
+        public override void OnGUI(Rect rect)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);

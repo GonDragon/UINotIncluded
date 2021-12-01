@@ -94,12 +94,15 @@
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Utility\MainIconDef.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
+    <Compile Include="Widget\Configs\ButtonConfig.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
-    <Compile Include="Widget\ToolbarElementWrapper.cs" />
+    <Compile Include="Widget\Configs\ElementConfig.cs" />
+    <Compile Include="Widget\ToolbarElement.cs" />
+    <Compile Include="Widget\WidgetManager.cs" />
+    <Compile Include="Widget\Workers\Button_Worker.cs" />
     <Compile Include="Widget\Workers\WidgetWorker.cs" />
     <Compile Include="Widget\Workers\BlankSpace_Worker.cs" />
-    <Compile Include="Widget\Workers\Erroring_Worker.cs" />
     <Compile Include="Widget\ExtendedWidgetDef.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
     <Compile Include="Utility\AltInspectorManager.cs" />

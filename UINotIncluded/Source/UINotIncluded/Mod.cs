@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Verse;
@@ -31,8 +32,8 @@ namespace UINotIncluded
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
             CompatibilityPatches();
-            //LoadMainButtonsSettings();
-            
+            LoadMainButtonsSettings();
+
 
             try
             {
@@ -63,6 +64,44 @@ namespace UINotIncluded
             {
                 UINI.Error("Error initializing settings for TabsBar");
             }
+        }
+
+        private static void LoadMainButtonsSettings()
+        {
+            bool DeleteNonExistentButtons(List<Widget.Configs.ElementConfig> configList)
+            {
+                List<int> indexToDelete = new List<int>();
+                bool deleted = false;
+
+                int i = 0;
+                foreach(Widget.Configs.ElementConfig config in configList)
+                {
+                    try
+                    {
+                        config.Def.GetType();
+                    } catch
+                    {
+                        UINI.Warning(string.Format("Def {0} not found. Marked for removal.",config.defName));
+                        indexToDelete.Add(i);
+                    } finally
+                    {
+                        i++;
+                    }
+                }
+
+                foreach(int k in indexToDelete.OrderByDescending(k => k))
+                {
+                    configList.RemoveAt(k);
+                    deleted = true;
+                }
+
+                return deleted;
+            }
+
+            bool somethingDeleted = DeleteNonExistentButtons(Settings.TopBarElements);
+            somethingDeleted |= DeleteNonExistentButtons(Settings.BottomBarElements);
+
+            if (somethingDeleted) LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
         }
 
         public static void Log(string message) => Verse.Log.Message(PrefixMessage(message));

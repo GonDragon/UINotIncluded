@@ -36,10 +36,9 @@ namespace UINotIncluded
 
         public static bool TabsOnTop => Settings.TopBarElements.Count() > 0;
         public static bool TabsOnBottom => Settings.BottomBarElements.Count() > 0;
-        private static List<ToolbarElementWrapper> topBar;
-        private static bool topBarInitialized = false;
-        private static List<ToolbarElementWrapper> bottomBar;
-        private static bool bottomBarInitialized = false;
+
+        private static List<Widget.Configs.ElementConfig> topBar;
+        private static List<Widget.Configs.ElementConfig> bottomBar;
 
         private static BarStyle _barStyle;
         private static Type _barStyleType;
@@ -63,63 +62,34 @@ namespace UINotIncluded
             }
         }
 
-        public static IEnumerable<ToolbarElementWrapper> AllAvaibleElements
+        public static IEnumerable<Widget.Configs.ElementConfig> AllAvaibleElements
         {
             get
             {
-                foreach (MainButtonDef buttonDef in DefDatabase<MainButtonDef>.AllDefs)
+                foreach(Widget.Configs.ElementConfig config in UINotIncluded.Widget.WidgetManager.MainTabButtons)
                 {
-                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(buttonDef);
-                    if (buttonDef.defName == "Inspect" || Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
-                    yield return wrapped;
-                }
-
-                foreach (ExtendedWidgetDef widgetDef in DefDatabase<ExtendedWidgetDef>.AllDefs)
-                {
-                    if (widgetDef.defName == "ErroringWidget") continue;
-                    ToolbarElementWrapper wrapped = new ToolbarElementWrapper(widgetDef);
-                    if (((ExtendedWidgetDef)wrapped.Def).multipleInstances) { yield return wrapped; continue; }
-                    if (Settings.TopBarElements.Contains(wrapped) || Settings.BottomBarElements.Contains(wrapped)) continue;
-                    yield return wrapped;
+                    if (!config.Repeatable && (TopBarElements.Select(e => e.defName).Contains(config.defName) || BottomBarElements.Select(e => e.defName).Contains(config.defName))) continue;
+                    yield return config;
                 }
             }
         }
 
-        public static List<ToolbarElementWrapper> TopBarElements
+        public static List<Widget.Configs.ElementConfig> TopBarElements
         {
             get
             {
-                if (topBar == null) topBar = new List<ToolbarElementWrapper>();
-                else if (!topBarInitialized)
-                {
-                    topBarInitialized = true;
-                    foreach (ToolbarElementWrapper element in topBar) element.LoadMemory();
-                    topBar = topBar.Where(NotMarkedForDeletion).ToList();
-                }
+                if (topBar == null) topBar = new List<Widget.Configs.ElementConfig>();
                 return topBar;
             }
         }
 
-        public static List<ToolbarElementWrapper> BottomBarElements
+        public static List<Widget.Configs.ElementConfig> BottomBarElements
         {
             get
             {
-                if (bottomBar == null) bottomBar = new List<ToolbarElementWrapper>();
-                else if (!bottomBarInitialized)
-                {
-                    bottomBarInitialized = true;
-                    foreach (ToolbarElementWrapper element in bottomBar) element.LoadMemory();
-                    bottomBar = bottomBar.Where(NotMarkedForDeletion).ToList();
-                }
+                if (bottomBar == null) bottomBar = new List<Widget.Configs.ElementConfig>();
                 return bottomBar;
             }
-        }
-
-        private static bool NotMarkedForDeletion(ToolbarElementWrapper element)
-        {
-            bool marked = element.markedForDeletion;
-            if (marked) UINI.Warning(string.Format("Element {0} marked for deletion from the mainbar. Deleting.",element.defName));
-            return !marked;
         }
 
         public static List<Designator>[] GetDesignationConfigs()
@@ -186,9 +156,9 @@ namespace UINotIncluded
             TopBarElements.Clear();
             BottomBarElements.Clear();
 
-            foreach (ToolbarElementWrapper wrap in AllAvaibleElements.OrderBy<ToolbarElementWrapper, int>((Func<ToolbarElementWrapper, int>)(x => x.Order)).Where(x => !x.MultipleInstances))
+            foreach (Widget.Configs.ButtonConfig element in AllAvaibleElements)
             {
-                BottomBarElements.Add(wrap);
+                BottomBarElements.Add(element);
             }
         }
 
@@ -337,7 +307,7 @@ namespace UINotIncluded
         public string label;
         private readonly List<Page> pages;
         private int current;
-        private List<ToolbarElementWrapper> cacheAvaibleElements;
+        private List<Widget.Configs.ElementConfig> cacheAvaibleElements;
 
         public SettingPages()
         {
@@ -484,20 +454,20 @@ namespace UINotIncluded
             if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default")) Settings.RestoreDefaultMainBar();
             curY += 25f;
 
-            DragManager<ToolbarElementWrapper> manager = new DragManager<ToolbarElementWrapper>(
+            DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
                 OnUpdate: () =>
                 {
                     cacheAvaibleElements.Clear();
-                    foreach (ToolbarElementWrapper element in Settings.AllAvaibleElements) cacheAvaibleElements.Add(element);
+                    foreach (Widget.Configs.ElementConfig element in Settings.AllAvaibleElements) cacheAvaibleElements.Add(element);
                 },
-                GetLabel: (ToolbarElementWrapper wrapper) => { return wrapper.LabelCap; },
-                OnClick: (ToolbarElementWrapper wrapper) => { return wrapper.ConfigAction; });
+                GetLabel: (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; },
+                OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OnClick; });
 
             DragMemory.hoveringOver = null;
 
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Available", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), cacheAvaibleElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
-            Widget.CustomLists.Draggable<ToolbarElementWrapper>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (ToolbarElementWrapper element) => { return element.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Available", new Rect(rect.x, curY, columnWidth, rect.height - 25f).ContractedBy(3f), cacheAvaibleElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager);
 
             manager.Update();
         }

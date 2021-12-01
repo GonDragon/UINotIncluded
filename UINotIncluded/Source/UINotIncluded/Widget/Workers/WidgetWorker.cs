@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 
@@ -6,11 +7,12 @@ namespace UINotIncluded.Widget
 {
     public abstract class WidgetWorker
     {
-        public ExtendedWidgetDef def;
         public float iconSize = 24f;
         public virtual BarElementMemory CreateMemory => new BarElementMemory();
 
-        public virtual bool WidgetVisible => true;
+        public virtual bool Visible => true;
+        public virtual bool FixedWidth => false;
+        public virtual float Width => 100f;
 
         public virtual Action ConfigAction(BarElementMemory memory)
         {
@@ -26,32 +28,14 @@ namespace UINotIncluded.Widget
             return rect;
         }
 
-        public virtual bool FixedWidth(BarElementMemory memory)
-        {
-            return true;
-        }
-
-        public virtual float GetWidth()
-        {
-            return def.minWidth;
-        }
-
-        public virtual float GetWidth(BarElementMemory memory)
-        {
-            return GetWidth();
-        }
-
-        public virtual string LabelCap(BarElementMemory memory)
-        {
-            return def.LabelCap;
-        }
-
         public virtual void Margins(ref Rect rect)
         {
             rect = rect.ContractedBy(ExtendedToolbar.margin);
         }
 
-        public abstract void OnGUI(Rect rect, BarElementMemory memory);
+        public abstract void OnGUI(Rect rect);
+
+        public virtual void OnClick() { }
         public virtual void Padding(ref Rect rect)
         {
             rect = rect.ContractedBy(ExtendedToolbar.padding);

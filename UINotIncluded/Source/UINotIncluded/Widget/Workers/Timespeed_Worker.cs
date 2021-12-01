@@ -23,12 +23,7 @@ namespace UINotIncluded.Widget
             cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoTimeControlsGUI;
         }
 
-        public override float GetWidth()
-        {
-            return def.minWidth + extraWidth;
-        }
-
-        public override void OnGUI(Rect rect, BarElementMemory memory)
+        public override void OnGUI(Rect rect)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);

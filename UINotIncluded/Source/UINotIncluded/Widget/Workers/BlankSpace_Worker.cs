@@ -9,16 +9,6 @@ namespace UINotIncluded.Widget
     {
         public override BarElementMemory CreateMemory => new BlankSpaceMemory();
 
-        public override float GetWidth(BarElementMemory memory)
-        {
-            return FixedWidth(memory) ? ((BlankSpaceMemory)memory).width : -1f;
-        }
-
-        public override bool FixedWidth(BarElementMemory memory)
-        {
-            return ((BlankSpaceMemory)memory).fixedWidth;
-        }
-
         public override Action ConfigAction(BarElementMemory memory)
         {
             return () =>
@@ -27,7 +17,9 @@ namespace UINotIncluded.Widget
             };
         }
 
-        public override void OnGUI(Rect rect, BarElementMemory memory)
-        { }
+        public override void OnGUI(Rect rect)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,36 +14,34 @@ namespace UINotIncluded.Widget
         public static float padding = 2;
         public static float margin = 3;
 
-        public static void ExtendedToolbarOnGUI(List<ToolbarElementWrapper> elements, Rect inRect)
+        public static void ExtendedToolbarOnGUI(List<Widget.Configs.ElementConfig> elements, Rect inRect)
         {
             if (elements.Count() == 0) return;
-
-            //Widgets.DrawAtlas(new Rect(0, 0, Width, Height), ModTextures.toolbarBackground);
             Settings.BarStyle.DoToolbarBackground(inRect);
 
             float fixedWidth = 0f;
             int elasticElementsAmount = 0;
 
-            foreach (ToolbarElementWrapper element in elements)
+            foreach (Widget.Configs.ElementConfig element in elements)
             {
-                if (!element.Visible) continue;
-                if (!element.FixedWidth) elasticElementsAmount++;
-                else fixedWidth += element.Width;
+                if (!element.Worker.Visible) continue;
+                if (!element.Worker.FixedWidth) elasticElementsAmount++;
+                else fixedWidth += element.Worker.Width;
             }
 
             float elasticSpaceAvaible = Width - fixedWidth;
             float elasticElementWidth = elasticSpaceAvaible / elasticElementsAmount;
 
             float curX = 0;
-            foreach (ToolbarElementWrapper element in elements)
+            foreach (Widget.Configs.ElementConfig element in elements)
             {
-                if (!element.Visible) continue;
-                float eWidth = element.Width;
-                if (!element.FixedWidth) eWidth = elasticElementWidth;
+                if (!element.Worker.Visible) continue;
+                float eWidth = element.Worker.Width;
+                if (!element.Worker.FixedWidth) eWidth = elasticElementWidth;
 
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = Settings.fontSize;
-                element.OnGUI(new Rect(curX, inRect.y, eWidth, Height));
+                element.Worker.OnGUI(new Rect(curX, inRect.y, eWidth, Height));
                 curX += eWidth;
             }
             Text.Font = GameFont.Small;

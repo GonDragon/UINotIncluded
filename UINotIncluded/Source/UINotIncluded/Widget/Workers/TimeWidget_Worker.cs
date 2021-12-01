@@ -25,25 +25,25 @@ namespace UINotIncluded.Widget
 
         public override BarElementMemory CreateMemory => new TimeWidgetMemory();
 
-        public override float GetWidth(BarElementMemory memory)
-        {
-            float difference;
-            switch(Settings.fontSize)
-            {
-                case GameFont.Small:
-                    difference = 35;
-                    break;
-                case GameFont.Medium:
-                    difference = 75;
-                    break;
-                default:
-                    difference = 0;
-                    break;
-            }
-            return (float)Math.Round(def.minWidth + difference);
-        }
+        //public override float GetWidth(BarElementMemory memory)
+        //{
+        //    float difference;
+        //    switch(Settings.fontSize)
+        //    {
+        //        case GameFont.Small:
+        //            difference = 35;
+        //            break;
+        //        case GameFont.Medium:
+        //            difference = 75;
+        //            break;
+        //        default:
+        //            difference = 0;
+        //            break;
+        //    }
+        //    return (float)Math.Round(def.minWidth + difference);
+        //}
 
-        public override bool WidgetVisible
+        public override bool Visible
         {
             get => Find.CurrentMap != null;
         }
@@ -53,7 +53,7 @@ namespace UINotIncluded.Widget
             return () => Find.WindowStack.Add(new UINotIncluded.Windows.EditTimeWidget_Window((TimeWidgetMemory) memory));
         }
 
-        public override void OnGUI(Rect rect, BarElementMemory memory)
+        public override void OnGUI(Rect rect)
         {
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);
@@ -71,7 +71,8 @@ namespace UINotIncluded.Widget
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes;
-            switch (((TimeWidgetMemory)memory).roundHour)
+            //switch (((TimeWidgetMemory)memory).roundHour) TODO
+            switch (RoundHour.hour)
             {
                 case RoundHour.hour:
                     minutes = 0;
@@ -86,7 +87,8 @@ namespace UINotIncluded.Widget
                     throw new NotImplementedException();
                     
             }
-            string datestamp = ((TimeWidgetMemory)memory).dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+            //string datestamp = ((TimeWidgetMemory)memory).dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+            string datestamp = DateFormat.MMDDYYYY.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float remainingSpace = space.width - dateWidth - TimeWidth;
@@ -100,7 +102,8 @@ namespace UINotIncluded.Widget
             row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
 
             string timestamp;
-            switch (((TimeWidgetMemory)memory).clockFormat)
+            //switch (((TimeWidgetMemory)memory).clockFormat) TODO
+            switch (ClockFormat.twelveHours)
             {
                 case ClockFormat.twelveHours:
                     string meridiam = hour > 12 ? "pm" : "am";
