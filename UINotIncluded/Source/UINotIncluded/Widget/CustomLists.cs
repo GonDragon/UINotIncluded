@@ -11,13 +11,16 @@ namespace UINotIncluded.Widget
         private static readonly float buttonspace_heigth = 40f;
         private static readonly float contraction = 4f;
 
-        public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<T, string> getLabel, DragManager<T> manager)
+        public static void Draggable<T>(string name, Rect inRect, List<T> elements, Func<T, string> getLabel, DragManager<T> manager, bool drawTittle = true)
         {
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 30f), name);
-            Text.Anchor = TextAnchor.UpperLeft;
-            inRect.y += 30f;
-            inRect.height -= 30f;
+            if (drawTittle)
+            {
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 30f), name);
+                Text.Anchor = TextAnchor.UpperLeft;
+                inRect.y += 30f;
+                inRect.height -= 30f;
+            }
             Widgets.DrawMenuSection(inRect);
 
             ScrollInstance scroll = ScrollManager.GetInstance(name.GetHashCode());
