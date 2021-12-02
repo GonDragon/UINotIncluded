@@ -447,18 +447,6 @@ namespace UINotIncluded
             }
             curY += 25f;
 
-            Rect selectTypeRect = new Rect(rect.x, curY, columnWidth, 30f);
-            if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetManager.SelectedGetterName))
-            {
-                List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (String widgetGetter in WidgetManager.availableGetters.Keys)
-                {
-                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); })));
-                }
-                Find.WindowStack.Add((Window)new FloatMenu(options));
-            }
-
-
             DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
                 OnUpdate: () =>
                 {
@@ -467,6 +455,17 @@ namespace UINotIncluded
                 },
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
                 OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OpenConfigWindow; });
+
+            Rect selectTypeRect = new Rect(rect.x, curY, columnWidth, 30f);
+            if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetManager.SelectedGetterName))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (String widgetGetter in WidgetManager.availableGetters.Keys)
+                {
+                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); manager.Update(); })));
+                }
+                Find.WindowStack.Add((Window)new FloatMenu(options));
+            }
 
             DragMemory.hoveringOver = null;
 

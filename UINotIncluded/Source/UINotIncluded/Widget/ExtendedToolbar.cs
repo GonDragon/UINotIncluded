@@ -41,7 +41,9 @@ namespace UINotIncluded.Widget
 
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = Settings.fontSize;
+                Text.WordWrap = false;
                 element.Worker.OnGUI(new Rect(curX, inRect.y, eWidth, Height));
+                Text.WordWrap = true;
                 curX += eWidth;
             }
             Text.Font = GameFont.Small;

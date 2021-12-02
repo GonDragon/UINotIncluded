@@ -1,16 +1,20 @@
 ﻿using System;
-
 using UnityEngine;
 using Verse;
 
-namespace UINotIncluded.Widget
+namespace UINotIncluded.Widget.Workers
 {
     public class Weather_Worker : WidgetWorker
     {
-        public ExtendedWidgetDef def;
         private float widthCache = -1;
         private GameFont fontCache = GameFont.Tiny;
         private TemperatureDisplayMode cacheMode = Prefs.TemperatureMode;
+        private readonly Configs.WeatherConfig config;
+
+        public Weather_Worker(Configs.WeatherConfig config)
+        {
+            this.config = config;
+        }
 
         public override float Width
         {
@@ -18,13 +22,18 @@ namespace UINotIncluded.Widget
             {
                 if (widthCache < 0 || fontCache != Settings.fontSize || cacheMode != Prefs.TemperatureMode)
                 {
-                    widthCache = (float)Math.Round(Math.Max(def.minWidth, Text.CalcSize((1000f).ToStringTemperature()).x * (((float)Settings.fontSize / 3f) + 1f)));
+                    GameFont font = Text.Font;
+                    Text.Font = Settings.fontSize;
+                    widthCache = (float)Math.Round(Text.CalcSize((1000f).ToStringTemperature()).x) + iconSize;
                     fontCache = Settings.fontSize;
                     cacheMode = Prefs.TemperatureMode;
+                    Text.Font = font;
                 }
                 return widthCache;
             }
         }
+
+        public override bool FixedWidth => true;
 
         public override bool Visible
         {

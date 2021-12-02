@@ -5,9 +5,10 @@
     <defName>BlankSpace</defName>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
-  <UINotIncluded.Widget.ExtendedWidgetDef>
+  <UINotIncluded.Widget.WidgetDef>
     <defName>Weather</defName>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
+    <configType>UINotIncluded.Widget.Configs.WeatherConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>Time</defName>

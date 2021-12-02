@@ -86,7 +86,6 @@
     <Compile Include="Settings\DesignationConfig.cs" />
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
-    <Compile Include="Settings\WidgetGetter.cs" />
     <Compile Include="Utility\AssemblyChecker.cs" />
     <Compile Include="Utility\BarElementMemory.cs" />
     <Compile Include="Utility\BarStyle.cs" />
@@ -96,10 +95,12 @@
     <Compile Include="Utility\MainIconDef.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\Configs\ButtonConfig.cs" />
+    <Compile Include="Widget\Configs\WeatherConfig.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
     <Compile Include="Widget\Configs\ElementConfig.cs" />
     <Compile Include="Widget\ToolbarElement.cs" />
+    <Compile Include="Widget\WidgetDef.cs" />
     <Compile Include="Widget\WidgetManager.cs" />
     <Compile Include="Widget\Workers\Button_Worker.cs" />
     <Compile Include="Widget\Workers\WidgetWorker.cs" />

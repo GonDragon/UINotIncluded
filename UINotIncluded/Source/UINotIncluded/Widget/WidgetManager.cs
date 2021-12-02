@@ -76,7 +76,10 @@ namespace UINotIncluded.Widget
 
         public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableWidgets()
         {
-            throw new NotImplementedException();
+            foreach(WidgetDef widgetDef in DefDatabase<WidgetDef>.AllDefs)
+            {
+                yield return widgetDef.GetNewConfig();
+            }
         }
 
         public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableElements()
