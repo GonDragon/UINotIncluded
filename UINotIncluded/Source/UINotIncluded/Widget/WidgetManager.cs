@@ -84,7 +84,8 @@ namespace UINotIncluded.Widget
 
         public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableElements()
         {
-            return AllAvailableMainTabButtons();
+            foreach (Widget.Configs.ElementConfig config in AllAvailableMainTabButtons()) yield return config;
+            foreach (Widget.Configs.ElementConfig config in AllAvailableWidgets()) yield return config;
         }
 
         public static void AddGetter(string name, Func<IEnumerable<Widget.Configs.ElementConfig>> getterFunction)

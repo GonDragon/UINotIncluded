@@ -442,17 +442,12 @@ namespace UINotIncluded
             if (Widgets.ButtonText(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), "Restore to default"))
             {
                 Settings.RestoreDefaultMainBar();
-                cacheAvaibleElements.Clear();
-                foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
+                UpdateCache();
             }
             curY += 25f;
 
             DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
-                OnUpdate: () =>
-                {
-                    cacheAvaibleElements.Clear();
-                    foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
-                },
+                OnUpdate: () => UpdateCache(),
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
                 OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OpenConfigWindow; });
 
@@ -462,7 +457,7 @@ namespace UINotIncluded
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (String widgetGetter in WidgetManager.availableGetters.Keys)
                 {
-                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); manager.Update(); })));
+                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); UpdateCache(); })));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
@@ -474,6 +469,12 @@ namespace UINotIncluded
             Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (Widget.Configs.ElementConfig element) => { return element.SettingLabel; }, manager);
 
             manager.Update();
+        }
+
+        private void UpdateCache()
+        {
+            cacheAvaibleElements.Clear();
+            foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
         }
 
         private struct Page
