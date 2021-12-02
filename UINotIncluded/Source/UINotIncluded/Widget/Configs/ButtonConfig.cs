@@ -13,6 +13,7 @@ namespace UINotIncluded.Widget.Configs
     public class ButtonConfig : ElementConfig
     {
         MainButtonDef mainButtonDef;
+        public string defName;
 
         private string _iconPath;
         private string _label;
@@ -58,8 +59,7 @@ namespace UINotIncluded.Widget.Configs
 
         public override void ExposeData()
         {
-            base.ExposeData();
-
+            Scribe_Values.Look(ref defName, "defName");
             Scribe_Values.Look(ref _iconPath, "iconPath");
             Scribe_Values.Look(ref _label, "label");
             Scribe_Values.Look(ref minimized, "minimized");
@@ -134,6 +134,7 @@ namespace UINotIncluded.Widget.Configs
         }
 
         public override bool Configurable => true;
+        public override string SettingLabel => defName;
 
         public override WidgetWorker Worker
         {
@@ -144,7 +145,7 @@ namespace UINotIncluded.Widget.Configs
             }
         }
 
-        public override Def Def
+        public Def Def
         {
             get
             {

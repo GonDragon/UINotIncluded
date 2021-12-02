@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <UINotIncluded.Widget.ExtendedWidgetDef>
-    <defName>ErroringWidget</defName>
-    <workerClass>UINotIncluded.Widget.Erroring_Worker</workerClass>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>BlankSpace</defName>
-    <multipleInstances>true</multipleInstances>
-    <workerClass>UINotIncluded.Widget.BlankSpace_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>Weather</defName>
-    <workerClass>UINotIncluded.Widget.Weather_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>Time</defName>
-    <workerClass>UINotIncluded.Widget.TimeWidget_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>TimeSpeed</defName>
-    <workerClass>UINotIncluded.Widget.Timespeed_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>TimeIRL</defName>
-    <workerClass>UINotIncluded.Widget.RealTime_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
 </Defs>

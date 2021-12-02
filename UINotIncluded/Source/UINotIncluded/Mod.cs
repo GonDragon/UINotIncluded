@@ -78,10 +78,10 @@ namespace UINotIncluded
                 {
                     try
                     {
-                        config.Def.GetType();
+                        if(config.GetType() == typeof(Widget.Configs.ButtonConfig)) ((Widget.Configs.ButtonConfig)config).Def.GetType();
                     } catch
                     {
-                        UINI.Warning(string.Format("Def {0} not found. Marked for removal.",config.defName));
+                        UINI.Warning(string.Format("Def {0} not found. Marked for removal.", ((Widget.Configs.ButtonConfig)config).defName));
                         indexToDelete.Add(i);
                     } finally
                     {

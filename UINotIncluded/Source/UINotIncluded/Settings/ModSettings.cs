@@ -144,7 +144,7 @@ namespace UINotIncluded
             TopBarElements.Clear();
             BottomBarElements.Clear();
 
-            foreach (Widget.Configs.ButtonConfig element in WidgetGetter.AllAvailableMainTabButtons())
+            foreach (Widget.Configs.ButtonConfig element in WidgetManager.AllAvailableMainTabButtons())
             {
                 BottomBarElements.Add(element);
             }
@@ -433,7 +433,7 @@ namespace UINotIncluded
             float columnWidth = rect.width / 3;
             float curY = rect.y;
 
-            if (cacheAvaibleElements == null) cacheAvaibleElements = WidgetGetter.AvailableSelectedWidgets.ToList();
+            if (cacheAvaibleElements == null) cacheAvaibleElements = WidgetManager.AvailableSelectedWidgets.ToList();
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.Toolbars.Description".Translate()));
@@ -443,17 +443,17 @@ namespace UINotIncluded
             {
                 Settings.RestoreDefaultMainBar();
                 cacheAvaibleElements.Clear();
-                foreach (Widget.Configs.ElementConfig element in WidgetGetter.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
+                foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
             }
             curY += 25f;
 
             Rect selectTypeRect = new Rect(rect.x, curY, columnWidth, 30f);
-            if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetGetter.SelectedGetterName))
+            if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetManager.SelectedGetterName))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (String widgetGetter in WidgetGetter.availableGetters.Keys)
+                foreach (String widgetGetter in WidgetManager.availableGetters.Keys)
                 {
-                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetGetter.SelectGetter(widgetGetter); })));
+                    options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); })));
                 }
                 Find.WindowStack.Add((Window)new FloatMenu(options));
             }
@@ -463,16 +463,16 @@ namespace UINotIncluded
                 OnUpdate: () =>
                 {
                     cacheAvaibleElements.Clear();
-                    foreach (Widget.Configs.ElementConfig element in WidgetGetter.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
+                    foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
                 },
-                GetLabel: (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; },
+                GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
                 OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OpenConfigWindow; });
 
             DragMemory.hoveringOver = null;
 
-            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Available", new Rect(rect.x, curY + selectTypeRect.height, columnWidth, rect.height - 25f - selectTypeRect.height).ContractedBy(3f), cacheAvaibleElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager, false);
-            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager);
-            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; }, manager);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Available", new Rect(rect.x, curY + selectTypeRect.height, columnWidth, rect.height - 25f - selectTypeRect.height).ContractedBy(3f), cacheAvaibleElements, (Widget.Configs.ElementConfig element) => { return element.SettingLabel; }, manager, false);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Top Bar", new Rect(rect.x + columnWidth, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.TopBarElements, (Widget.Configs.ElementConfig element) => { return element.SettingLabel; }, manager);
+            Widget.CustomLists.Draggable<Widget.Configs.ElementConfig>("Bottom Bar", new Rect(rect.x + columnWidth * 2, curY, columnWidth, rect.height - 25f).ContractedBy(3f), Settings.BottomBarElements, (Widget.Configs.ElementConfig element) => { return element.SettingLabel; }, manager);
 
             manager.Update();
         }
