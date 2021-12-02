@@ -449,7 +449,10 @@ namespace UINotIncluded
             DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
                 OnUpdate: () => UpdateCache(),
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
-                OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OpenConfigWindow; });
+                OnClick: (Widget.Configs.ElementConfig element) => {
+                    if(element.Configurable) return element.Worker.OpenConfigWindow;
+                    return null;
+                });
 
             Rect selectTypeRect = new Rect(rect.x, curY, columnWidth, 30f);
             if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetManager.SelectedGetterName))

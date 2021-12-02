@@ -160,5 +160,16 @@ namespace UINotIncluded.Widget.Configs
             Label = ((MainButtonDef)Def).label;
             minimized = ((MainButtonDef)Def).minimized;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ButtonConfig config &&
+                   defName == config.defName;
+        }
+
+        public override int GetHashCode()
+        {
+            return 1340835839 + EqualityComparer<string>.Default.GetHashCode(defName);
+        }
     }
 }

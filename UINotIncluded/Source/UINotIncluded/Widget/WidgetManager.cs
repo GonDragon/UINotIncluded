@@ -69,7 +69,7 @@ namespace UINotIncluded.Widget
         {
             foreach (Widget.Configs.ButtonConfig config in UINotIncluded.Widget.WidgetManager.MainTabButtons)
             {
-                if (!config.Repeatable && (Settings.TopBarElements.Where(e => e.GetType() == typeof(Widget.Configs.ButtonConfig)).Select(e => ((Widget.Configs.ButtonConfig)e).defName).Contains(config.defName) || Settings.BottomBarElements.Where(e => e.GetType() == typeof(Widget.Configs.ButtonConfig)).Select(e => ((Widget.Configs.ButtonConfig)e).defName).Contains(config.defName))) continue;
+                if (!config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
                 yield return config;
             }
         }
@@ -78,7 +78,9 @@ namespace UINotIncluded.Widget
         {
             foreach(WidgetDef widgetDef in DefDatabase<WidgetDef>.AllDefs)
             {
-                yield return widgetDef.GetNewConfig();
+                Widget.Configs.ElementConfig config = widgetDef.GetNewConfig();
+                if (!config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
+                yield return config;
             }
         }
 
