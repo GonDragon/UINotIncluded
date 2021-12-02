@@ -6,12 +6,13 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+using UINotIncluded.Widget.Configs;
 
 namespace UINotIncluded.Windows
 {
     public class EditMainButton_Window : Window
     {
-        private readonly MainButtonMemory buttonMemory;
+        private readonly ButtonConfig config;
 
         //private string newLabel;
         //private string iconPath;
@@ -34,15 +35,15 @@ namespace UINotIncluded.Windows
 
         public override Vector2 InitialSize => new Vector2(350f, 600f);
 
-        public EditMainButton_Window(MainButtonMemory buttonMemory)
+        public EditMainButton_Window(ButtonConfig config)
         {
-            this.buttonMemory = buttonMemory;
-            this.absorbInputAroundWindow = true;
+            this.config = config;
+            absorbInputAroundWindow = true;
         }
 
         public override void OnAcceptKeyPressed()
         {
-            this.TryAccept();
+            TryAccept();
             Event.current.Use();
         }
 
@@ -57,13 +58,13 @@ namespace UINotIncluded.Windows
             inRect.yMin += 45f;
             float curY = inRect.y;
             float iconX = (float)Math.Floor(inRect.width / 2) - 44f;
-            if ((Texture)this.buttonMemory.Def.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)this.buttonMemory.Def.Icon);
+            if (config.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)config.Icon);
             curY += 93f;
             float x = inRect.x + inRect.width / 3f;
             float width = (float)((double)inRect.xMax - (double)x - (double)EditMainButton_Window.ResetButtonWidth - 10.0);
             float labelY = curY;
             Widgets.Label(inRect.x, ref labelY, inRect.width, (string)"Name".Translate());
-            this.buttonMemory.label = Widgets.TextField(new Rect(x, curY, width, EditMainButton_Window.EditFieldHeight), this.buttonMemory.label, 40, EditMainButton_Window.ValidSymbolRegex);
+            config.Label = Widgets.TextField(new Rect(x, curY, width, EditMainButton_Window.EditFieldHeight), config.Label, 40, EditMainButton_Window.ValidSymbolRegex);
 
             Rect labelRect = new Rect(x, curY, width, EditMainButton_Window.EditFieldHeight);
             Rect defaultLabelRect = new Rect(labelRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
@@ -71,24 +72,19 @@ namespace UINotIncluded.Windows
             if (Widgets.ButtonText(defaultLabelRect, defaultLabel))
             {
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                this.buttonMemory.label = buttonMemory.defaultLabel;
+                config.Label = config.Def.label;
             }
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
             Rect minimizedRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
             Rect defaultMinimizedRect = new Rect(minimizedRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
-            Widgets.CheckboxLabeled(minimizedRect, "UINotIncluded.Windows.Minimize".Translate(), ref buttonMemory.minimized);
+            Widgets.CheckboxLabeled(minimizedRect, "UINotIncluded.Windows.Minimize".Translate(), ref config.minimized);
 
             if (Widgets.ButtonText(defaultMinimizedRect, defaultLabel))
             {
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                this.buttonMemory.minimized = this.buttonMemory.defaultMinimized;
+                config.minimized = ((MainButtonDef)config.Def).minimized;
             }
-            curY += (EditMainButton_Window.EditFieldHeight + 10f);
-
-            Rect forceVisibleRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
-            Widgets.CheckboxLabeled(forceVisibleRect, "UINotIncluded.Windows.forceVisible".Translate(), ref buttonMemory.visible);
-
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
             Rect iconRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
@@ -98,7 +94,7 @@ namespace UINotIncluded.Windows
             if (Widgets.ButtonText(defaulticonRect, defaultLabel))
             {
                 SoundDefOf.Click.PlayOneShotOnCamera();
-                this.buttonMemory.iconPath = this.buttonMemory.defaultIconPath;
+                config.IconPath = ((MainButtonDef)config.Def).iconPath;
             }
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
@@ -106,23 +102,22 @@ namespace UINotIncluded.Windows
             iconSelectorRect.yMax -= 4f;
             iconSelectorRect.yMin = curY;
 
-            this.DoIconSelector(iconSelectorRect);
-            buttonMemory.Update();
+            DoIconSelector(iconSelectorRect);
             if (Widgets.ButtonText(new Rect(0.0f, rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"Reset".Translate()))
             {
-                buttonMemory.Reset();
-                this.Close();
+                config.Reset();
+                Close();
             }
             if (!Widgets.ButtonText(new Rect(rect.width - EditMainButton_Window.ButSize.x, rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"DoneButton".Translate()))
                 return;
-            this.TryAccept();
+            TryAccept();
         }
 
         private void DoIconSelector(Rect mainRect)
         {
             int num1 = 50;
-            Rect viewRect = new Rect(0.0f, 0.0f, mainRect.width - 16f, this.viewHeight);
-            Widgets.BeginScrollView(mainRect, ref this.scrollPos, viewRect);
+            Rect viewRect = new Rect(0.0f, 0.0f, mainRect.width - 16f, viewHeight);
+            Widgets.BeginScrollView(mainRect, ref scrollPos, viewRect);
             IEnumerable<string> allPaths = GetAvaibleIcons();
             int num2 = Mathf.FloorToInt(viewRect.width / (float)(num1 + 5));
             int num3 = allPaths.Count();
@@ -136,16 +131,16 @@ namespace UINotIncluded.Windows
                 Rect rect = new Rect((float)(((double)viewRect.width - (double)(num7 * num1) - (double)((num7 - 1) * 5)) / 2.0) + (float)(num6 * num1) + (float)(num6 * 5), (float)(num5 * num1 + num5 * 5), (float)num1, (float)num1);
                 Widgets.DrawLightHighlight(rect);
                 Widgets.DrawHighlightIfMouseover(rect);
-                if (iconPath == this.buttonMemory.iconPath)
+                if (iconPath == config.IconPath)
                     Widgets.DrawBox(rect);
                 if (iconPath != null && cacheIcons[iconPath] != null) GUI.DrawTexture(new Rect(rect.x + 5f, rect.y + 5f, 40f, 40f), cacheIcons[iconPath]);
                 GUI.color = Color.white;
                 if (Widgets.ButtonInvisible(rect))
                 {
-                    this.buttonMemory.iconPath = iconPath;
+                    config.IconPath = iconPath;
                     SoundDefOf.Tick_High.PlayOneShotOnCamera();
                 }
-                this.viewHeight = Mathf.Max(this.viewHeight, rect.yMax);
+                viewHeight = Mathf.Max(viewHeight, rect.yMax);
                 ++num4;
             }
             GUI.color = Color.white;
@@ -174,10 +169,9 @@ namespace UINotIncluded.Windows
 
         private void TryAccept()
         {
-            if (!this.buttonMemory.label.NullOrEmpty())
-                this.buttonMemory.label = this.buttonMemory.label.Trim();
-            this.buttonMemory.Update();
-            this.Close();
+            if (!config.Label.NullOrEmpty())
+                config.Label = config.Label.Trim();
+            Close();
         }
     }
 }

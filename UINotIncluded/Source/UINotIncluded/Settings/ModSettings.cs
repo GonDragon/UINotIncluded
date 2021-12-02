@@ -461,7 +461,7 @@ namespace UINotIncluded
                     foreach (Widget.Configs.ElementConfig element in Settings.AllAvaibleElements) cacheAvaibleElements.Add(element);
                 },
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.Def.LabelCap; },
-                OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OnClick; });
+                OnClick: (Widget.Configs.ElementConfig element) => { return element.Worker.OpenConfigWindow; });
 
             DragMemory.hoveringOver = null;
 

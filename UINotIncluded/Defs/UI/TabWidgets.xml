@@ -2,44 +2,32 @@
 <Defs>
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>ErroringWidget</defName>
-    <order>0</order>
-    <minWidth>0</minWidth>
     <workerClass>UINotIncluded.Widget.Erroring_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>BlankSpace</defName>
-    <order>0</order>
     <multipleInstances>true</multipleInstances>
-    <minWidth>0</minWidth>
     <workerClass>UINotIncluded.Widget.BlankSpace_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>Weather</defName>
-    <order>100</order>
-    <minWidth>90</minWidth>
     <workerClass>UINotIncluded.Widget.Weather_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>Time</defName>
-    <order>101</order>
-    <minWidth>180</minWidth>
     <workerClass>UINotIncluded.Widget.TimeWidget_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>TimeSpeed</defName>
-    <order>102</order>
-    <minWidth>147</minWidth>
     <workerClass>UINotIncluded.Widget.Timespeed_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>TimeIRL</defName>
-    <order>103</order>
-    <minWidth>75</minWidth>
     <workerClass>UINotIncluded.Widget.RealTime_Worker</workerClass>
   </UINotIncluded.Widget.ExtendedWidgetDef>
 

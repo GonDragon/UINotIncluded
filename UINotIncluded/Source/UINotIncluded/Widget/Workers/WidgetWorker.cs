@@ -35,7 +35,7 @@ namespace UINotIncluded.Widget
 
         public abstract void OnGUI(Rect rect);
 
-        public virtual void OnClick() { }
+        public virtual void OpenConfigWindow() { }
         public virtual void Padding(ref Rect rect)
         {
             rect = rect.ContractedBy(ExtendedToolbar.padding);

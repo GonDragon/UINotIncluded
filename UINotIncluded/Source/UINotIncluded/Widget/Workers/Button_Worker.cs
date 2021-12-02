@@ -20,9 +20,14 @@ namespace UINotIncluded.Widget.Workers
             this.def = (MainButtonDef)config.Def;
         }
 
-        public override bool FixedWidth => config.Minimized;
+        public override bool FixedWidth => config.minimized;
 
         public override float Width => 60f;
+
+        public override void OpenConfigWindow()
+        {
+            Find.WindowStack.Add(new Windows.EditMainButton_Window(config));
+        }
 
         public virtual void InterfaceTryActivate()
         {
@@ -51,12 +56,12 @@ namespace UINotIncluded.Widget.Workers
         private void OnRepaint(Rect rect)
         {
             Text.Font = GameFont.Small;
-            string str = (string)this.def.LabelCap;
-            float num1 = this.def.LabelCapWidth;
+            string str = (string)this.config.Label;
+            float num1 = this.config.LabelWidth;
             if ((double)num1 > (double)rect.width - 2.0)
             {
-                str = this.def.ShortenedLabelCap;
-                num1 = this.def.ShortenedLabelCapWidth;
+                str = this.config.ShortenedLabel;
+                num1 = this.config.ShortenedLabelWidth;
             }
             if (def.Worker.Disabled)
             {
@@ -66,7 +71,7 @@ namespace UINotIncluded.Widget.Workers
             {
                 bool flag = (double)num1 > 0.850000023841858 * (double)rect.width - 1.0;
                 Rect rect1 = rect;
-                string label = this.def.Icon == null ? str : "";
+                string label = this.config.Icon == null ? str : "";
                 float num2 = flag ? 2f : -1f;
                 double buttonBarPercent = def.Worker.ButtonBarPercent;
                 double num3 = (double)num2;
@@ -74,19 +79,19 @@ namespace UINotIncluded.Widget.Workers
                 Vector2 functionalSizeOffset = new Vector2();
                 Color? labelColor = new Color?();
                 DrawButtonTextSubtle(rect1, label, mouseoverCategory, (float)buttonBarPercent, (float)num3, functionalSizeOffset, labelColor);
-                if(this.def.Icon != null)
+                if(this.config.Icon != null)
                 {
                     Vector2 center = rect.center;
                     float num4 = 16f;
                     if (Mouse.IsOver(rect))
                         center += new Vector2(2f, -2f);
-                    GUI.DrawTexture(new Rect(center.x - num4, center.y - num4, IconSize, IconSize), (Texture)this.def.Icon);
+                    GUI.DrawTexture(new Rect(center.x - num4, center.y - num4, IconSize, IconSize), (Texture)this.config.Icon);
                 }
                 if (Find.MainTabsRoot.OpenTab != this.def && !Find.WindowStack.NonImmediateDialogWindowOpen)
                     UIHighlighter.HighlightOpportunity(rect, this.def.cachedHighlightTagClosed);
                 if (this.def.description.NullOrEmpty())
                     return;
-                TooltipHandler.TipRegion(rect, (TipSignal)(this.def.LabelCap + "\n\n" + this.def.description));
+                TooltipHandler.TipRegion(rect, (TipSignal)(this.config.Label + "\n\n" + this.def.description));
             }
         }
 
