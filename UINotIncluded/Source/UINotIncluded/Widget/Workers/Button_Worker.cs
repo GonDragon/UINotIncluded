@@ -10,7 +10,7 @@ namespace UINotIncluded.Widget.Workers
         public MainButtonDef def;
         private const float CompactModeMargin = 2f;
         private const float IconSize = 32f;
-        private Widget.Configs.ButtonConfig config;
+        private readonly Widget.Configs.ButtonConfig config;
 
         private static readonly Texture2D ButtonBarTex = SolidColorMaterials.NewSolidColorTexture(new ColorInt(78, 109, 129, 130).ToColor);
 
@@ -56,12 +56,12 @@ namespace UINotIncluded.Widget.Workers
         private void OnRepaint(Rect rect)
         {
             Text.Font = GameFont.Small;
-            string str = (string)this.config.Label;
-            float num1 = this.config.LabelWidth;
-            if ((double)num1 > (double)rect.width - 2.0)
+            string label = (string)this.config.Label;
+            float labelWidth = this.config.LabelWidth;
+            if ((double)labelWidth > (double)rect.width - 2.0)
             {
-                str = this.config.ShortenedLabel;
-                num1 = this.config.ShortenedLabelWidth;
+                label = this.config.ShortenedLabel;
+                labelWidth = this.config.ShortenedLabelWidth;
             }
             if (def.Worker.Disabled)
             {
@@ -69,24 +69,38 @@ namespace UINotIncluded.Widget.Workers
             }
             else
             {
-                bool flag = (double)num1 > 0.850000023841858 * (double)rect.width - 1.0;
-                Rect rect1 = rect;
-                string label = this.config.Icon == null ? str : "";
-                float num2 = flag ? 2f : -1f;
+                bool flag = (double)labelWidth > 0.850000023841858 * (double)rect.width - 1.0;
+                Rect labelSpace = new Rect(rect);
+                label = config.minimized ? "" : label;
+                float leftMarginText = flag ? 2f : -1f;
                 double buttonBarPercent = def.Worker.ButtonBarPercent;
-                double num3 = (double)num2;
                 SoundDef mouseoverCategory = SoundDefOf.Mouseover_Category;
                 Vector2 functionalSizeOffset = new Vector2();
                 Color? labelColor = new Color?();
-                DrawButtonTextSubtle(rect1, label, mouseoverCategory, (float)buttonBarPercent, (float)num3, functionalSizeOffset, labelColor);
+
                 if(this.config.Icon != null)
                 {
-                    Vector2 center = rect.center;
-                    float num4 = 16f;
+                    Vector2 iconPos = rect.center;
+                    float halfIconSize = 16f;
+                    iconPos -= new Vector2(halfIconSize, halfIconSize);
+                    if (label != "") iconPos.x = rect.x + rect.width * 0.15f;
+                    float xcorrection = 0f;
                     if (Mouse.IsOver(rect))
-                        center += new Vector2(2f, -2f);
-                    GUI.DrawTexture(new Rect(center.x - num4, center.y - num4, IconSize, IconSize), (Texture)this.config.Icon);
+                    {
+                        iconPos += new Vector2(2f, -2f);
+                        xcorrection = -2f;
+                    }
+                    
+                    Rect iconSpace = new Rect(iconPos.x, iconPos.y, IconSize, IconSize);
+                    float diff = iconSpace.xMax - labelSpace.x;
+                    leftMarginText = diff + halfIconSize + xcorrection;
+                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, functionalSizeOffset, labelColor);
+                    GUI.DrawTexture(iconSpace, (Texture)this.config.Icon);                    
+                } else
+                {
+                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, functionalSizeOffset, labelColor);
                 }
+
                 if (Find.MainTabsRoot.OpenTab != this.def && !Find.WindowStack.NonImmediateDialogWindowOpen)
                     UIHighlighter.HighlightOpportunity(rect, this.def.cachedHighlightTagClosed);
                 if (this.def.description.NullOrEmpty())
