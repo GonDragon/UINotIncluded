@@ -5,7 +5,7 @@ using Verse.Sound;
 
 namespace UINotIncluded.Widget.Workers
 {
-    internal class Button_Worker : WidgetWorker
+    public class Button_Worker : WidgetWorker
     {
         public MainButtonDef def;
         private const float CompactModeMargin = 2f;
