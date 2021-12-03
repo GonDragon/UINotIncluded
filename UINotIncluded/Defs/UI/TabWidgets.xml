@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <UINotIncluded.Widget.ExtendedWidgetDef>
+  <UINotIncluded.Widget.WidgetDef>
     <defName>BlankSpace</defName>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
+    <configType>UINotIncluded.Widget.Configs.BlankSpaceConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
 
   <UINotIncluded.Widget.WidgetDef>
     <defName>Weather</defName>
@@ -20,8 +21,9 @@
     <configType>UINotIncluded.Widget.Configs.TimespeedConfig</configType>
   </UINotIncluded.Widget.WidgetDef>
 
-  <UINotIncluded.Widget.ExtendedWidgetDef>
+  <UINotIncluded.Widget.WidgetDef>
     <defName>TimeIRL</defName>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
+    <configType>UINotIncluded.Widget.Configs.TimeIrlConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
 
 </Defs>

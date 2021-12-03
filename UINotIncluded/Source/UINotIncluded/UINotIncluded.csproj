@@ -93,8 +93,10 @@
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Utility\MainIconDef.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
+    <Compile Include="Widget\Configs\BlankSpaceConfig.cs" />
     <Compile Include="Widget\Configs\ButtonConfig.cs" />
     <Compile Include="Widget\Configs\TimeConfig.cs" />
+    <Compile Include="Widget\Configs\TimeIrlConfig.cs" />
     <Compile Include="Widget\Configs\TimespeedConfig.cs" />
     <Compile Include="Widget\Configs\WeatherConfig.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
@@ -123,7 +125,7 @@
     <Compile Include="Utility\TimeSpeedExtension.cs" />
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
-    <Compile Include="Widget\Workers\RealTime_Worker.cs" />
+    <Compile Include="Widget\Workers\TimeIrl_Worker.cs" />
     <Compile Include="Widget\Workers\Time_Worker.cs" />
     <Compile Include="Widget\Workers\Timespeed_Worker.cs" />
     <Compile Include="Widget\Workers\Weather_Worker.cs" />
