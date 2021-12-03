@@ -43,6 +43,7 @@ namespace UINotIncluded
 
         public static readonly Texture2D buttonDraggable = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_drag");
         public static readonly Texture2D buttonDraggableMouseover = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_dragMousover");
+        public static readonly Texture2D ButtonBarTex = SolidColorMaterials.NewSolidColorTexture(new ColorInt(78, 109, 129, 130).ToColor);
 
         private static readonly Dictionary<String, Texture2D> weathers = new Dictionary<String, Texture2D>();
 

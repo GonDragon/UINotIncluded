@@ -12,8 +12,6 @@ namespace UINotIncluded.Widget.Workers
         private const float IconSize = 32f;
         private readonly Widget.Configs.ButtonConfig config;
 
-        private static readonly Texture2D ButtonBarTex = SolidColorMaterials.NewSolidColorTexture(new ColorInt(78, 109, 129, 130).ToColor);
-
         public Button_Worker(Widget.Configs.ButtonConfig config)
         {
             this.config = config;
@@ -152,7 +150,7 @@ namespace UINotIncluded.Widget.Workers
             }
             GUI.color = Color.white;
             if ((double)barPercent > 1.0 / 1000.0)
-                Widgets.FillableBar(rect.ContractedBy(1f), barPercent, ButtonBarTex, (Texture2D)null, false);
+                Widgets.FillableBar(rect.ContractedBy(1f), barPercent, ModTextures.ButtonBarTex, (Texture2D)null, false);
             Rect rect2 = new Rect(rect);
             if ((double)textLeftMargin < 0.0)
                 textLeftMargin = rect.width * 0.15f;
