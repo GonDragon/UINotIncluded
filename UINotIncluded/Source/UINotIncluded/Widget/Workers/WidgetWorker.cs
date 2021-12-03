@@ -8,16 +8,10 @@ namespace UINotIncluded.Widget
     public abstract class WidgetWorker
     {
         public float iconSize = 24f;
-        public virtual BarElementMemory CreateMemory => new BarElementMemory();
 
         public virtual bool Visible => true;
         public virtual bool FixedWidth => false;
         public virtual float Width => 100f;
-
-        public virtual Action ConfigAction(BarElementMemory memory)
-        {
-            return null;
-        }
 
         public Rect DrawIcon(Texture2D icon, float curX, float curY, string tooltip = null)
         {

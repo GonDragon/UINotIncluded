@@ -87,7 +87,6 @@
     <Compile Include="Settings\DesignatorManager.cs" />
     <Compile Include="Settings\ScrollManager.cs" />
     <Compile Include="Utility\AssemblyChecker.cs" />
-    <Compile Include="Utility\BarElementMemory.cs" />
     <Compile Include="Utility\BarStyle.cs" />
     <Compile Include="Utility\DragManager.cs" />
     <Compile Include="Utility\DesignatorExtension.cs" />
@@ -95,6 +94,8 @@
     <Compile Include="Utility\MainIconDef.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\Configs\ButtonConfig.cs" />
+    <Compile Include="Widget\Configs\TimeConfig.cs" />
+    <Compile Include="Widget\Configs\TimespeedConfig.cs" />
     <Compile Include="Widget\Configs\WeatherConfig.cs" />
     <Compile Include="Widget\CustomButtons.cs" />
     <Compile Include="Widget\CustomLists.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Widget\ExtendedToolbar.cs" />
     <Compile Include="UIManager.cs" />
     <Compile Include="Widget\Workers\RealTime_Worker.cs" />
-    <Compile Include="Widget\Workers\TimeWidget_Worker.cs" />
+    <Compile Include="Widget\Workers\Time_Worker.cs" />
     <Compile Include="Widget\Workers\Timespeed_Worker.cs" />
     <Compile Include="Widget\Workers\Weather_Worker.cs" />
     <Compile Include="Windows\EditBlankSpace_Window.cs" />

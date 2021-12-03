@@ -10,13 +10,15 @@
     <configType>UINotIncluded.Widget.Configs.WeatherConfig</configType>
   </UINotIncluded.Widget.WidgetDef>
 
-  <UINotIncluded.Widget.ExtendedWidgetDef>
+  <UINotIncluded.Widget.WidgetDef>
     <defName>Time</defName>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
+    <configType>UINotIncluded.Widget.Configs.TimeConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
 
-  <UINotIncluded.Widget.ExtendedWidgetDef>
+  <UINotIncluded.Widget.WidgetDef>
     <defName>TimeSpeed</defName>
-  </UINotIncluded.Widget.ExtendedWidgetDef>
+    <configType>UINotIncluded.Widget.Configs.TimespeedConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
 
   <UINotIncluded.Widget.ExtendedWidgetDef>
     <defName>TimeIRL</defName>

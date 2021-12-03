@@ -5,12 +5,18 @@ using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-namespace UINotIncluded.Widget
+namespace UINotIncluded.Widget.Workers
 {
     public class Timespeed_Worker : WidgetWorker
     {
         private static Action<Rect> cached_DoTimeControlsGUI;
         private static float extraWidth = 0f;
+
+        public override bool FixedWidth => true;
+
+        static float _width = 140f;
+        public override float Width => _width + extraWidth;
+
 
         public static void SetSmartspeedMode()
         {

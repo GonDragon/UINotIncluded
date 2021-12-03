@@ -7,7 +7,7 @@ using Verse;
 
 namespace UINotIncluded.Widget
 {
-    class WidgetDef : Def
+    public class WidgetDef : Def
     {
         public override TaggedString LabelCap
         {
@@ -19,7 +19,7 @@ namespace UINotIncluded.Widget
             }
         }
 
-        public System.Type configType;
+        public Type configType;
 
         public Configs.ElementConfig GetNewConfig()
         {

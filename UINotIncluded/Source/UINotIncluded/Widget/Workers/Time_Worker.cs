@@ -4,54 +4,65 @@ using System.Text;
 using UnityEngine;
 using Verse;
 
-namespace UINotIncluded.Widget
+namespace UINotIncluded.Widget.Workers
 {
-    public class TimeWidget_Worker : WidgetWorker
+    public class Time_Worker : WidgetWorker
     {
+        readonly Configs.TimeConfig config;
+
+        private const float extra = 50f;
+        public override float Width => TimeWidth + DateWidth + extra;
         private float TimeWidth
         {
             get
             {
-                if(Settings.fontSize != lastFont)
+                if(_timeWidth < 0 || fontCache != Settings.fontSize)
                 {
-                    _timeWidth = Text.CalcSize("00:00 hs").x;
-                    lastFont = Settings.fontSize;
+                    GameFont font = Text.Font;
+                    Text.Font = Settings.fontSize;
+                    _timeWidth = (float)Math.Round(Text.CalcSize("00:00 hs").x);
+                    if (fontCache != Settings.fontSize) _dateWidth = -1;
+                    fontCache = Settings.fontSize;
+                    Text.Font = font;
                 }
                 return _timeWidth;
             }
         }
-        private float _timeWidth;
-        private GameFont lastFont;
 
-        public override BarElementMemory CreateMemory => new TimeWidgetMemory();
-
-        //public override float GetWidth(BarElementMemory memory)
-        //{
-        //    float difference;
-        //    switch(Settings.fontSize)
-        //    {
-        //        case GameFont.Small:
-        //            difference = 35;
-        //            break;
-        //        case GameFont.Medium:
-        //            difference = 75;
-        //            break;
-        //        default:
-        //            difference = 0;
-        //            break;
-        //    }
-        //    return (float)Math.Round(def.minWidth + difference);
-        //}
-
-        public override bool Visible
+        private float DateWidth
         {
-            get => Find.CurrentMap != null;
+            get
+            {
+                if (Find.CurrentMap == null) return -1;
+                if (_dateWidth < 0 || fontCache != Settings.fontSize || _lastFormat != config.dateFormat)
+                {
+                    GameFont font = Text.Font;
+                    Text.Font = Settings.fontSize;
+                    string dummyDate = config.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, 0f);
+                    _dateWidth = (float)Math.Round(Text.CalcSize(dummyDate).x);
+                    if(fontCache != Settings.fontSize) _timeWidth = -1;
+                    fontCache = Settings.fontSize;
+                    _lastFormat = config.dateFormat;
+                    Text.Font = font;
+                }
+                return _dateWidth;
+
+            }
+        }
+        private DateFormat _lastFormat;
+        private float _dateWidth = -1;
+        private float _timeWidth = -1;
+        private GameFont fontCache;
+        public override void OpenConfigWindow()
+        {
+            Find.WindowStack.Add(new Windows.EditTimeWidget_Window(config));
+        }
+        public Time_Worker(Configs.TimeConfig config)
+        {
+            this.config = config;
         }
 
-        public override Action ConfigAction(BarElementMemory memory)
-        {
-            return () => Find.WindowStack.Add(new UINotIncluded.Windows.EditTimeWidget_Window((TimeWidgetMemory) memory));
-        }
+        public override bool FixedWidth => true;
 
         public override void OnGUI(Rect rect)
         {
@@ -71,8 +82,7 @@ namespace UINotIncluded.Widget
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes;
-            //switch (((TimeWidgetMemory)memory).roundHour) TODO
-            switch (RoundHour.hour)
+            switch (config.roundHour)
             {
                 case RoundHour.hour:
                     minutes = 0;
@@ -87,8 +97,7 @@ namespace UINotIncluded.Widget
                     throw new NotImplementedException();
                     
             }
-            //string datestamp = ((TimeWidgetMemory)memory).dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
-            string datestamp = DateFormat.MMDDYYYY.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
+            string datestamp = config.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
             float dateWidth = Text.CalcSize(datestamp).x;
             float remainingSpace = space.width - dateWidth - TimeWidth;
@@ -102,8 +111,7 @@ namespace UINotIncluded.Widget
             row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
 
             string timestamp;
-            //switch (((TimeWidgetMemory)memory).clockFormat) TODO
-            switch (ClockFormat.twelveHours)
+            switch (config.clockFormat)
             {
                 case ClockFormat.twelveHours:
                     string meridiam = hour > 12 ? "pm" : "am";
