@@ -87,11 +87,12 @@ namespace UINotIncluded.Widget.Configs
         
         public void RefreshCache()
         {
-            this._shortenedLabel = Label.Shorten();
+            this._shortenedLabel = _label.Shorten();
             GameFont font = Text.Font;
             Text.Font = GameFont.Small;
-            cachedShortenedLabelWidth = Text.CalcSize(Label).x;
+            cachedLabelWidth = Text.CalcSize(Label).x;
             cachedShortenedLabelWidth = Text.CalcSize(ShortenedLabel).x;
+            Text.Font = font;
         }
 
         public float LabelWidth => cachedLabelWidth;
