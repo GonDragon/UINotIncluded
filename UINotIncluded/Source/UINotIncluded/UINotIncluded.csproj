@@ -51,6 +51,11 @@
       <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PerformanceAnalyzer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\SteamLibrary\steamapps\workshop\content\294100\2038874626\1.3\Assemblies\PerformanceAnalyzer.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -146,6 +151,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>cd $(OutDir)
-del $(TargetName).* /q</PreBuildEvent>
+del * /q</PreBuildEvent>
   </PropertyGroup>
 </Project>

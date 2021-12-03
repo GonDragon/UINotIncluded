@@ -18,7 +18,9 @@ namespace UINotIncluded.Widget
                 foreach (MainButtonDef button in DefDatabase<MainButtonDef>.AllDefs.OrderBy(def => def.order))
                 {
                     if (button.defName == "Inspect") continue;
-                    yield return new Configs.ButtonConfig(button);
+                    Configs.ButtonConfig config = new Configs.ButtonConfig(button);
+                    config.RefreshIcon();
+                    yield return config;
                 }
             }        
         }

@@ -16,6 +16,8 @@ namespace UINotIncluded.Widget.Workers
         {
             this.config = config;
             this.def = (MainButtonDef)config.Def;
+            config.RefreshCache();
+            config.RefreshIcon();
         }
 
         public override bool FixedWidth => config.minimized;
@@ -39,6 +41,10 @@ namespace UINotIncluded.Widget.Workers
 
         public override void OnGUI(Rect rect)
         {
+#if DEBUG
+            string key = "DrawButton " + this.def.defName;
+            Analyzer.Profiling.Profiler profiler = Analyzer.Profiling.ProfileController.Start(key);
+#endif
             switch (Event.current.type)
             {
                 case EventType.Repaint:
@@ -49,6 +55,9 @@ namespace UINotIncluded.Widget.Workers
                     OnInteraction(rect);
                     break;
             }
+#if DEBUG
+            Analyzer.Profiling.ProfileController.Stop(key);
+#endif
         }
 
         private void OnRepaint(Rect rect)
@@ -56,7 +65,7 @@ namespace UINotIncluded.Widget.Workers
             Text.Font = GameFont.Small;
             string label = (string)this.config.Label;
             float labelWidth = this.config.LabelWidth;
-            if ((double)labelWidth > (double)rect.width - 2.0)
+            if (labelWidth > rect.width - 2.0)
             {
                 label = this.config.ShortenedLabel;
                 labelWidth = this.config.ShortenedLabelWidth;
@@ -67,13 +76,12 @@ namespace UINotIncluded.Widget.Workers
             }
             else
             {
-                bool flag = (double)labelWidth > 0.850000023841858 * (double)rect.width - 1.0;
+                bool flag = labelWidth > 0.8 * rect.width;
                 Rect labelSpace = new Rect(rect);
                 label = config.minimized ? "" : label;
-                float leftMarginText = flag ? 2f : -1f;
+                float leftMarginText = flag ? 2f : rect.width * 0.15f;
                 double buttonBarPercent = def.Worker.ButtonBarPercent;
                 SoundDef mouseoverCategory = SoundDefOf.Mouseover_Category;
-                Vector2 functionalSizeOffset = new Vector2();
                 Color? labelColor = new Color?();
 
                 if(this.config.Icon != null)
@@ -92,11 +100,11 @@ namespace UINotIncluded.Widget.Workers
                     Rect iconSpace = new Rect(iconPos.x, iconPos.y, IconSize, IconSize);
                     float diff = iconSpace.xMax - labelSpace.x;
                     leftMarginText = diff + halfIconSize + xcorrection;
-                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, functionalSizeOffset, labelColor);
+                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, labelColor);
                     GUI.DrawTexture(iconSpace, (Texture)this.config.Icon);                    
                 } else
                 {
-                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, functionalSizeOffset, labelColor);
+                    DrawButtonTextSubtle(rect, label, mouseoverCategory, (float)buttonBarPercent, (float)leftMarginText, labelColor);
                 }
 
                 if (Find.MainTabsRoot.OpenTab != this.def && !Find.WindowStack.NonImmediateDialogWindowOpen)
@@ -122,40 +130,29 @@ namespace UINotIncluded.Widget.Workers
             }
         }
 
-        private static void DrawButtonTextSubtle(
+        private void DrawButtonTextSubtle(
             Rect rect,
             string label,
             SoundDef mouseoverSound,
             float barPercent = 0.0f,
             float textLeftMargin = -1f,
-            Vector2 functionalSizeOffset = default(Vector2),
-            Color? labelColor = null,
-            bool highlight = false)
+            Color? labelColor = null)
         {
-            Rect offsetRect = rect;
-            offsetRect.width += functionalSizeOffset.x;
-            offsetRect.height += functionalSizeOffset.y;
-            bool flag = false;
-            if (Mouse.IsOver(offsetRect))
+            bool OverButton = Mouse.IsOver(rect);
+            if (OverButton)
             {
-                flag = true;
                 GUI.color = GenUI.MouseoverColor;
+                MouseoverSounds.DoRegion(rect, mouseoverSound);
             }
-            MouseoverSounds.DoRegion(offsetRect, mouseoverSound);
             Widgets.DrawAtlas(rect, Widgets.ButtonSubtleAtlas);
-            if (highlight)
-            {
-                GUI.color = Color.grey;
-                Widgets.DrawBox(rect, 2);
-            }
             GUI.color = Color.white;
-            if ((double)barPercent > 1.0 / 1000.0)
+            if (barPercent > 1.0 / 1000.0)
                 Widgets.FillableBar(rect.ContractedBy(1f), barPercent, ModTextures.ButtonBarTex, (Texture2D)null, false);
             Rect rect2 = new Rect(rect);
-            if ((double)textLeftMargin < 0.0)
+            if (textLeftMargin < 0.0)
                 textLeftMargin = rect.width * 0.15f;
             rect2.x += textLeftMargin;
-            if (flag)
+            if (OverButton)
             {
                 rect2.x += 2f;
                 rect2.y -= 2f;

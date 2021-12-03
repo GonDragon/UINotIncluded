@@ -25,19 +25,12 @@ namespace UINotIncluded.Widget.Configs
         private float cachedShortenedLabelWidth = -1f;
 
         private Texture2D icon;
-        public Texture2D Icon
-        {
-            get
-            {
-                if (icon == null && _iconPath != null) icon = ContentFinder<Texture2D>.Get(this._iconPath);
-                return icon;
-            }
-        }
+        public Texture2D Icon => icon;
 
-        public bool RefreshIcon()
+        public void RefreshIcon()
         {
-            icon = null;
-            return this.Icon != null;
+            if (icon == null && _iconPath != null) icon = ContentFinder<Texture2D>.Get(this._iconPath);
+            else icon = null;
         }
 
         public ButtonConfig(string defName)
@@ -88,50 +81,24 @@ namespace UINotIncluded.Widget.Configs
             set
             {
                 _label = value.CapitalizeFirst();
-                _shortenedLabel = null;
-                cachedLabelWidth = 0;
-                cachedShortenedLabelWidth = 0;
+                RefreshCache();
             }
+        }
+        
+        public void RefreshCache()
+        {
+            this._shortenedLabel = Label.Shorten();
+            GameFont font = Text.Font;
+            Text.Font = GameFont.Small;
+            cachedShortenedLabelWidth = Text.CalcSize(Label).x;
+            cachedShortenedLabelWidth = Text.CalcSize(ShortenedLabel).x;
         }
 
-        public float LabelWidth
-        {
-            get
-            {
-                if (cachedLabelWidth < 0f)
-                {
-                    GameFont font = Text.Font;
-                    Text.Font = GameFont.Small;
-                    cachedShortenedLabelWidth = Text.CalcSize(Label).x;
-                    Text.Font = font;
-                }
-                return cachedLabelWidth;
-            }
-        }
+        public float LabelWidth => cachedLabelWidth;
 
-        public string ShortenedLabel
-        {
-            get
-            {
-                if (this._shortenedLabel == null) this._shortenedLabel = Label.Shorten();
-                return ShortenedLabel;
-            }
-        }
+        public string ShortenedLabel => _shortenedLabel;
 
-        public float ShortenedLabelWidth
-        {
-            get
-            {
-                if(cachedShortenedLabelWidth < 0f)
-                {
-                    GameFont font = Text.Font;
-                    Text.Font = GameFont.Small;
-                    cachedShortenedLabelWidth = Text.CalcSize(ShortenedLabel).x;
-                    Text.Font = font;
-                }
-                return cachedShortenedLabelWidth;
-            }
-        }
+        public float ShortenedLabelWidth => cachedShortenedLabelWidth;
 
         public override bool Configurable => true;
         public override string SettingLabel => defName;
@@ -159,6 +126,7 @@ namespace UINotIncluded.Widget.Configs
             IconPath = ((MainButtonDef)Def).iconPath;
             Label = ((MainButtonDef)Def).label;
             minimized = ((MainButtonDef)Def).minimized;
+            RefreshCache();
         }
 
         public override bool Equals(object obj)
