@@ -284,6 +284,12 @@ namespace UINotIncluded
             base.DoSettingsWindowContents(inRect);
         }
 
+        public override void WriteSettings()
+        {
+            settingPages.cacheAvaibleElements = null;
+            base.WriteSettings();
+        }
+
         public override string SettingsCategory()
         {
             return UINI.Name;
@@ -295,7 +301,7 @@ namespace UINotIncluded
         public string label;
         private readonly List<Page> pages;
         private int current;
-        private List<Widget.Configs.ElementConfig> cacheAvaibleElements;
+        public List<Widget.Configs.ElementConfig> cacheAvaibleElements;
 
         public SettingPages()
         {

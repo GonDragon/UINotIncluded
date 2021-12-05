@@ -113,7 +113,7 @@ namespace UINotIncluded.Widget.Configs
             }
         }
 
-        public Def Def
+        public virtual Def Def
         {
             get
             {

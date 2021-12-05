@@ -11,7 +11,7 @@ namespace UINotIncluded.Widget.Workers
         private const float CompactModeMargin = 2f;
         private const float IconSize = 32f;
         private const float HalfIconSize = 16f;
-        private readonly Widget.Configs.ButtonConfig config;
+        public readonly Widget.Configs.ButtonConfig config;
 
         public Button_Worker(Widget.Configs.ButtonConfig config)
         {
