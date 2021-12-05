@@ -103,6 +103,7 @@
     <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\Configs\BlankSpaceConfig.cs" />
     <Compile Include="Widget\Configs\ButtonConfig.cs" />
+    <Compile Include="Widget\Configs\DropdownMenuConfig.cs" />
     <Compile Include="Widget\Configs\TimeConfig.cs" />
     <Compile Include="Widget\Configs\TimeIrlConfig.cs" />
     <Compile Include="Widget\Configs\TimespeedConfig.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Widget\WidgetDef.cs" />
     <Compile Include="Widget\WidgetManager.cs" />
     <Compile Include="Widget\Workers\Button_Worker.cs" />
+    <Compile Include="Widget\Workers\Dropdown_Worker.cs" />
     <Compile Include="Widget\Workers\WidgetWorker.cs" />
     <Compile Include="Widget\Workers\BlankSpace_Worker.cs" />
     <Compile Include="Widget\ExtendedWidgetDef.cs" />
@@ -137,7 +139,9 @@
     <Compile Include="Widget\Workers\Time_Worker.cs" />
     <Compile Include="Widget\Workers\Timespeed_Worker.cs" />
     <Compile Include="Widget\Workers\Weather_Worker.cs" />
+    <Compile Include="Windows\DropdownMenu_Window.cs" />
     <Compile Include="Windows\EditBlankSpace_Window.cs" />
+    <Compile Include="Windows\EditDropdown_Window.cs" />
     <Compile Include="Windows\EditMainButton_Window.cs" />
     <Compile Include="Windows\EditTimeWidget_Window.cs" />
   </ItemGroup>

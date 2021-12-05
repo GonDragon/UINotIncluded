@@ -29,7 +29,7 @@ namespace UINotIncluded.Widget.Configs
 
         public void RefreshIcon()
         {
-            if (icon == null && _iconPath != null) icon = ContentFinder<Texture2D>.Get(this._iconPath);
+            if (_iconPath != null) icon = ContentFinder<Texture2D>.Get(this._iconPath);
             else icon = null;
         }
 

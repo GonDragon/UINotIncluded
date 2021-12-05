@@ -26,4 +26,9 @@
     <configType>UINotIncluded.Widget.Configs.TimeIrlConfig</configType>
   </UINotIncluded.Widget.WidgetDef>
 
+  <UINotIncluded.Widget.WidgetDef>
+    <defName>DropdownMenu</defName>
+    <configType>UINotIncluded.Widget.Configs.DropdownMenuConfig</configType>
+  </UINotIncluded.Widget.WidgetDef>
+
 </Defs>
