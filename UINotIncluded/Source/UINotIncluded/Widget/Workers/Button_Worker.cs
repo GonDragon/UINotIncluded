@@ -87,15 +87,13 @@ namespace UINotIncluded.Widget.Workers
                     Vector2 iconPos = rect.center;
                     iconPos -= new Vector2(HalfIconSize, HalfIconSize);
                     if (label != "") iconPos.x = rect.x + leftMargin;
-                    float xcorrection = 0f;
                     if (overButton)
                     {
                         iconPos += new Vector2(2f, -2f);
-                        xcorrection = -2f;
                     }
                     
                     Rect iconSpace = new Rect(iconPos.x, iconPos.y, IconSize, IconSize);
-                    leftMargin += IconSize + 4f + xcorrection;
+                    leftMargin += IconSize + 4f;
                     DrawButtonTextSubtle(rect, label, SoundDefOf.Mouseover_Category, overButton,(float)buttonBarPercent, (float)leftMargin);
                     GUI.DrawTexture(iconSpace, (Texture)this.config.Icon);                    
                 } else
