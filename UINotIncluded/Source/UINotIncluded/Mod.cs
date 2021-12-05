@@ -31,9 +31,6 @@ namespace UINotIncluded
         {
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
-            CompatibilityPatches();
-            LoadMainButtonsSettings();
-
 
             try
             {
@@ -64,10 +61,19 @@ namespace UINotIncluded
             {
                 UINI.Error("Error initializing settings for TabsBar");
             }
+
+            CompatibilityPatches();
+            VersionPatcher();
+            LoadMainButtonsSettings();
         }
 
         private static void LoadMainButtonsSettings()
         {
+            if (Settings.TopBarElements.Count == 0 && Settings.BottomBarElements.Count == 0)
+            {
+                UINI.Warning("Empty bottom and topbar detected. Repopulating");
+                Settings.RestoreDefaultMainBar();
+            }
             bool DeleteNonExistentButtons(List<Widget.Configs.ElementConfig> configList)
             {
                 List<int> indexToDelete = new List<int>();
@@ -123,6 +129,23 @@ namespace UINotIncluded
                 if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Smart Speed")) Widget.Workers.Timespeed_Worker.SetSmartspeedMode();
             }
             catch (TypeLoadException ex) { Error(String.Format("Error checking if SmartSpeed its installed.\n{0}", ex.ToString())); }
+        }
+
+        private static void VersionPatcher()
+        {
+            Version lastVersionUsed = new Version(Settings.lastVersion ?? "0.0.0.0");
+
+            if (lastVersionUsed < new Version(1, 1, 0, 0))
+            {
+                UINI.Log("Old config-file detected. Updating to 1.1.0.0+");
+                Utility.Deprecated.DeprecationManager.UpdateBarsToNewVersion();
+            }
+
+            if(lastVersionUsed < Assembly.GetName().Version)
+            {
+                Settings.lastVersion = Version;
+                LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
+            }
         }
     }
 }

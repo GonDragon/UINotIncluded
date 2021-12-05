@@ -31,6 +31,8 @@ namespace UINotIncluded
         public static bool vanillaWeather;
         public static bool vanillaTemperature;
 
+        public static string lastVersion;
+
         public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
@@ -180,8 +182,16 @@ namespace UINotIncluded
             Scribe_Collections.Look(ref mainDesignations, "mainDesignations", LookMode.Value);
             Scribe_Collections.Look(ref rightDesignations, "rightDesignations", LookMode.Value);
 
-            Scribe_Collections.Look(ref topBar, "topBar", LookMode.Deep);
-            Scribe_Collections.Look(ref bottomBar, "bottomBar", LookMode.Deep);
+            Scribe_Collections.Look(ref topBar, "top", LookMode.Deep);
+            Scribe_Collections.Look(ref bottomBar, "bottom", LookMode.Deep);
+
+            Scribe_Values.Look(ref lastVersion, "lastVersion");
+
+            if(Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedTopBar, "topBar", LookMode.Deep);
+                Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedBottomBar, "bottomBar", LookMode.Deep);
+            }
 
             base.ExposeData();
         }
