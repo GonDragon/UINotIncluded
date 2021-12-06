@@ -15,6 +15,9 @@ namespace UINotIncluded.Widget.Configs
         public float width = 200f;
         public float spacing = 5f;
 
+        public float lastX = 0f;
+        public float lastY = 0f;
+
         private Workers.Dropdown_Worker _worker;
         public DropdownMenuConfig() : base(new MainButtonDef()
         {

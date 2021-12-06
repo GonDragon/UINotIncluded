@@ -23,7 +23,21 @@ namespace UINotIncluded.Windows
             }
         }
 
-        public override MainTabWindowAnchor Anchor => MainTabWindowAnchor.Right;
+        protected override void SetInitialSizeAndPosition()
+        {
+            base.SetInitialSizeAndPosition();
+
+            if (config.lastY > UI.screenHeight / 2)
+                this.windowRect.y = (float)(UI.screenHeight - UIManager.ExtendedBarHeight) - this.windowRect.height;
+            else
+                this.windowRect.y = config.lastY + UIManager.ExtendedBarHeight;
+
+            if (config.lastX + this.windowRect.width > UI.screenWidth)
+                this.windowRect.x = UI.screenWidth - this.windowRect.width;
+            else
+                this.windowRect.x = config.lastX;
+        }
+
         protected override float Margin => config.spacing;
         public DropdownMenu_Window()
         {

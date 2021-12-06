@@ -7,6 +7,7 @@ using UINotIncluded.Widget.Configs;
 
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace UINotIncluded.Widget.Workers
 {
@@ -18,6 +19,13 @@ namespace UINotIncluded.Widget.Workers
         {
             Windows.DropdownMenu_Window.config = (DropdownMenuConfig)config;
             base.InterfaceTryActivate();
+        }
+
+        public override void OnGUI(Rect rect)
+        {
+            ((DropdownMenuConfig)config).lastX = rect.x;
+            ((DropdownMenuConfig)config).lastY = rect.y;
+            base.OnGUI(rect);
         }
 
         public override void OpenConfigWindow()
