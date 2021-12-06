@@ -10,7 +10,7 @@ namespace UINotIncluded
 {
     public class Settings : ModSettings
     {
-        public static bool designationsOnLeft;
+        public static bool designationsOnLeft = false;
         public static GameFont fontSize;
         public static List<String> hiddenDesignations;
         public static bool initializedDesignations;
@@ -18,18 +18,18 @@ namespace UINotIncluded
         public static List<String> leftDesignations;
         public static List<String> mainDesignations;
         public static List<String> rightDesignations;
-        public static bool togglersOnTop;
-        public static bool useDesignatorBar;
-        public static bool vanillaAnimals;
+        public static bool togglersOnTop = false;
+        public static bool useDesignatorBar = false;
+        public static bool vanillaAnimals = true;
         public static bool settingsChecked;
-        public static bool centeredWindows;
+        public static bool centeredWindows = false;
 
-        public static bool vanillaReadout;
-        public static bool vanillaControlSpeed;
-        public static bool vanillaDate;
-        public static bool vanillaRealtime;
-        public static bool vanillaWeather;
-        public static bool vanillaTemperature;
+        public static bool vanillaReadout = true;
+        public static bool vanillaControlSpeed = true;
+        public static bool vanillaDate = true;
+        public static bool vanillaRealtime = true;
+        public static bool vanillaWeather = true;
+        public static bool vanillaTemperature = true;
 
         public static string lastVersion;
 
