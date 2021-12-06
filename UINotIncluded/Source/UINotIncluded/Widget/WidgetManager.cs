@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace UINotIncluded.Widget
@@ -11,6 +9,10 @@ namespace UINotIncluded.Widget
     [StaticConstructorOnStartup]
     public static class WidgetManager
     {
+        const string all_name = "Widgets and Buttons";
+        const string buttons_name = "Available Buttons";
+        const string widgets_name = "Available Widgets";
+
         public static IEnumerable<Configs.ButtonConfig> MainTabButtons
         {
             get
@@ -34,25 +36,27 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (selectedGetterName == null) SelectGetter("All");
+                if (selectedGetterName == null) SelectGetter(all_name);
                 return selectedGetterName;
             }
         }
-        public static IEnumerable<Widget.Configs.ElementConfig> AvailableSelectedWidgets
+        public static IEnumerable<Widget.Configs.ElementConfig> AvailableSelectedWidgets(bool allowAlreadyOnBars = false)
         {
-            get
+            if (selectedGetterFunction == null) SelectGetter(all_name);
+
+            foreach(Widget.Configs.ElementConfig config in selectedGetterFunction())
             {
-                if (selectedGetterFunction == null) SelectGetter("All");
-                return selectedGetterFunction();
+                if (!allowAlreadyOnBars && !config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
+                yield return config;
             }
         }
 
         static WidgetManager()
         {
             availableGetters = new Dictionary<string, Func<IEnumerable<Widget.Configs.ElementConfig>>>();
-            AddGetter("Available Buttons", AllAvailableMainTabButtons);
-            AddGetter("Available Widgets", AllAvailableWidgets);
-            AddGetter("All", AllAvailableElements);
+            AddGetter(buttons_name, AllMainButtons);
+            AddGetter(widgets_name, AllWidgets);
+            AddGetter(all_name, AllElements);
         }
 
         public static void SelectGetter(string name)
@@ -67,29 +71,25 @@ namespace UINotIncluded.Widget
             selectedGetterFunction = availableGetters[name];
         }
 
-        public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableMainTabButtons()
+        public static IEnumerable<Widget.Configs.ElementConfig> AllMainButtons()
         {
-            foreach (Widget.Configs.ButtonConfig config in UINotIncluded.Widget.WidgetManager.MainTabButtons)
-            {
-                if (!config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
-                yield return config;
-            }
+            foreach (Widget.Configs.ButtonConfig config in UINotIncluded.Widget.WidgetManager.MainTabButtons) yield return config;
         }
 
-        public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableWidgets()
+        public static IEnumerable<Widget.Configs.ElementConfig> AllWidgets()
         {
             foreach(WidgetDef widgetDef in DefDatabase<WidgetDef>.AllDefs)
             {
                 Widget.Configs.ElementConfig config = widgetDef.GetNewConfig();
-                if (!config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
                 yield return config;
+
             }
         }
 
-        public static IEnumerable<Widget.Configs.ElementConfig> AllAvailableElements()
+        public static IEnumerable<Widget.Configs.ElementConfig> AllElements()
         {
-            foreach (Widget.Configs.ElementConfig config in AllAvailableMainTabButtons()) yield return config;
-            foreach (Widget.Configs.ElementConfig config in AllAvailableWidgets()) yield return config;
+            foreach (Widget.Configs.ElementConfig config in AllMainButtons()) yield return config;
+            foreach (Widget.Configs.ElementConfig config in AllWidgets()) yield return config;
         }
 
         public static void AddGetter(string name, Func<IEnumerable<Widget.Configs.ElementConfig>> getterFunction)

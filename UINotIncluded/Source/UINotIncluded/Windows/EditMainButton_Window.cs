@@ -12,7 +12,7 @@ namespace UINotIncluded.Windows
 {
     public class EditMainButton_Window : Window
     {
-        private readonly ButtonConfig config;
+        internal readonly ButtonConfig config;
 
         //private string newLabel;
         //private string iconPath;
@@ -58,7 +58,7 @@ namespace UINotIncluded.Windows
             inRect.yMin += 45f;
             float curY = inRect.y;
             float iconX = (float)Math.Floor(inRect.width / 2) - 44f;
-            if (config.Icon != null) GUI.DrawTexture(new Rect(iconX, curY + 5f, 88f, 88f), (Texture)config.Icon);
+            if (config.Icon != null) GUI.DrawTexture(new Rect(rect.x + iconX, curY + 5f, 88f, 88f), (Texture)config.Icon);
             curY += 93f;
             float x = inRect.x + inRect.width / 3f;
             float width = (float)((double)inRect.xMax - (double)x - (double)EditMainButton_Window.ResetButtonWidth - 10.0);
@@ -108,8 +108,10 @@ namespace UINotIncluded.Windows
                 config.Reset();
                 Close();
             }
-            if (!Widgets.ButtonText(new Rect(rect.width - EditMainButton_Window.ButSize.x, rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"DoneButton".Translate()))
+            if (!Widgets.ButtonText(new Rect(InitialSize.x - EditMainButton_Window.ButSize.x - (this.Margin*2), rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"DoneButton".Translate()))
+            {
                 return;
+            }
             TryAccept();
         }
 

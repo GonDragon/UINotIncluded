@@ -5,11 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 using RimWorld;
+using Verse;
 
 namespace UINotIncluded.Widget.Configs
 {
     public class DropdownMenuConfig : ButtonConfig
     {
+        public List<Widget.Configs.ElementConfig> elements = new List<ElementConfig>();
+        public float width = 200f;
+        public float spacing = 5f;
+
         private Workers.Dropdown_Worker _worker;
         public DropdownMenuConfig() : base(new MainButtonDef()
         {
@@ -27,6 +32,9 @@ namespace UINotIncluded.Widget.Configs
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look(ref width, "width", 200f);
+            Scribe_Values.Look(ref spacing, "spacing", 5f);
+            Scribe_Collections.Look(ref elements, "elements", LookMode.Deep);
         }
 
         public override WidgetWorker Worker

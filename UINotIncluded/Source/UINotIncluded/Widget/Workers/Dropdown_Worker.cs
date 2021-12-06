@@ -14,6 +14,12 @@ namespace UINotIncluded.Widget.Workers
     {
         public Dropdown_Worker(ButtonConfig config) : base(config) {        }
 
+        public override void InterfaceTryActivate()
+        {
+            Windows.DropdownMenu_Window.config = (DropdownMenuConfig)config;
+            base.InterfaceTryActivate();
+        }
+
         public override void OpenConfigWindow()
         {
             Find.WindowStack.Add(new UINotIncluded.Windows.EditDropdown_Window((Configs.DropdownMenuConfig)this.config));

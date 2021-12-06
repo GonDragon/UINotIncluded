@@ -146,7 +146,7 @@ namespace UINotIncluded
             TopBarElements.Clear();
             BottomBarElements.Clear();
 
-            foreach (Widget.Configs.ButtonConfig element in WidgetManager.AllAvailableMainTabButtons())
+            foreach (Widget.Configs.ButtonConfig element in WidgetManager.AllMainButtons())
             {
                 BottomBarElements.Add(element);
             }
@@ -449,7 +449,7 @@ namespace UINotIncluded
             float columnWidth = rect.width / 3;
             float curY = rect.y;
 
-            if (cacheAvaibleElements == null) cacheAvaibleElements = WidgetManager.AvailableSelectedWidgets.ToList();
+            if (cacheAvaibleElements == null) cacheAvaibleElements = WidgetManager.AvailableSelectedWidgets().ToList();
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(new Rect(rect.x + (float)Math.Floor(rect.width / 4), curY, (float)Math.Floor(rect.width / 2), 25f), new GUIContent("UINotIncluded.Setting.Toolbars.Description".Translate()));
@@ -493,7 +493,7 @@ namespace UINotIncluded
         private void UpdateCache()
         {
             cacheAvaibleElements.Clear();
-            foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets) cacheAvaibleElements.Add(element);
+            foreach (Widget.Configs.ElementConfig element in WidgetManager.AvailableSelectedWidgets()) cacheAvaibleElements.Add(element);
         }
 
         private struct Page
