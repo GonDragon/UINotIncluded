@@ -13,7 +13,6 @@ namespace UINotIncluded
         public static bool designationsOnLeft = false;
         public static GameFont fontSize;
         public static List<String> hiddenDesignations;
-        public static bool initializedDesignations;
         public static bool initializedDefaultBar;
         public static List<String> leftDesignations;
         public static List<String> mainDesignations;
@@ -170,7 +169,6 @@ namespace UINotIncluded
             Scribe_Values.Look(ref vanillaTemperature, "vanillaTemperature", false);
 
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
-            Scribe_Values.Look(ref initializedDesignations, "initializedDesignations", false);
             Scribe_Values.Look(ref initializedDefaultBar, "initializedDefaultBar", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
             Scribe_Values.Look(ref legacyAltInspector, "legacyAltInspector", false);

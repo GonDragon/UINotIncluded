@@ -32,38 +32,20 @@ namespace UINotIncluded
             Harmony = new Harmony(Id);
             Harmony.PatchAll();
 
-            try
+            if (!Settings.initializedDefaultBar)
             {
-                if (!Settings.initializedDesignations)
-                {
-                    UINI.Log("DesigationConfigs never initialized. Initializing.");
-                    Settings.RestoreDesignationLists();
-                    Settings.initializedDesignations = true;
-                    LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
-                }
-            }
-            catch
+                UINI.Log("Firts usage of the mod. Initializing.");
+                Settings.RestoreDefaultMainBar();
+                Settings.RestoreDesignationLists();
+                Settings.initializedDefaultBar = true;
+                Settings.lastVersion = Version;
+                LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
+            } else
             {
-                UINI.Error("Error initializing settings for Designation Bar");
-            }
-
-            try
-            {
-                if (!Settings.initializedDefaultBar)
-                {
-                    UINI.Log("TabsBar never initialized. Initializing.");
-                    Settings.RestoreDefaultMainBar();
-                    Settings.initializedDefaultBar = true;
-                    LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
-                }
-            }
-            catch
-            {
-                UINI.Error("Error initializing settings for TabsBar");
+                VersionPatcher();
             }
 
             CompatibilityPatches();
-            VersionPatcher();
             LoadMainButtonsSettings();
         }
 
