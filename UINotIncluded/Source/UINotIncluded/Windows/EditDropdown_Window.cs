@@ -16,6 +16,11 @@ namespace UINotIncluded.Windows
 
         public override Vector2 InitialSize => new Vector2(786f, 600f);
 
+        public override void PreOpen()
+        {
+            base.PreOpen();
+            WidgetManager.SelectGetter(WidgetManager.BUTTONS);
+        }
         public override void DoWindowContents(Rect rect)
         {
             Rect firstHalf = new Rect(rect.x, rect.y, 314f, rect.height);
@@ -61,7 +66,7 @@ namespace UINotIncluded.Windows
             if (Widgets.ButtonText(selectTypeRect.ContractedBy(2f), WidgetManager.SelectedGetterName))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (String widgetGetter in WidgetManager.availableGetters.Keys)
+                foreach (String widgetGetter in WidgetManager.buttonGetters.Keys)
                 {
                     options.Add(new FloatMenuOption(widgetGetter, (Action)(() => { WidgetManager.SelectGetter(widgetGetter); cacheAvaibleElements = null; })));
                 }

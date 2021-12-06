@@ -9,9 +9,9 @@ namespace UINotIncluded.Widget
     [StaticConstructorOnStartup]
     public static class WidgetManager
     {
-        const string all_name = "Widgets and Buttons";
-        const string buttons_name = "Available Buttons";
-        const string widgets_name = "Available Widgets";
+        public const string ALL = "Widgets and Buttons";
+        public const string BUTTONS = "Available Buttons";
+        public const string WIDGETS = "Available Widgets";
 
         public static IEnumerable<Configs.ButtonConfig> MainTabButtons
         {
@@ -28,6 +28,7 @@ namespace UINotIncluded.Widget
         }
 
         public static readonly Dictionary<string, Func<IEnumerable<Widget.Configs.ElementConfig>>> availableGetters;
+        public static readonly Dictionary<string, Func<IEnumerable<Widget.Configs.ButtonConfig>>> buttonGetters;
 
         private static string selectedGetterName;
         private static Func<IEnumerable<Widget.Configs.ElementConfig>> selectedGetterFunction;
@@ -36,13 +37,13 @@ namespace UINotIncluded.Widget
         {
             get
             {
-                if (selectedGetterName == null) SelectGetter(all_name);
+                if (selectedGetterName == null) SelectGetter(ALL);
                 return selectedGetterName;
             }
         }
         public static IEnumerable<Widget.Configs.ElementConfig> AvailableSelectedWidgets(bool allowAlreadyOnBars = false)
         {
-            if (selectedGetterFunction == null) SelectGetter(all_name);
+            if (selectedGetterFunction == null) SelectGetter(ALL);
 
             foreach(Widget.Configs.ElementConfig config in selectedGetterFunction())
             {
@@ -54,9 +55,10 @@ namespace UINotIncluded.Widget
         static WidgetManager()
         {
             availableGetters = new Dictionary<string, Func<IEnumerable<Widget.Configs.ElementConfig>>>();
-            AddGetter(buttons_name, AllMainButtons);
-            AddGetter(widgets_name, AllWidgets);
-            AddGetter(all_name, AllElements);
+            buttonGetters = new Dictionary<string, Func<IEnumerable<Configs.ButtonConfig>>>();
+            AddButtonGetter(BUTTONS, AllMainButtons);
+            AddGetter(WIDGETS, AllWidgets);
+            AddGetter(ALL, AllElements);
         }
 
         public static void SelectGetter(string name)
@@ -71,7 +73,7 @@ namespace UINotIncluded.Widget
             selectedGetterFunction = availableGetters[name];
         }
 
-        public static IEnumerable<Widget.Configs.ElementConfig> AllMainButtons()
+        public static IEnumerable<Widget.Configs.ButtonConfig> AllMainButtons()
         {
             foreach (Widget.Configs.ButtonConfig config in UINotIncluded.Widget.WidgetManager.MainTabButtons) yield return config;
         }
@@ -95,6 +97,12 @@ namespace UINotIncluded.Widget
         public static void AddGetter(string name, Func<IEnumerable<Widget.Configs.ElementConfig>> getterFunction)
         {
             availableGetters[name] = getterFunction;
+        }
+
+        public static void AddButtonGetter(string name, Func<IEnumerable<Widget.Configs.ButtonConfig>> getterFunction)
+        {
+            buttonGetters[name] = getterFunction;
+            AddGetter(name, getterFunction);
         }
     }
 }
