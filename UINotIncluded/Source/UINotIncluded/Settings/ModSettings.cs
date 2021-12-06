@@ -50,7 +50,7 @@ namespace UINotIncluded
             {
                 if (_barStyle == null)
                 {
-                    if (_barStyleType == null) _barStyleType = typeof(BarStyle_RustyOrange);
+                    if (_barStyleType == null) _barStyleType = typeof(BarStyle_VanillaBluePlus);
                     _barStyle = (BarStyle)Activator.CreateInstance(_barStyleType);
                 }
                 return _barStyle;
