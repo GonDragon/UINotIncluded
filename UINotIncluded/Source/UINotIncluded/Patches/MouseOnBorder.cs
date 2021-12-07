@@ -48,30 +48,18 @@ namespace UINotIncluded.Patches
                             unload = true;
                         } else
                         {
-                            //First half of the If
-                            yield return new CodeInstruction(OpCodes.Ldarg_0); //this
-                            yield return new CodeInstruction(OpCodes.Ldarg_0); //this
-                            yield return new CodeInstruction(OpCodes.Ldfld, Field_mouseTouchingScreenBottomEdgeStartTime);
-                            yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CameraDriverPatch), nameof(NegativeStartTime)));
-                            yield return new CodeInstruction(OpCodes.Stfld, Field_mouseTouchingScreenBottomEdgeStartTime);
 
-                            // Load the Vector.Y
-                            yield return new CodeInstruction(OpCodes.Ldloca_S, 9); //Vector2 vector2
-                            yield return new CodeInstruction(OpCodes.Ldflda, AccessTools.Field(typeof(Vector2), "y")); //Vector2 vector2
-                            yield return new CodeInstruction(OpCodes.Dup);
-                            yield return new CodeInstruction(OpCodes.Ldind_R4);
-
-                            // Second Half of the if, get the difference of Vector.Y
-                            yield return new CodeInstruction(OpCodes.Ldarg_0); //this
+                            //Call the function
+                            yield return new CodeInstruction(OpCodes.Ldarg_0);
                             yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CameraDriver), "config"));
-                            yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CameraMapConfig), "dollyRateScreenEdge"));
-                            yield return new CodeInstruction(OpCodes.Ldarg_0); //this
-                            yield return new CodeInstruction(OpCodes.Ldfld, Field_mouseTouchingScreenBottomEdgeStartTime);
-                            yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CameraDriverPatch), nameof(MoveIfTimer)));
+                            yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CameraMapConfig), "dollyRateScreenEdge")); // this.config.dollyRateScreenEdge
 
-                            // Do stuff idk, I hate this
-                            yield return new CodeInstruction(OpCodes.Add);
-                            yield return new CodeInstruction(OpCodes.Stind_R4);
+                            yield return new CodeInstruction(OpCodes.Ldloca_S, 9); //Vector2 vector2
+
+                            yield return new CodeInstruction(OpCodes.Ldarg_0); 
+                            yield return new CodeInstruction(OpCodes.Ldflda, Field_mouseTouchingScreenBottomEdgeStartTime); // ref this.mouseTouchingScreenBottomEdgeStartTime
+                            
+                            yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CameraDriverPatch), nameof(MoveIfTimer)));
 
                             // Set the flag
                             yield return new CodeInstruction(OpCodes.Ldc_I4_1); //
@@ -100,17 +88,16 @@ namespace UINotIncluded.Patches
             }
         }
 
-        public static float NegativeStartTime(float mouseTouchingScreenBottomEdgeStartTime)
+        public static void MoveIfTimer(float dollyRateScreenEdge,ref Vector2 vector2, ref float mouseTouchingScreenBottomEdgeStartTime)
         {
-            if (mouseTouchingScreenBottomEdgeStartTime < 0.0) return Time.realtimeSinceStartup;
-            return mouseTouchingScreenBottomEdgeStartTime;
-        }
-
-        public static float MoveIfTimer(float dollyRateScreenEdge, float mouseTouchingScreenBottomEdgeStartTime)
-        {
+            if (mouseTouchingScreenBottomEdgeStartTime < 0.0)
+            {
+                mouseTouchingScreenBottomEdgeStartTime = Time.realtimeSinceStartup;
+            }
             if (Time.realtimeSinceStartup - mouseTouchingScreenBottomEdgeStartTime >= 0.280000001192093)
-                return dollyRateScreenEdge;
-            return 0f;
+            {
+                vector2.y += dollyRateScreenEdge;
+            }
         }
 
         
