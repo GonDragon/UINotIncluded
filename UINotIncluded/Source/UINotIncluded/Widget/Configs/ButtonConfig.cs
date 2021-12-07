@@ -130,15 +130,11 @@ namespace UINotIncluded.Widget.Configs
             RefreshCache();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equivalent(ElementConfig other)
         {
-            return obj is ButtonConfig config &&
-                   defName == config.defName;
-        }
+            if (other.GetType() != typeof(ButtonConfig)) return false;
 
-        public override int GetHashCode()
-        {
-            return 1340835839 + EqualityComparer<string>.Default.GetHashCode(defName);
+            return ((ButtonConfig)other).defName == defName;
         }
     }
 }

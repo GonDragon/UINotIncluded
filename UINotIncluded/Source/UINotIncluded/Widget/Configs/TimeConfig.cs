@@ -21,17 +21,6 @@ namespace UINotIncluded.Widget.Configs
             Scribe_Values.Look(ref roundHour, "roundHour", RoundHour.tenMinute);
             Scribe_Values.Look(ref clockFormat, "clockFormat", ClockFormat.twentyfourHours);
         }
-
-        public override bool Equals(object obj)
-        {
-            return obj is TimeConfig config;
-        }
-
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-
         public override WidgetWorker Worker
         {
             get

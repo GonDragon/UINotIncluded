@@ -47,7 +47,7 @@ namespace UINotIncluded.Widget
 
             foreach(Widget.Configs.ElementConfig config in selectedGetterFunction())
             {
-                if (!allowAlreadyOnBars && !config.Repeatable && (Settings.TopBarElements.Contains(config) || Settings.BottomBarElements.Contains(config))) continue;
+                if (!allowAlreadyOnBars && !config.Repeatable && (Settings.TopBarElements.Exists(e => e.Equivalent(config)) || Settings.BottomBarElements.Exists(e => e.Equivalent(config)))) continue;
                 yield return config;
             }
         }

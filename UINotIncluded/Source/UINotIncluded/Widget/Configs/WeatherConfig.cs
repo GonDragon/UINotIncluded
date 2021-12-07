@@ -23,15 +23,5 @@ namespace UINotIncluded.Widget.Configs
                 return _worker;
             }
         }
-
-        public override bool Equals(object obj)
-        {
-            return obj is WeatherConfig config;
-        }
-
-        public override int GetHashCode()
-        {
-            return 0;
-        }
     }
 }
