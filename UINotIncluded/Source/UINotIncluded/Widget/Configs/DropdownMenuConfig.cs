@@ -23,7 +23,6 @@ namespace UINotIncluded.Widget.Configs
         {
             defName = "UINI_NMB" + DateTime.Now.ToFileTime(),
             label = "",
-            description = "Custom dropdown window.",
             tabWindowClass = typeof(Windows.DropdownMenu_Window)
         })
         {            
