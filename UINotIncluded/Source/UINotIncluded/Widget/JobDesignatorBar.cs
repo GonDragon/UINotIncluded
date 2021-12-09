@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -34,7 +33,7 @@ namespace UINotIncluded.Widget
                 CustomGizmoGridDrawer.DrawGizmoGrid((IEnumerable<Designator>)Jobs[(int)DesignationConfig.main], mainRows, curX, out mousoverGizmo);
                 if (mousoverGizmo != null) DrawTooltip((Designator)mousoverGizmo, false);
             }
-            
+
             curX -= leftWidth;
 
             if (Jobs[(int)DesignationConfig.left].Count > 0)

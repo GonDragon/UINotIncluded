@@ -40,7 +40,8 @@ namespace UINotIncluded
                 Settings.initializedDefaultBar = true;
                 Settings.lastVersion = Version;
                 LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
-            } else
+            }
+            else
             {
                 VersionPatcher();
             }
@@ -62,22 +63,24 @@ namespace UINotIncluded
                 bool deleted = false;
 
                 int i = 0;
-                foreach(Widget.Configs.ElementConfig config in configList)
+                foreach (Widget.Configs.ElementConfig config in configList)
                 {
                     try
                     {
-                        if(config.GetType() == typeof(Widget.Configs.ButtonConfig)) ((Widget.Configs.ButtonConfig)config).Def.GetType();
-                    } catch
+                        if (config.GetType() == typeof(Widget.Configs.ButtonConfig)) ((Widget.Configs.ButtonConfig)config).Def.GetType();
+                    }
+                    catch
                     {
                         UINI.Warning(string.Format("Def {0} not found. Marked for removal.", ((Widget.Configs.ButtonConfig)config).defName));
                         indexToDelete.Add(i);
-                    } finally
+                    }
+                    finally
                     {
                         i++;
                     }
                 }
 
-                foreach(int k in indexToDelete.OrderByDescending(k => k))
+                foreach (int k in indexToDelete.OrderByDescending(k => k))
                 {
                     configList.RemoveAt(k);
                     deleted = true;
@@ -123,7 +126,7 @@ namespace UINotIncluded
                 Utility.Deprecated.DeprecationManager.UpdateBarsToNewVersion();
             }
 
-            if(lastVersionUsed < Assembly.GetName().Version)
+            if (lastVersionUsed < Assembly.GetName().Version)
             {
                 Settings.lastVersion = Version;
                 LoadedModManager.GetMod<UINI_Mod>().WriteSettings();

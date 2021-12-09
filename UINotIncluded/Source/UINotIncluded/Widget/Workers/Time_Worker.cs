@@ -8,15 +8,16 @@ namespace UINotIncluded.Widget.Workers
 {
     public class Time_Worker : WidgetWorker
     {
-        readonly Configs.TimeConfig config;
+        private readonly Configs.TimeConfig config;
 
         private const float extra = 50f;
         public override float Width => TimeWidth + DateWidth + extra;
+
         private float TimeWidth
         {
             get
             {
-                if(_timeWidth < 0 || fontCache != Settings.fontSize)
+                if (_timeWidth < 0 || fontCache != Settings.fontSize)
                 {
                     GameFont font = Text.Font;
                     Text.Font = Settings.fontSize;
@@ -40,23 +41,25 @@ namespace UINotIncluded.Widget.Workers
                     Text.Font = Settings.fontSize;
                     string dummyDate = config.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, 0f);
                     _dateWidth = (float)Math.Round(Text.CalcSize(dummyDate).x);
-                    if(fontCache != Settings.fontSize) _timeWidth = -1;
+                    if (fontCache != Settings.fontSize) _timeWidth = -1;
                     fontCache = Settings.fontSize;
                     _lastFormat = config.dateFormat;
                     Text.Font = font;
                 }
                 return _dateWidth;
-
             }
         }
+
         private DateFormat _lastFormat;
         private float _dateWidth = -1;
         private float _timeWidth = -1;
         private GameFont fontCache;
+
         public override void OpenConfigWindow()
         {
             Find.WindowStack.Add(new Windows.EditTimeWidget_Window(config));
         }
+
         public Time_Worker(Configs.TimeConfig config)
         {
             this.config = config;
@@ -87,15 +90,17 @@ namespace UINotIncluded.Widget.Workers
                 case RoundHour.hour:
                     minutes = 0;
                     break;
+
                 case RoundHour.tenMinute:
                     minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 6) * 10;
                     break;
+
                 case RoundHour.minute:
                     minutes = (int)Math.Floor((hour - Math.Floor(hour)) * 60);
                     break;
+
                 default:
                     throw new NotImplementedException();
-                    
             }
             string datestamp = config.dateFormat.GetFormated((long)Find.TickManager.TicksAbs, pos.x);
 
@@ -104,7 +109,6 @@ namespace UINotIncluded.Widget.Workers
 
             float dateLabelWidth = (float)Math.Floor(dateWidth + remainingSpace / 3);
             float timeLabelWidth = (float)Math.Floor(TimeWidth + remainingSpace * 2 / 3);
-            
 
             Text.WordWrap = false;
 
@@ -118,16 +122,19 @@ namespace UINotIncluded.Widget.Workers
                     hour = hour > 12 ? hour % 12 : hour;
                     hour = (float)Math.Floor(hour);
                     hour = hour == 0 ? 12 : hour;
-                    timestamp = string.Format("{0}:{1} {2}",hour.ToString(), minutes.ToString("D2"),meridiam);
+                    timestamp = string.Format("{0}:{1} {2}", hour.ToString(), minutes.ToString("D2"), meridiam);
                     row.Label(timestamp, timeLabelWidth, height: space.height);
                     break;
+
                 case ClockFormat.twentyfourHours:
-                    timestamp = string.Format("{0}:{1} {2}", Math.Floor(hour).ToString(), minutes.ToString("D2"),"hs");
+                    timestamp = string.Format("{0}:{1} {2}", Math.Floor(hour).ToString(), minutes.ToString("D2"), "hs");
                     row.Label(timestamp, timeLabelWidth, height: space.height);
                     break;
+
                 case ClockFormat.vanilla:
                     DateReadout.DateOnGUI(new Rect(row.FinalX, row.FinalY, timeLabelWidth, space.height));
                     break;
+
                 default:
                     throw new NotImplementedException();
             }

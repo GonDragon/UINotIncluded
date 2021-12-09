@@ -1,5 +1,4 @@
-﻿using System;
-using UINotIncluded.Widget.Configs;
+﻿using UINotIncluded.Widget.Configs;
 using UnityEngine;
 using Verse;
 
@@ -7,7 +6,7 @@ namespace UINotIncluded.Widget.Workers
 {
     internal class BlankSpace_Worker : WidgetWorker
     {
-        Configs.BlankSpaceConfig config;
+        private Configs.BlankSpaceConfig config;
 
         public BlankSpace_Worker(BlankSpaceConfig config)
         {
@@ -23,6 +22,7 @@ namespace UINotIncluded.Widget.Workers
 
         public override float Width => config.width;
 
-        public override void OnGUI(Rect rect) { }
+        public override void OnGUI(Rect rect)
+        { }
     }
 }

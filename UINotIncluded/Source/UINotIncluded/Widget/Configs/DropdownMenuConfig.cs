@@ -1,10 +1,6 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using RimWorld;
 using Verse;
 
 namespace UINotIncluded.Widget.Configs
@@ -19,13 +15,14 @@ namespace UINotIncluded.Widget.Configs
         public float lastY = 0f;
 
         private Workers.Dropdown_Worker _worker;
+
         public DropdownMenuConfig() : base(new MainButtonDef()
         {
             defName = "UINI_NMB" + DateTime.Now.ToFileTime(),
             label = "",
             tabWindowClass = typeof(Windows.DropdownMenu_Window)
         })
-        {            
+        {
             Reset();
         }
 

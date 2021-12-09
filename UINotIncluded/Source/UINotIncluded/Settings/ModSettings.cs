@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UINotIncluded.Widget;
@@ -155,7 +154,7 @@ namespace UINotIncluded
         {
             Scribe_Values.Look(ref togglersOnTop, "togglersOnTop", true);
             Scribe_Values.Look(ref designationsOnLeft, "designationsOnLeft", false);
-            
+
             Scribe_Values.Look(ref vanillaAnimals, "vanillaAnimals", false);
             Scribe_Values.Look(ref centeredWindows, "centeredWindows", false);
 
@@ -185,7 +184,7 @@ namespace UINotIncluded
 
             Scribe_Values.Look(ref lastVersion, "lastVersion");
 
-            if(Scribe.mode == LoadSaveMode.LoadingVars)
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedTopBar, "topBar", LookMode.Deep);
                 Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedBottomBar, "bottomBar", LookMode.Deep);
@@ -376,7 +375,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
 
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
-            
+
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), Settings.fontSize.ToString()))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
@@ -463,8 +462,9 @@ namespace UINotIncluded
             DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
                 OnUpdate: () => UpdateCache(),
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
-                OnClick: (Widget.Configs.ElementConfig element) => {
-                    if(element.Configurable) return element.Worker.OpenConfigWindow;
+                OnClick: (Widget.Configs.ElementConfig element) =>
+                {
+                    if (element.Configurable) return element.Worker.OpenConfigWindow;
                     return null;
                 });
 

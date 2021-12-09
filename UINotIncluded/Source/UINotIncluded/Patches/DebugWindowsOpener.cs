@@ -6,21 +6,21 @@ namespace UINotIncluded.Patches
     [HarmonyPatch(typeof(Verse.DebugWindowsOpener), "DrawButtons")]
     internal class DebugWindowsOpener_Patch
     {
-        static bool opened = true;
+        private static bool opened = true;
 
         public static bool Prefix(WidgetRow ___widgetRow)
         {
             if (!opened)
             {
                 ___widgetRow.Init(0f, 0f);
-                if (___widgetRow.ButtonIcon(ModTextures.chevronRight,"Show Dev Toolbar")) opened = true;
+                if (___widgetRow.ButtonIcon(ModTextures.chevronRight, "Show Dev Toolbar")) opened = true;
             }
             return opened;
         }
 
         public static void Postfix(WidgetRow ___widgetRow)
         {
-            if (opened && ___widgetRow.ButtonIcon(ModTextures.chevronLeft,"Hide Dev Toolbar")) opened = false;
+            if (opened && ___widgetRow.ButtonIcon(ModTextures.chevronLeft, "Hide Dev Toolbar")) opened = false;
         }
     }
 }

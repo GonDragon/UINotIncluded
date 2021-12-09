@@ -7,7 +7,7 @@ namespace UINotIncluded.Windows
 {
     internal class EditBlankSpace_Window : Window
     {
-        readonly Widget.Configs.BlankSpaceConfig config;
+        private readonly Widget.Configs.BlankSpaceConfig config;
         private static readonly Vector2 ButSize = new Vector2(150f, 38f);
 
         public EditBlankSpace_Window(BlankSpaceConfig config)
@@ -16,7 +16,6 @@ namespace UINotIncluded.Windows
         }
 
         public override Vector2 InitialSize => new Vector2(400f, 400f);
-
 
         public override void DoWindowContents(Rect inRect)
         {

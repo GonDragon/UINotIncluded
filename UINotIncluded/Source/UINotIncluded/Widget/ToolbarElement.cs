@@ -1,10 +1,4 @@
-﻿using RimWorld;
-using System;
-using System.Runtime.Serialization;
-using UnityEngine;
-using Verse;
-
-namespace UINotIncluded.Widget
+﻿namespace UINotIncluded.Widget
 {
     public class ToolbarElement
     {

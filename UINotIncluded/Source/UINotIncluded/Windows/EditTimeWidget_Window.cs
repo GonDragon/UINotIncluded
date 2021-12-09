@@ -17,6 +17,7 @@ namespace UINotIncluded.Windows
         }
 
         public override Vector2 InitialSize => new Vector2(400f, 400f);
+
         public override void DoWindowContents(Rect inRect)
         {
             Listing_Standard list = new Listing_Standard();

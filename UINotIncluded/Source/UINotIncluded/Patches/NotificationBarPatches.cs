@@ -1,11 +1,11 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using Verse;
-using UnityEngine;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
+using UnityEngine;
+using Verse;
 
 namespace UINotIncluded
 {
@@ -37,7 +37,8 @@ namespace UINotIncluded
                     }
                     yield return code;
                     prev = code;
-                } else if (!patchWeater_finish)
+                }
+                else if (!patchWeater_finish)
                 {
                     if (prev.opcode == OpCodes.Newobj)
                     {
@@ -45,7 +46,8 @@ namespace UINotIncluded
                         patchWeater_finish = true;
                     }
                     prev = code;
-                } else if (!patchedTemp)
+                }
+                else if (!patchedTemp)
                 {
                     if (prev.opcode == OpCodes.Call && (MethodInfo)prev.operand == globalControls_Temperaturestring)
                     {
@@ -58,7 +60,8 @@ namespace UINotIncluded
                     }
                     yield return code;
                     prev = code;
-                } else
+                }
+                else
                 {
                     yield return code;
                 }
@@ -69,7 +72,7 @@ namespace UINotIncluded
         {
             if (!Settings.vanillaWeather) return;
             y -= 26f;
-            Rect rect = new Rect(x - 22f, y,230f,26f);
+            Rect rect = new Rect(x - 22f, y, 230f, 26f);
             Find.CurrentMap.weatherManager.DoWeatherGUI(rect);
         }
 
@@ -80,9 +83,6 @@ namespace UINotIncluded
             Rect rect = new Rect(x - 100f, y, 293f, 26f);
             Widgets.Label(rect, label);
         }
-
-
-
     }
 
     [HarmonyPatch(typeof(GlobalControlsUtility))]

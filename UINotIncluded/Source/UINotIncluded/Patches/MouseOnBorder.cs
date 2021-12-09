@@ -1,14 +1,10 @@
-﻿using System;
+﻿using HarmonyLib;
+using RimWorld.Planet;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
-using RimWorld;
-using UnityEngine;
-using HarmonyLib;
 using System.Reflection.Emit;
-using RimWorld.Planet;
+using UnityEngine;
+using Verse;
 
 namespace UINotIncluded.Patches
 {
@@ -50,12 +46,12 @@ namespace UINotIncluded.Patches
                     if (buffer.Count() == target.Count() && !unload)
                     {
                         matches++;
-                        if(matches < 2)
+                        if (matches < 2)
                         {
                             unload = true;
-                        } else
+                        }
+                        else
                         {
-
                             //Call the function
                             yield return new CodeInstruction(OpCodes.Ldarg_0);
                             yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CameraDriver), "config"));
@@ -63,9 +59,9 @@ namespace UINotIncluded.Patches
 
                             yield return new CodeInstruction(OpCodes.Ldloca_S, 9); //Vector2 vector2
 
-                            yield return new CodeInstruction(OpCodes.Ldarg_0); 
+                            yield return new CodeInstruction(OpCodes.Ldarg_0);
                             yield return new CodeInstruction(OpCodes.Ldflda, Field_mouseTouchingScreenBottomEdgeStartTime); // ref this.mouseTouchingScreenBottomEdgeStartTime
-                            
+
                             yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CameraDriverPatch), nameof(MoveIfTimer)));
 
                             // Set the flag
@@ -74,7 +70,7 @@ namespace UINotIncluded.Patches
 
                             detected = false;
                             buffer.Clear();
-                        }                        
+                        }
                     }
                 }
                 else
@@ -95,7 +91,7 @@ namespace UINotIncluded.Patches
             }
         }
 
-        public static void MoveIfTimer(float dollyRateScreenEdge,ref Vector2 vector2, ref float mouseTouchingScreenBottomEdgeStartTime)
+        public static void MoveIfTimer(float dollyRateScreenEdge, ref Vector2 vector2, ref float mouseTouchingScreenBottomEdgeStartTime)
         {
             if (!Settings.TabsOnTop)
             {
@@ -110,7 +106,7 @@ namespace UINotIncluded.Patches
             {
                 vector2.y += dollyRateScreenEdge;
             }
-        }        
+        }
     }
 
     [HarmonyPatch(typeof(WorldCameraDriver), "CalculateCurInputDollyVect")]
@@ -157,7 +153,6 @@ namespace UINotIncluded.Patches
                         }
                         else
                         {
-
                             //Call the function
                             yield return new CodeInstruction(OpCodes.Ldarg_0);
                             yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(WorldCameraDriver), "config"));

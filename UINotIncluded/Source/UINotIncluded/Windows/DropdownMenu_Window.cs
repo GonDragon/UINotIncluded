@@ -1,15 +1,14 @@
-﻿using System.IO;
+﻿using RimWorld;
 using System.Linq;
 using UnityEngine;
 using Verse;
-using RimWorld;
-using System.Collections.Generic;
 
 namespace UINotIncluded.Windows
 {
     public class DropdownMenu_Window : MainTabWindow
     {
         public static Widget.Configs.DropdownMenuConfig config;
+
         public override Vector2 RequestedTabSize
         {
             get
@@ -39,6 +38,7 @@ namespace UINotIncluded.Windows
         }
 
         protected override float Margin => config.spacing;
+
         public DropdownMenu_Window()
         {
             this.layer = WindowLayer.Super;
@@ -52,7 +52,7 @@ namespace UINotIncluded.Windows
             foreach (Widget.Configs.ButtonConfig config in DropdownMenu_Window.config.elements)
             {
                 curY += DrawElement(config, new Vector2(0.0f, curY), rect.width) + DropdownMenu_Window.config.spacing;
-            }                
+            }
 
             GUI.EndGroup();
         }

@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,8 +8,6 @@ using Verse;
 
 namespace UINotIncluded.Patches
 {
-
-
     [HarmonyPatch(typeof(GizmoGridDrawer), "DrawGizmoGrid")]
     internal class GizmoGridDrawerPatch
     {
@@ -30,25 +27,26 @@ namespace UINotIncluded.Patches
                 {
                     buffer.Add(code);
 
-                    for(int i=0; i<buffer.Count(); i++)
+                    for (int i = 0; i < buffer.Count(); i++)
                     {
                         if (buffer[i].opcode != target[i]) unload = true;
                     }
 
-                    if(buffer.Count() == target.Count() && !unload)
+                    if (buffer.Count() == target.Count() && !unload)
                     {
                         yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GizmoGridDrawerPatch), nameof(PatchedBaseY)));
                         detected = false;
                         buffer.Clear();
                     }
-                } else
+                }
+                else
                 {
                     yield return code;
                 }
 
                 if (unload)
                 {
-                    foreach(CodeInstruction codeInstruction in buffer)
+                    foreach (CodeInstruction codeInstruction in buffer)
                     {
                         yield return codeInstruction;
                     }

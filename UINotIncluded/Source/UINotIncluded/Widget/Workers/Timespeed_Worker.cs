@@ -14,9 +14,8 @@ namespace UINotIncluded.Widget.Workers
 
         public override bool FixedWidth => true;
 
-        static float _width = 140f;
+        private static float _width = 140f;
         public override float Width => _width + extraWidth;
-
 
         public static void SetSmartspeedMode()
         {

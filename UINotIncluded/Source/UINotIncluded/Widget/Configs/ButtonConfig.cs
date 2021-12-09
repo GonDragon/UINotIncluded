@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UINotIncluded.Widget.Workers;
 using UnityEngine;
 using Verse;
@@ -12,7 +7,7 @@ namespace UINotIncluded.Widget.Configs
 {
     public class ButtonConfig : ElementConfig
     {
-        MainButtonDef mainButtonDef;
+        private MainButtonDef mainButtonDef;
         public string defName;
 
         private string _iconPath;
@@ -48,7 +43,8 @@ namespace UINotIncluded.Widget.Configs
             minimized = def.minimized;
         }
 
-        public ButtonConfig() { } //Empty constructor to load from ExposeData
+        public ButtonConfig()
+        { } //Empty constructor to load from ExposeData
 
         public override void ExposeData()
         {
@@ -71,6 +67,7 @@ namespace UINotIncluded.Widget.Configs
                 RefreshIcon();
             }
         }
+
         public string Label
         {
             get
@@ -84,7 +81,7 @@ namespace UINotIncluded.Widget.Configs
                 RefreshCache();
             }
         }
-        
+
         public void RefreshCache()
         {
             this._shortenedLabel = _label.Shorten();

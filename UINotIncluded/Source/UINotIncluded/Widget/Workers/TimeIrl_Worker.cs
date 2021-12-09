@@ -13,7 +13,8 @@ namespace UINotIncluded.Widget.Workers
 
         private const float extra = 30f;
         private float cacheWidth = -1f;
-        GameFont fontCache;
+        private GameFont fontCache;
+
         public override float Width
         {
             get

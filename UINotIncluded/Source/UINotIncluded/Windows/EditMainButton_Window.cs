@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UINotIncluded.Widget.Configs;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using UINotIncluded.Widget.Configs;
 
 namespace UINotIncluded.Windows
 {
@@ -30,8 +30,8 @@ namespace UINotIncluded.Windows
         private static readonly float ResetButtonWidth = 60f;
         private static readonly Regex ValidSymbolRegex = new Regex("^[\\p{L}0-9 '\\-]*$");
         private const int MaxSymbolLength = 40;
-        static private readonly Dictionary<string, Texture2D> cacheIcons = new Dictionary<string, Texture2D>();
-        static private List<string> cacheIconsPath;
+        private static readonly Dictionary<string, Texture2D> cacheIcons = new Dictionary<string, Texture2D>();
+        private static List<string> cacheIconsPath;
 
         public override Vector2 InitialSize => new Vector2(350f, 600f);
 
@@ -108,7 +108,7 @@ namespace UINotIncluded.Windows
                 config.Reset();
                 Close();
             }
-            if (!Widgets.ButtonText(new Rect(InitialSize.x - EditMainButton_Window.ButSize.x - (this.Margin*2), rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"DoneButton".Translate()))
+            if (!Widgets.ButtonText(new Rect(InitialSize.x - EditMainButton_Window.ButSize.x - (this.Margin * 2), rect.height - EditMainButton_Window.ButSize.y, EditMainButton_Window.ButSize.x, EditMainButton_Window.ButSize.y), (string)"DoneButton".Translate()))
             {
                 return;
             }

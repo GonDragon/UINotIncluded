@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UINotIncluded.Widget;
 using UnityEngine;
 using Verse;
@@ -12,7 +10,10 @@ namespace UINotIncluded.Windows
     public class EditDropdown_Window : EditMainButton_Window
     {
         private List<Widget.Configs.ElementConfig> cacheAvaibleElements;
-        public EditDropdown_Window(Widget.Configs.DropdownMenuConfig config) : base(config) { }
+
+        public EditDropdown_Window(Widget.Configs.DropdownMenuConfig config) : base(config)
+        {
+        }
 
         public override Vector2 InitialSize => new Vector2(786f, 600f);
 
@@ -21,6 +22,7 @@ namespace UINotIncluded.Windows
             base.PreOpen();
             WidgetManager.SelectGetter(WidgetManager.BUTTONS);
         }
+
         public override void DoWindowContents(Rect rect)
         {
             Rect firstHalf = new Rect(rect.x, rect.y, 314f, rect.height);
@@ -57,7 +59,8 @@ namespace UINotIncluded.Windows
             DragManager<Widget.Configs.ElementConfig> manager = new DragManager<Widget.Configs.ElementConfig>(
                 OnUpdate: () => cacheAvaibleElements = null,
                 GetLabel: (Widget.Configs.ElementConfig element) => { return element.SettingLabel; },
-                OnClick: (Widget.Configs.ElementConfig element) => {
+                OnClick: (Widget.Configs.ElementConfig element) =>
+                {
                     if (element.Configurable) return element.Worker.OpenConfigWindow;
                     return null;
                 });

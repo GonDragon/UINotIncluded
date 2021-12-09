@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UINotIncluded.Widget.Configs;
 using Verse;
 
@@ -11,7 +7,7 @@ namespace UINotIncluded
     public class Memory : IExposable
     {
         public virtual void ExposeData()
-        {  }
+        { }
 
         public virtual Widget.Configs.ElementConfig ConvertToConfig() => throw new NotImplementedException();
     }
@@ -46,6 +42,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref visible, "visible", true);
         }
     }
+
     public class TimeWidgetMemory : Memory
     {
         public DateFormat dateFormat;
@@ -70,6 +67,7 @@ namespace UINotIncluded
             Scribe_Values.Look(ref clockFormat, "clockFormat", ClockFormat.twentyfourHours);
         }
     }
+
     public class BlankSpaceMemory : Memory
     {
         public bool fixedWidth;
@@ -91,5 +89,4 @@ namespace UINotIncluded
             Scribe_Values.Look(ref width, "width");
         }
     }
-
 }

@@ -1,5 +1,4 @@
-﻿using RimWorld;
-using RimWorld.Planet;
+﻿using RimWorld.Planet;
 using System.Collections.Generic;
 using UINotIncluded.Widget;
 using UnityEngine;
@@ -31,7 +30,7 @@ namespace UINotIncluded
             if (updateToolbars)
             {
                 topBarElements.Clear();
-                foreach(Widget.Configs.ElementConfig config in Settings.TopBarElements)
+                foreach (Widget.Configs.ElementConfig config in Settings.TopBarElements)
                 {
                     topBarElements.Add(new ToolbarElement(config));
                 }
@@ -74,6 +73,5 @@ namespace UINotIncluded
         public static void After_MainUIOnGUI()
         {
         }
-
     }
 }

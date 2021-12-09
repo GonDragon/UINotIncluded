@@ -1,18 +1,8 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UINotIncluded.Widget.Workers;
-using UnityEngine;
-using Verse;
-
-namespace UINotIncluded.Widget.Configs
+﻿namespace UINotIncluded.Widget.Configs
 {
     public class WeatherConfig : ElementConfig
     {
-        Workers.Weather_Worker _worker;
+        private Workers.Weather_Worker _worker;
         public override string SettingLabel => "Weather Widget";
 
         public override WidgetWorker Worker

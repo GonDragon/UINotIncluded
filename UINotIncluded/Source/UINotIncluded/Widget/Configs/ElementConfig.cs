@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace UINotIncluded.Widget.Configs
@@ -16,10 +12,13 @@ namespace UINotIncluded.Widget.Configs
         public virtual WidgetWorker Worker => throw new NotImplementedException();
 
         public virtual bool Equivalent(ElementConfig other) => this.GetType() == other.GetType();
+
         public virtual string SettingLabel => "undefined";
-        public virtual void Reset() { }
+
+        public virtual void Reset()
+        { }
 
         public virtual void ExposeData()
-        {}
+        { }
     }
 }

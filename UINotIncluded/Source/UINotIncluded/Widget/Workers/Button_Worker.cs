@@ -70,9 +70,9 @@ namespace UINotIncluded.Widget.Workers
             float leftMargin = rect.width * 0.1f;
             bool drawIcon = this.config.Icon != null;
             float maxWidth = drawIcon ? rect.width - leftMargin - IconSize - 8f : rect.width - leftMargin - 4f;
-            
+
             if (labelWidth > maxWidth) label = this.config.ShortenedLabel;
-            
+
             if (def.Worker.Disabled)
             {
                 Widgets.DrawAtlas(rect, Widgets.ButtonSubtleAtlas);
@@ -82,7 +82,7 @@ namespace UINotIncluded.Widget.Workers
                 label = config.minimized ? "" : label;
                 double buttonBarPercent = def.Worker.ButtonBarPercent;
 
-                if(drawIcon)
+                if (drawIcon)
                 {
                     Vector2 iconPos = rect.center;
                     iconPos -= new Vector2(HalfIconSize, HalfIconSize);
@@ -91,12 +91,13 @@ namespace UINotIncluded.Widget.Workers
                     {
                         iconPos += new Vector2(2f, -2f);
                     }
-                    
+
                     Rect iconSpace = new Rect(iconPos.x, iconPos.y, IconSize, IconSize);
                     leftMargin += IconSize + 4f;
-                    DrawButtonTextSubtle(rect, label, SoundDefOf.Mouseover_Category, overButton,(float)buttonBarPercent, (float)leftMargin);
-                    GUI.DrawTexture(iconSpace, (Texture)this.config.Icon);                    
-                } else
+                    DrawButtonTextSubtle(rect, label, SoundDefOf.Mouseover_Category, overButton, (float)buttonBarPercent, (float)leftMargin);
+                    GUI.DrawTexture(iconSpace, (Texture)this.config.Icon);
+                }
+                else
                 {
                     DrawButtonTextSubtle(rect, label, SoundDefOf.Mouseover_Category, overButton, (float)buttonBarPercent, (float)leftMargin);
                 }
@@ -120,7 +121,7 @@ namespace UINotIncluded.Widget.Workers
             }
             else
             {
-                if (Widgets.ButtonInvisible(rect,false)) InterfaceTryActivate();
+                if (Widgets.ButtonInvisible(rect, false)) InterfaceTryActivate();
             }
         }
 

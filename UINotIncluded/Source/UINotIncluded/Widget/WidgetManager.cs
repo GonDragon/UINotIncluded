@@ -24,7 +24,7 @@ namespace UINotIncluded.Widget
                     config.RefreshIcon();
                     yield return config;
                 }
-            }        
+            }
         }
 
         public static readonly Dictionary<string, Func<IEnumerable<Widget.Configs.ElementConfig>>> availableGetters;
@@ -41,11 +41,12 @@ namespace UINotIncluded.Widget
                 return selectedGetterName;
             }
         }
+
         public static IEnumerable<Widget.Configs.ElementConfig> AvailableSelectedWidgets(bool allowAlreadyOnBars = false)
         {
             if (selectedGetterFunction == null) SelectGetter(ALL);
 
-            foreach(Widget.Configs.ElementConfig config in selectedGetterFunction())
+            foreach (Widget.Configs.ElementConfig config in selectedGetterFunction())
             {
                 if (!allowAlreadyOnBars && !config.Repeatable && (Settings.TopBarElements.Exists(e => e.Equivalent(config)) || Settings.BottomBarElements.Exists(e => e.Equivalent(config)))) continue;
                 yield return config;
@@ -80,11 +81,10 @@ namespace UINotIncluded.Widget
 
         public static IEnumerable<Widget.Configs.ElementConfig> AllWidgets()
         {
-            foreach(WidgetDef widgetDef in DefDatabase<WidgetDef>.AllDefs)
+            foreach (WidgetDef widgetDef in DefDatabase<WidgetDef>.AllDefs)
             {
                 Widget.Configs.ElementConfig config = widgetDef.GetNewConfig();
                 yield return config;
-
             }
         }
 

@@ -1,6 +1,4 @@
-﻿using RimWorld;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace UINotIncluded.Widget
@@ -29,7 +27,9 @@ namespace UINotIncluded.Widget
 
         public abstract void OnGUI(Rect rect);
 
-        public virtual void OpenConfigWindow() { }
+        public virtual void OpenConfigWindow()
+        { }
+
         public virtual void Padding(ref Rect rect)
         {
             rect = rect.ContractedBy(ExtendedToolbar.padding);
