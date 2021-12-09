@@ -50,6 +50,7 @@ namespace UINotIncluded
             LoadMainButtonsSettings();
         }
 
+        public static List<List<Widget.Configs.ElementConfig>> ListsToCheck = new List<List<Widget.Configs.ElementConfig>>();
         private static void LoadMainButtonsSettings()
         {
             if (Settings.TopBarElements.Count == 0 && Settings.BottomBarElements.Count == 0)
@@ -68,6 +69,7 @@ namespace UINotIncluded
                     try
                     {
                         if (config.GetType() == typeof(Widget.Configs.ButtonConfig)) ((Widget.Configs.ButtonConfig)config).Def.GetType();
+                        else if (config.GetType() == typeof(Widget.Configs.DropdownMenuConfig)) deleted |= DeleteNonExistentButtons(((Widget.Configs.DropdownMenuConfig)config).elements);
                     }
                     catch
                     {
@@ -83,7 +85,7 @@ namespace UINotIncluded
                 foreach (int k in indexToDelete.OrderByDescending(k => k))
                 {
                     configList.RemoveAt(k);
-                    deleted = true;
+                    deleted |= true;
                 }
 
                 return deleted;
@@ -91,6 +93,7 @@ namespace UINotIncluded
 
             bool somethingDeleted = DeleteNonExistentButtons(Settings.TopBarElements);
             somethingDeleted |= DeleteNonExistentButtons(Settings.BottomBarElements);
+            foreach (List<Widget.Configs.ElementConfig> list in ListsToCheck) somethingDeleted |= DeleteNonExistentButtons(list);
 
             if (somethingDeleted) LoadedModManager.GetMod<UINI_Mod>().WriteSettings();
         }

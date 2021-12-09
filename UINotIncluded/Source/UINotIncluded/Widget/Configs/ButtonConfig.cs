@@ -114,7 +114,7 @@ namespace UINotIncluded.Widget.Configs
         {
             get
             {
-                if (mainButtonDef == null) mainButtonDef = DefDatabase<MainButtonDef>.GetNamed(this.defName);
+                if (mainButtonDef == null) mainButtonDef = DefDatabase<MainButtonDef>.GetNamedSilentFail(this.defName);
                 return mainButtonDef;
             }
         }
