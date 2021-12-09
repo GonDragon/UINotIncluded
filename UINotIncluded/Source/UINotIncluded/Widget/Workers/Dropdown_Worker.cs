@@ -13,6 +13,7 @@ namespace UINotIncluded.Widget.Workers
 {
     public class Dropdown_Worker : Button_Worker
     {
+        public override bool ShowTooltip => false;
         public Dropdown_Worker(ButtonConfig config) : base(config) {        }
 
         public override void InterfaceTryActivate()

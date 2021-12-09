@@ -25,6 +25,8 @@ namespace UINotIncluded.Widget.Workers
 
         public override float Width => 60f;
 
+        public virtual bool ShowTooltip => true; 
+
         public override void OpenConfigWindow()
         {
             Find.WindowStack.Add(new Windows.EditMainButton_Window(config));
@@ -103,7 +105,7 @@ namespace UINotIncluded.Widget.Workers
 
                 if (Find.MainTabsRoot.OpenTab != this.def && !Find.WindowStack.NonImmediateDialogWindowOpen)
                     UIHighlighter.HighlightOpportunity(rect, this.def.cachedHighlightTagClosed);
-                if (this.def.description.NullOrEmpty())
+                if (this.def.description.NullOrEmpty() || !ShowTooltip)
                     return;
                 TooltipHandler.TipRegion(rect, (TipSignal)(this.config.Label + "\n\n" + this.def.description));
             }
