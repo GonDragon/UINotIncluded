@@ -13,6 +13,7 @@ namespace UINotIncluded.Widget.Configs
         private string _iconPath;
         private string _label;
         public bool minimized;
+        public bool hideLabel = false;
         private Button_Worker _worker;
         private string _shortenedLabel;
 
@@ -52,6 +53,7 @@ namespace UINotIncluded.Widget.Configs
             Scribe_Values.Look(ref _iconPath, "iconPath");
             Scribe_Values.Look(ref _label, "label");
             Scribe_Values.Look(ref minimized, "minimized");
+            Scribe_Values.Look(ref hideLabel, "hideLabel", false);
         }
 
         public string IconPath
@@ -124,6 +126,7 @@ namespace UINotIncluded.Widget.Configs
             IconPath = ((MainButtonDef)Def).iconPath;
             Label = ((MainButtonDef)Def).label;
             minimized = ((MainButtonDef)Def).minimized;
+            hideLabel = false;
             RefreshCache();
         }
 

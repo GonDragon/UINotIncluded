@@ -64,7 +64,7 @@ namespace UINotIncluded.Widget.Workers
         private void OnRepaint(Rect rect)
         {
             Text.Font = GameFont.Small;
-            string label = (string)this.config.Label;
+            string label = config.hideLabel ? "" : (string)this.config.Label;
             float labelWidth = this.config.LabelWidth;
             bool overButton = Mouse.IsOver(rect);
             float leftMargin = rect.width * 0.1f;
