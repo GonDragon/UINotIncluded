@@ -71,7 +71,12 @@ namespace UINotIncluded.Widget.Workers
             bool drawIcon = this.config.Icon != null;
             float maxWidth = drawIcon ? rect.width - leftMargin - IconSize - 8f : rect.width - leftMargin - 4f;
 
-            if (labelWidth > maxWidth) label = this.config.ShortenedLabel;
+            if (labelWidth > maxWidth)
+            {
+                label = this.config.ShortenedLabel;
+                labelWidth = this.config.ShortenedLabelWidth;
+                if (labelWidth > maxWidth) label = "";
+            }
 
             if (def.Worker.Disabled)
             {
