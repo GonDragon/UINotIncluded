@@ -20,6 +20,7 @@ namespace UINotIncluded.Widget.Workers
         {
             ((DropdownMenuConfig)config).lastX = rect.x;
             ((DropdownMenuConfig)config).lastY = rect.y;
+            ((DropdownMenuConfig)config).lastWidth = rect.width;
             base.OnGUI(rect);
         }
 

@@ -35,11 +35,18 @@ namespace UINotIncluded.Windows
             secondHalf.yMin += 45f;
             Listing_Standard list = new Listing_Standard();
             list.Begin(secondHalf);
-            list.Label(string.Format("Width ({0}px)", Math.Round(((Widget.Configs.DropdownMenuConfig)config).width).ToString()));
-            ((Widget.Configs.DropdownMenuConfig)config).width = list.Slider(((Widget.Configs.DropdownMenuConfig)config).width, 50f, 400f);
+
+            list.CheckboxLabeled("Match label size", ref ((Widget.Configs.DropdownMenuConfig)config).matchLabelSize, "If on, the dropdown will match the width of its button.");
+
+            if (!((Widget.Configs.DropdownMenuConfig)config).matchLabelSize)
+            {
+                list.Label(string.Format("Width ({0}px)", Math.Round(((Widget.Configs.DropdownMenuConfig)config).width).ToString()));
+                ((Widget.Configs.DropdownMenuConfig)config).width = list.Slider(((Widget.Configs.DropdownMenuConfig)config).width, 50f, 400f);
+            }            
 
             list.Label(string.Format("Spacing ({0}px)", Math.Round(((Widget.Configs.DropdownMenuConfig)config).spacing).ToString()));
             ((Widget.Configs.DropdownMenuConfig)config).spacing = list.Slider(((Widget.Configs.DropdownMenuConfig)config).spacing, 0f, 10f);
+                        
             list.End();
 
             float optionsHeight = list.MaxColumnHeightSeen;

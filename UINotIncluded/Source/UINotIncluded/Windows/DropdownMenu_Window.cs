@@ -13,7 +13,7 @@ namespace UINotIncluded.Windows
         {
             get
             {
-                float x = config.width;
+                float x = config.matchLabelSize ? config.lastWidth : config.width;
                 float n_elements = config.elements.Count();
 
                 float y = UIManager.ExtendedBarHeight * n_elements + config.spacing * (n_elements + 1);
