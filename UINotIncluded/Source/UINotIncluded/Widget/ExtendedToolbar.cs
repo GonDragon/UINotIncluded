@@ -16,6 +16,11 @@ namespace UINotIncluded.Widget
 
         public static void ExtendedToolbarOnGUI(List<Widget.Configs.ElementConfig> elements, Rect inRect)
         {
+#if DEBUG
+            string key = "Draw Toolbar";
+            Analyzer.Profiling.Profiler profiler = Analyzer.Profiling.ProfileController.Start(key);
+#endif
+
             if (elements.Count() == 0) return;
             Settings.BarStyle.DoToolbarBackground(inRect);
 
@@ -48,6 +53,9 @@ namespace UINotIncluded.Widget
             }
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
+#if DEBUG
+            Analyzer.Profiling.ProfileController.Stop(key);
+#endif
         }
 
         public static void DoWidgetBackground(Rect rect)
