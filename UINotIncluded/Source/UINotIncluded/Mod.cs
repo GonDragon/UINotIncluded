@@ -126,7 +126,15 @@ namespace UINotIncluded
             if (lastVersionUsed < new Version(1, 1, 0, 0))
             {
                 UINI.Log("Old config-file detected. Updating to 1.1.0.0+");
-                Utility.Deprecated.DeprecationManager.UpdateBarsToNewVersion();
+                try
+                {
+                    Utility.Deprecated.DeprecationManager.UpdateBarsToNewVersion();
+                } catch
+                {
+                    UINI.Warning("Something went wrong. Save file it's probably corrupted. Restoring default tabs.");
+                    Settings.RestoreDefaultMainBar();
+                }
+                
             }
 
             if (lastVersionUsed < Assembly.GetName().Version)
