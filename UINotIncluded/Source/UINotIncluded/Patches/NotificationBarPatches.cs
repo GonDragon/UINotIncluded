@@ -94,7 +94,7 @@ namespace UINotIncluded
         {
             if (Settings.TabsOnBottom) curBaseY -= UIManager.ExtendedBarHeight;
             if (Settings.useDesignatorBar && !Settings.designationsOnLeft && !worldView) curBaseY -= 88f;
-            if (Settings.togglersOnTop) curBaseY += 35;
+            if (Settings.togglersOnTop) curBaseY += Widget.ExtendedToolbar.Height;
             float borderGap = 4f;
             float initialY = Settings.togglersOnTop ? (Settings.TabsOnTop ? UIManager.ExtendedBarHeight + borderGap : borderGap) : curBaseY;
             rowVisibility.Init((float)UI.screenWidth - borderGap, initialY, Settings.togglersOnTop ? UIDirection.LeftThenDown : UIDirection.LeftThenUp, Settings.togglersOnTop ? 250f : 180f);

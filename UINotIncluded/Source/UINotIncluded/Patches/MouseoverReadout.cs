@@ -17,7 +17,7 @@ namespace UINotIncluded
             }
             __state = true;
 
-            float deltaH = Settings.TabsOnBottom ? 0 : 35;
+            float deltaH = Settings.TabsOnBottom ? 35f - Widget.ExtendedToolbar.Height : 35f;
 
             GUI.BeginGroup(new Rect(0f, 0f + deltaH, UI.screenWidth, UI.screenHeight - deltaH));
             return true;

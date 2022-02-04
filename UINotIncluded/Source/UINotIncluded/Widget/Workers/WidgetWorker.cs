@@ -5,7 +5,7 @@ namespace UINotIncluded.Widget
 {
     public abstract class WidgetWorker
     {
-        public float iconSize = 24f;
+        public float IconSize => ExtendedToolbar.Height - 9f;
 
         public virtual bool Visible => true;
         public virtual bool FixedWidth => false;
@@ -13,7 +13,7 @@ namespace UINotIncluded.Widget
 
         public Rect DrawIcon(Texture2D icon, float curX, float curY, string tooltip = null)
         {
-            Rect rect = new Rect(curX, curY, iconSize, iconSize);
+            Rect rect = new Rect(curX, curY, IconSize, IconSize);
             GUI.DrawTexture(rect, icon);
             if (!tooltip.NullOrEmpty())
                 TooltipHandler.TipRegion(rect, (TipSignal)tooltip);

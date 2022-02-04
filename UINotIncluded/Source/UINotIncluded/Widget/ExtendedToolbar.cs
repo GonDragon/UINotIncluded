@@ -7,7 +7,8 @@ namespace UINotIncluded.Widget
 {
     internal static class ExtendedToolbar
     {
-        public static float Height => 35f;
+        [TweakValue("Bar Height", 25f, 50f)]
+        public static float Height = 35f;
         public static float Width => UI.screenWidth;
 
         public static float interGap = 0;

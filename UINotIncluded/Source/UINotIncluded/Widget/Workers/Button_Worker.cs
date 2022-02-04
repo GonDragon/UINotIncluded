@@ -9,8 +9,8 @@ namespace UINotIncluded.Widget.Workers
     {
         public MainButtonDef def;
         private const float CompactModeMargin = 2f;
-        private const float IconSize = 32f;
-        private const float HalfIconSize = 16f;
+        private new float IconSize => Widget.ExtendedToolbar.Height - 3f;
+        private float HalfIconSize => IconSize / 2;
         public readonly Widget.Configs.ButtonConfig config;
 
         public Button_Worker(Widget.Configs.ButtonConfig config)

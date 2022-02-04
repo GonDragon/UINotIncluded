@@ -11,10 +11,9 @@ namespace UINotIncluded.Widget.Workers
 
         public override bool FixedWidth => true;
 
-        private const float extra = 30f;
+        private float extra => this.IconSize + 6f;
         private float cacheWidth = -1f;
         private GameFont fontCache;
-
         public override float Width
         {
             get
@@ -33,18 +32,21 @@ namespace UINotIncluded.Widget.Workers
 
         public override void OnGUI(Rect rect)
         {
-            this.Margins(ref rect);
-            ExtendedToolbar.DoWidgetBackground(rect);
-            this.Padding(ref rect);
+            Rect innerRect = new Rect(rect);
+            this.Margins(ref innerRect);
+            ExtendedToolbar.DoWidgetBackground(innerRect);
+            this.Padding(ref innerRect);
 
-            Rect iconSpace = DrawIcon(ModTextures.iconWorld, rect.x, rect.y);
-            rect.x += iconSpace.width;
-            rect.width -= iconSpace.width;
-            WidgetRow row = new WidgetRow(rect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
+            Rect iconSpace = DrawIcon(ModTextures.iconWorld, innerRect.x, innerRect.y);
+            innerRect.x += iconSpace.width;
+            innerRect.width -= iconSpace.width;
+            WidgetRow row = new WidgetRow(innerRect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
             String label = DateTime.Now.ToString("HH:mm");
 
-            row.Label(label, rect.width, null, rect.height);
+            Text.Anchor = TextAnchor.MiddleLeft;
+            row.Label(label, innerRect.width, null, rect.height);
+            Text.Anchor = TextAnchor.UpperLeft;
         }
     }
 }

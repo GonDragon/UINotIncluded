@@ -33,7 +33,9 @@ namespace UINotIncluded.Widget.Workers
             this.Margins(ref rect);
             ExtendedToolbar.DoWidgetBackground(rect);
             this.Padding(ref rect);
-            cached_DoTimeControlsGUI(rect);
+
+            Rect timeRect = new Rect(rect.x, rect.center.y - 12f, rect.width, 24f);
+            cached_DoTimeControlsGUI(timeRect);
         }
 
         private static class CustomTimeControls

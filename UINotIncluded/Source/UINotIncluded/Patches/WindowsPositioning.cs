@@ -36,7 +36,7 @@ namespace UINotIncluded
                 if (Settings.TabsOnTop) rect.y += UIManager.ExtendedBarHeight;
             }
 
-            if (ID == 1593759361) //Debug Toolbar
+            else if (ID == 1593759361) //Debug Toolbar
             {
                 if (Settings.TabsOnTop) rect.y += UIManager.ExtendedBarHeight;
             }
@@ -65,7 +65,12 @@ namespace UINotIncluded
 
             float maxHeight = UI.screenHeight;
             if (Settings.TabsOnTop) maxHeight -= UIManager.ExtendedBarHeight;
-            if (Settings.TabsOnBottom) maxHeight -= UIManager.ExtendedBarHeight;
+            if (Settings.TabsOnBottom)
+            {
+                maxHeight -= UIManager.ExtendedBarHeight;
+                ___windowRect.y += 35f - UIManager.ExtendedBarHeight;
+            }
+            
 
             ___windowRect.height = Math.Min(___windowRect.height, maxHeight);
             ___windowRect.y = maxHeight == ___windowRect.height ? (Settings.TabsOnTop ? UIManager.ExtendedBarHeight : 0) : ___windowRect.y;

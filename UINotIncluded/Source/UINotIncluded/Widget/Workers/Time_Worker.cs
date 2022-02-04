@@ -11,7 +11,7 @@ namespace UINotIncluded.Widget.Workers
         private readonly Configs.TimeConfig config;
 
         private const float extra = 50f;
-        public override float Width => TimeWidth + DateWidth + extra;
+        public override float Width => TimeWidth + DateWidth + this.IconSize + 26;
 
         private float TimeWidth
         {
@@ -69,11 +69,12 @@ namespace UINotIncluded.Widget.Workers
 
         public override void OnGUI(Rect rect)
         {
-            this.Margins(ref rect);
-            ExtendedToolbar.DoWidgetBackground(rect);
-            this.Padding(ref rect);
+            Rect innerRect = new Rect(rect);
+            this.Margins(ref innerRect);
+            ExtendedToolbar.DoWidgetBackground(innerRect);
+            this.Padding(ref innerRect);
 
-            Rect space = rect.ContractedBy(ExtendedToolbar.padding);
+            Rect space = innerRect.ContractedBy(ExtendedToolbar.padding);
 
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
             Season season = GenDate.Season((long)Find.TickManager.TicksAbs, pos);
@@ -81,7 +82,7 @@ namespace UINotIncluded.Widget.Workers
             space.x += iconSpace.width;
             space.width -= iconSpace.width;
 
-            WidgetRow row = new WidgetRow(space.x, space.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
+            WidgetRow row = new WidgetRow(space.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
             float hour = GenDate.HourFloat((long)Find.TickManager.TicksAbs, pos.x);
             int minutes;
@@ -111,8 +112,9 @@ namespace UINotIncluded.Widget.Workers
             float timeLabelWidth = (float)Math.Floor(TimeWidth + remainingSpace * 2 / 3);
 
             Text.WordWrap = false;
+            Text.Anchor = TextAnchor.MiddleLeft;
 
-            row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), space.height);
+            row.Label(datestamp, dateLabelWidth, GetDateDescription(pos, season), rect.height);
 
             string timestamp;
             switch (config.clockFormat)
@@ -123,22 +125,23 @@ namespace UINotIncluded.Widget.Workers
                     hour = (float)Math.Floor(hour);
                     hour = hour == 0 ? 12 : hour;
                     timestamp = string.Format("{0}:{1} {2}", hour.ToString(), minutes.ToString("D2"), meridiam);
-                    row.Label(timestamp, timeLabelWidth, height: space.height);
+                    row.Label(timestamp, timeLabelWidth, height: rect.height);
                     break;
 
                 case ClockFormat.twentyfourHours:
                     timestamp = string.Format("{0}:{1} {2}", Math.Floor(hour).ToString(), minutes.ToString("D2"), "hs");
-                    row.Label(timestamp, timeLabelWidth, height: space.height);
+                    row.Label(timestamp, timeLabelWidth, height: rect.height);
                     break;
 
                 case ClockFormat.vanilla:
-                    DateReadout.DateOnGUI(new Rect(row.FinalX, row.FinalY, timeLabelWidth, space.height));
+                    DateReadout.DateOnGUI(new Rect(row.FinalX, row.FinalY, timeLabelWidth, rect.height));
                     break;
 
                 default:
                     throw new NotImplementedException();
             }
             Text.WordWrap = true;
+            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         private static string GetDateDescription(Vector2 pos, Season season)
