@@ -29,6 +29,8 @@ namespace UINotIncluded
         public static bool vanillaWeather = true;
         public static bool vanillaTemperature = true;
 
+        public static float barsHeight = 35f;
+
         public static string lastVersion;
 
         public static bool legacyAltInspector;
@@ -183,6 +185,7 @@ namespace UINotIncluded
             Scribe_Collections.Look(ref bottomBar, "bottom", LookMode.Deep);
 
             Scribe_Values.Look(ref lastVersion, "lastVersion");
+            Scribe_Values.Look(ref barsHeight, "barsHeight", 35f);
 
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
@@ -375,6 +378,14 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
 
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
+
+            listingStandard.Gap();
+
+            if(listingStandard.ButtonTextLabeled("UINotIncluded.Setting.barHeight".Translate(Settings.barsHeight), "Default".Translate()))
+            {
+                Settings.barsHeight = 35f;
+            }
+            Settings.barsHeight = listingStandard.Slider(Settings.barsHeight, 20f, 50f);
 
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), Settings.fontSize.ToString()))
             {

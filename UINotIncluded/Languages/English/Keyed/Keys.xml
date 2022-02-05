@@ -19,6 +19,7 @@
 <UINotIncluded.Setting.Toolbars.Description>Main Buttons Bar Config</UINotIncluded.Setting.Toolbars.Description>
 <UINotIncluded.Setting.fontSize>Widgets Font Size</UINotIncluded.Setting.fontSize>
 <UINotIncluded.Setting.style>Widgets Style</UINotIncluded.Setting.style>
+<UINotIncluded.Setting.barHeight>Tabs bar height: {0}px</UINotIncluded.Setting.barHeight>
 
 <UINotIncluded.Setting.vanillaReadout>Show Vanilla Mouse Readout</UINotIncluded.Setting.vanillaReadout>
 <UINotIncluded.Setting.vanillaReadout.Description>If checked, the readout of information of the tile the mouse is over will appear on the bottom-left corner of the screen. With this option unchecked, you should only rely on the alt-inspector.</UINotIncluded.Setting.vanillaReadout.Description>
