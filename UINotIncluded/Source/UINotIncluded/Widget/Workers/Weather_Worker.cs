@@ -12,6 +12,8 @@ namespace UINotIncluded.Widget.Workers
         private float cacheHeight = ExtendedToolbar.Height;
         private readonly Configs.WeatherConfig config;
 
+        public override bool Visible => Find.CurrentMap != null;
+
         public Weather_Worker(Configs.WeatherConfig config)
         {
             this.config = config;
@@ -36,11 +38,6 @@ namespace UINotIncluded.Widget.Workers
         }
 
         public override bool FixedWidth => true;
-
-        public override bool Visible
-        {
-            get => Find.CurrentMap != null;
-        }
 
         public override void OnGUI(Rect rect)
         {
