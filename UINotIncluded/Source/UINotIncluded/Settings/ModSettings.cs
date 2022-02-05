@@ -384,8 +384,14 @@ namespace UINotIncluded
             if(listingStandard.ButtonTextLabeled("UINotIncluded.Setting.barHeight".Translate(Settings.barsHeight), "Default".Translate()))
             {
                 Settings.barsHeight = 35f;
+                if (Find.CurrentMap != null) Find.ColonistBar.MarkColonistsDirty();
             }
-            Settings.barsHeight = listingStandard.Slider(Settings.barsHeight, 20f, 50f);
+            float newHeight = listingStandard.Slider(Settings.barsHeight, 25f, 50f);
+            if(newHeight != Settings.barsHeight)
+            {
+                Settings.barsHeight = newHeight;
+                if(Find.CurrentMap != null) Find.ColonistBar.MarkColonistsDirty();
+            }
 
             if (listingStandard.ButtonTextLabeled("UINotIncluded.Setting.fontSize".Translate(), Settings.fontSize.ToString()))
             {
