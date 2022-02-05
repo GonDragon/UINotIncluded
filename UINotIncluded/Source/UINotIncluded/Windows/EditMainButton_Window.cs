@@ -92,6 +92,11 @@ namespace UINotIncluded.Windows
 
             curY += (EditMainButton_Window.EditFieldHeight + 10f);
 
+            Rect forcheShow = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
+            Widgets.CheckboxLabeled(forcheShow, "Force visible", ref config.forceShow);
+
+            curY += (EditMainButton_Window.EditFieldHeight + 10f);
+
             Rect iconRect = new Rect(inRect.x, curY, width * 2 - Widgets.CheckboxSize - 11f, EditMainButton_Window.EditFieldHeight);
             Rect defaulticonRect = new Rect(minimizedRect.xMax + 10f, curY, EditMainButton_Window.ResetButtonWidth, EditMainButton_Window.EditFieldHeight);
             Widgets.Label(iconRect, "Icon".Translate());

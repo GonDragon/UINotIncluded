@@ -14,6 +14,7 @@ namespace UINotIncluded.Widget.Configs
         private string _label;
         public bool minimized;
         public bool hideLabel = false;
+        public bool forceShow = false;
         private Button_Worker _worker;
         private string _shortenedLabel;
 
@@ -54,6 +55,7 @@ namespace UINotIncluded.Widget.Configs
             Scribe_Values.Look(ref _label, "label");
             Scribe_Values.Look(ref minimized, "minimized");
             Scribe_Values.Look(ref hideLabel, "hideLabel", false);
+            Scribe_Values.Look(ref forceShow, "forceShow", false);
         }
 
         public string IconPath
@@ -101,7 +103,15 @@ namespace UINotIncluded.Widget.Configs
         public float ShortenedLabelWidth => cachedShortenedLabelWidth;
 
         public override bool Configurable => true;
-        public override string SettingLabel => defName;
+        public override string SettingLabel
+        {
+            get
+            {
+                if (mainButtonDef.buttonVisible) return defName;
+                if (forceShow) return defName + " (forced)";
+                else return defName + " (hidden)";
+            }
+        }
 
         public override WidgetWorker Worker
         {

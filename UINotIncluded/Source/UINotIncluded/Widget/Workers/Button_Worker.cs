@@ -13,6 +13,8 @@ namespace UINotIncluded.Widget.Workers
         private float HalfIconSize => IconSize / 2;
         public readonly Widget.Configs.ButtonConfig config;
 
+        public override bool Visible => def.buttonVisible || config.forceShow;
+
         public Button_Worker(Widget.Configs.ButtonConfig config)
         {
             this.config = config;
