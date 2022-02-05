@@ -8,10 +8,18 @@ using Verse;
 
 namespace UINotIncluded
 {
-    [HarmonyPatch(typeof(Messages), "MessagesDoGUI")]
+    [HarmonyPatch]
     internal class MessagesDoGUIPatch
     {
         private static FieldInfo vector2_y = AccessTools.Field(typeof(Vector2), "y");
+
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            yield return AccessTools.Method(typeof(Messages), "MessagesDoGUI");
+
+            Assembly lto_assembly = AccessTools.AllAssemblies().FirstOrDefault(x => x.GetName().Name == "TacticalGroups");
+            if (lto_assembly != null) yield return LTOColonistGroup_MessagesDoGUI(lto_assembly);
+        }
 
         private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
@@ -37,6 +45,19 @@ namespace UINotIncluded
         private static int YOffsetAdjustment()
         {
             return Settings.TabsOnTop ? (int)UIManager.ExtendedBarHeight : 0;
+        }
+
+        private static MethodBase LTOColonistGroup_MessagesDoGUI(Assembly lto_assembly)
+        {
+            foreach(System.Type type in AccessTools.GetTypesFromAssembly(lto_assembly))
+            {
+                if(type.Name == "HarmonyPatches_DynamicMessages")
+                {
+                    return AccessTools.Method(type, "MessagesDoGUI");
+                }
+            }
+
+            throw new System.Exception("Unable to find HarmonyPatches_DynamicMessages class on current assembly");
         }
     }
 }
