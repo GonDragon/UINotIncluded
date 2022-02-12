@@ -45,9 +45,8 @@ namespace UINotIncluded
             }
         }
 
-        internal static void BarsOnGUI()
+        public static void BarsOnGUI()
         {
-            //CheckForUpdate();
             ExtendedToolbar.ExtendedToolbarOnGUI(Settings.TopBarElements, new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
             ExtendedToolbar.ExtendedToolbarOnGUI(Settings.BottomBarElements, new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
         }

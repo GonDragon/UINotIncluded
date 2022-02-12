@@ -1,5 +1,9 @@
 using HarmonyLib;
 using RimWorld;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 
 namespace UINotIncluded
 {
@@ -30,13 +34,50 @@ namespace UINotIncluded
         }
     }
 
-    [HarmonyPatch(typeof(MainButtonsRoot), "DoButtons")]
-    internal class DoButtonsPatch
+    [HarmonyPatch(typeof(MainButtonsRoot), "MainButtonsOnGUI")]
+    internal class MainButtonsRoot_TranspilerPatch
     {
-        public static bool Prefix()
+        private static readonly MethodInfo vanilla_DoButtons = AccessTools.Method(typeof(MainButtonsRoot), "DoButtons");
+        private static readonly MethodInfo uini_DoButtons = AccessTools.Method(typeof(UIManager), "BarsOnGUI");
+
+        private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
-            UIManager.BarsOnGUI();
-            return false;
+            bool found = false;
+            bool patched = false;
+            CodeInstruction temp = new CodeInstruction(OpCodes.Nop);
+
+            foreach (CodeInstruction code in instructions)
+            {
+                if (!patched)
+                {
+                    if(!found)
+                    {
+                        if(code.opcode == OpCodes.Ldarg_0)
+                        {
+                            temp = code;
+                            found = true;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (code.opcode == OpCodes.Call && (MethodInfo)code.operand == vanilla_DoButtons)
+                        {
+                            code.operand = uini_DoButtons;
+                            code.labels = temp.labels;
+                            patched = true;
+                        }
+                        else
+                        {
+                            found = false;
+                            yield return temp;
+
+                        }
+                    }
+                    
+                }
+                yield return code;
+            }
         }
     }
 }
