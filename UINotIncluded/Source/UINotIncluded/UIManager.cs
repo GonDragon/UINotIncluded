@@ -51,6 +51,12 @@ namespace UINotIncluded
             ExtendedToolbar.ExtendedToolbarOnGUI(Settings.BottomBarElements, new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
         }
 
+        public static void VUIE_BarsOnGUI()
+        {
+            ExtendedToolbar.VUIE_ExtendedToolbarOnGUI(Settings.TopBarElements, new Rect(0f, 0f, UI.screenWidth, ExtendedToolbar.Height));
+            ExtendedToolbar.VUIE_ExtendedToolbarOnGUI(Settings.BottomBarElements, new Rect(0f, UI.screenHeight - ExtendedToolbar.Height, UI.screenWidth, ExtendedToolbar.Height));
+        }
+
         public static void Before_MainUIOnGUI()
         {
             if (tabsOnTop != Settings.TabsOnTop)

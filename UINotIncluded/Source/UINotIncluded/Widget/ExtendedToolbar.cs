@@ -62,6 +62,11 @@ namespace UINotIncluded.Widget
         {
             Settings.BarStyle.DoWidgetBackground(rect);
         }
+
+        public static void VUIE_ExtendedToolbarOnGUI(List<Widget.Configs.ElementConfig> elements, Rect inRect)
+        {
+            ExtendedToolbarOnGUI(elements, inRect);
+        }
     }
 
     public enum ToolbarPosition

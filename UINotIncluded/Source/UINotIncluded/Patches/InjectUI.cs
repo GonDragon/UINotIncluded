@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using Verse;
 
 namespace UINotIncluded
 {
@@ -38,10 +39,17 @@ namespace UINotIncluded
     internal class MainButtonsRoot_TranspilerPatch
     {
         private static readonly MethodInfo vanilla_DoButtons = AccessTools.Method(typeof(MainButtonsRoot), "DoButtons");
-        private static readonly MethodInfo uini_DoButtons = AccessTools.Method(typeof(UIManager), "BarsOnGUI");
+        private static MethodInfo uini_DoButtons = AccessTools.Method(typeof(UIManager), "BarsOnGUI");
 
         private static IEnumerable<CodeInstruction> Transpiler(ILGenerator gen, IEnumerable<CodeInstruction> instructions)
         {
+            // Detect VUIE to change the DoButtons function
+            if (LoadedModManager.RunningModsListForReading.Any(x => x.Name == "Vanilla UI Expanded"))
+            {
+                uini_DoButtons = AccessTools.Method(typeof(UIManager), "VUIE_BarsOnGUI");
+            }
+
+
             bool found = false;
             bool patched = false;
             CodeInstruction temp = new CodeInstruction(OpCodes.Nop);
