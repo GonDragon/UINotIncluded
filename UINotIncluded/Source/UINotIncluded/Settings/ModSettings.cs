@@ -268,12 +268,12 @@ namespace UINotIncluded
 
     internal class UINI_Mod : Mod
     {
-        public Settings settings;
+        public static Settings settings;
         private readonly SettingPages settingPages = new SettingPages();
 
         public UINI_Mod(ModContentPack content) : base(content)
         {
-            this.settings = GetSettings<Settings>();
+            settings = GetSettings<Settings>();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
