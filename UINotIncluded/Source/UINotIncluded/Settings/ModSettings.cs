@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UINotIncluded.Widget;
@@ -114,11 +115,22 @@ namespace UINotIncluded
             }
         }
 
+        public static List<Designator> CachedDesignators;
         public static void InitialiceDesignators()
         {
             if (_avaibleDesignators.Count() != 0) return;
 
-            foreach (Designator designator in DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators)
+
+            if(CachedDesignators == null)
+            {
+                CachedDesignators = new List<Designator>();
+                foreach (Designator designator in DefDatabase<DesignationCategoryDef>.GetNamed("Orders").AllResolvedDesignators)
+                {
+                    CachedDesignators.Add(designator);
+                }
+            }
+
+            foreach (Designator designator in CachedDesignators)
             {
                 _avaibleDesignators[designator.GetType().ToString()] = designator;
             }
