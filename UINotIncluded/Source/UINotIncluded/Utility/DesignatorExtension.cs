@@ -22,7 +22,7 @@ namespace Verse
             }
             MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
             if (parms.highLight)
-                QuickSearchWidget.DrawStrongHighlight(butRect.ExpandedBy(12f));
+                Widgets.DrawStrongHighlight(butRect.ExpandedBy(12f));
             Material material = instance.disabled || parms.lowLight ? TexUI.GrayscaleGUI : (Material)null;
             GUI.color = parms.lowLight ? Command.LowLightBgColor : color;
             GenUI.DrawTextureWithMaterial(butRect, parms.shrunk ? (Texture)instance.BGTextureShrunk : (Texture)instance.BGTexture, material);

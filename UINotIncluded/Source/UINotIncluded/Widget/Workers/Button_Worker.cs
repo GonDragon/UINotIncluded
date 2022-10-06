@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -21,11 +22,21 @@ namespace UINotIncluded.Widget.Workers
             this.def = (MainButtonDef)config.Def;
             config.RefreshCache();
             config.RefreshIcon();
+
+            if(def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
+            {
+                OnRepaint = this._OnRepaint;
+            } else
+            {
+                OnRepaint = def.Worker.DoButton;
+            }
         }
 
         public override bool FixedWidth => config.minimized;
 
         public override float Width => 60f;
+
+        public Action<Rect> OnRepaint;
 
         public override void OpenConfigWindow()
         {
@@ -63,7 +74,7 @@ namespace UINotIncluded.Widget.Workers
 #endif
         }
 
-        private void OnRepaint(Rect rect)
+        private void _OnRepaint(Rect rect)
         {
             Text.Font = GameFont.Small;
             string label = config.hideLabel ? "" : (string)this.config.Label;

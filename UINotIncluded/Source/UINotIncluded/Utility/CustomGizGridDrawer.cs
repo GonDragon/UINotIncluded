@@ -17,7 +17,7 @@ namespace Verse
         private static readonly List<List<Gizmo>> gizmoGroups = new List<List<Gizmo>>();
         private static readonly List<Gizmo> firstGizmos = new List<Gizmo>();
         private static readonly List<Gizmo> tmpAllGizmos = new List<Gizmo>();
-        private static readonly Func<Gizmo, Gizmo, int> SortByOrder = (Func<Gizmo, Gizmo, int>)((lhs, rhs) => lhs.order.CompareTo(rhs.order));
+        private static readonly Func<Gizmo, Gizmo, int> SortByOrder = (Func<Gizmo, Gizmo, int>)((lhs, rhs) => lhs.Order.CompareTo(rhs.Order));
 
         public static float HeightDrawnRecently => Time.frameCount > CustomGizmoGridDrawer.heightDrawnFrame + 2 ? 0.0f : CustomGizmoGridDrawer.heightDrawn;
 
