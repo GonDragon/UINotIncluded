@@ -14,12 +14,9 @@ namespace UINotIncluded
 
         public static readonly float archButtonWidth = ExtendedToolbar.Height;
 
-        public static bool toggleAltInspector = false;
-
         private static bool tabsOnTop = Settings.TabsOnTop;
         private static readonly WidgetRow animalsRow = new WidgetRow();
         private static readonly JobDesignatorBar JobsBar = new JobDesignatorBar();
-        private static readonly AltInspectorManager altInspectorManager = new AltInspectorManager();
 
         private static bool updateToolbars = true;
         private static readonly List<ToolbarElement> topBarElements = new List<ToolbarElement>();
@@ -94,7 +91,6 @@ namespace UINotIncluded
         {
             float animalsY = Settings.TabsOnTop ? 13f + ExtendedToolbar.Height : 13f;
             if (Find.CurrentMap == null || WorldRendererUtility.WorldRenderedNow) return;
-            altInspectorManager.AltInspectorOnGUI();
             if (!Settings.vanillaAnimals) AnimalButtons.AnimalButtonsOnGUI(animalsRow, 10f, animalsY);
             if (Settings.useDesignatorBar && Find.MainTabsRoot.OpenTab == null) JobsBar.JobDesignatorBarOnGUI();
         }

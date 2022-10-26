@@ -128,19 +128,4 @@ namespace UINotIncluded
             return false;
         }
     }
-
-    [HarmonyPatch(typeof(PlaySettings), "DoPlaySettingsGlobalControls")]
-    internal class DoPlaySettingsGlobalControlsPatch
-    {
-        public static void Postfix(WidgetRow row, bool worldView)
-        {
-            if (worldView)
-            {
-            }
-            else
-            {
-                row.ToggleableIcon(ref UIManager.toggleAltInspector, ModTextures.iconAltInspector, "UINotIncluded.Playsetting.altinspect.tooltip".Translate(), SoundDefOf.Mouseover_ButtonToggle);
-            }
-        }
-    }
 }

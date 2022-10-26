@@ -131,7 +131,6 @@
     <Compile Include="Widget\Workers\BlankSpace_Worker.cs" />
     <Compile Include="Widget\ExtendedWidgetDef.cs" />
     <Compile Include="Widget\JobDesignatorBar.cs" />
-    <Compile Include="Utility\AltInspectorManager.cs" />
     <Compile Include="Patches\NotificationBarPatches.cs" />
     <Compile Include="Patches\Messages.cs" />
     <Compile Include="Patches\ColonistBar.cs" />

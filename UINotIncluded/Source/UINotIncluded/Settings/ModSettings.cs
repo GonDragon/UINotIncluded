@@ -34,7 +34,6 @@ namespace UINotIncluded
 
         public static string lastVersion;
 
-        public static bool legacyAltInspector;
         private static readonly Dictionary<string, Designator> _avaibleDesignators = new Dictionary<string, Designator>();
 
         public static bool TabsOnTop => Settings.TopBarElements.Count() > 0;
@@ -184,7 +183,6 @@ namespace UINotIncluded
             Scribe_Values.Look(ref useDesignatorBar, "useDesignatorBar", true);
             Scribe_Values.Look(ref initializedDefaultBar, "initializedDefaultBar", false);
             Scribe_Values.Look(ref fontSize, "fontSize", GameFont.Tiny);
-            Scribe_Values.Look(ref legacyAltInspector, "legacyAltInspector", false);
 
             Scribe_Values.Look(ref _barStyleType, "StyleType", typeof(BarStyle_RustyOrange));
 
@@ -389,7 +387,6 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaDate".Translate(), ref Settings.vanillaDate, "UINotIncluded.Setting.vanillaDate.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaControlSpeed".Translate(), ref Settings.vanillaControlSpeed, "UINotIncluded.Setting.vanillaControlSpeed.Description".Translate());
 
-            listingStandard.CheckboxLabeled("UINotIncluded.Setting.legacyAltInspector".Translate(), ref Settings.legacyAltInspector, "UINotIncluded.Setting.legacyAltInspector.Description".Translate());
 
             listingStandard.Gap();
 

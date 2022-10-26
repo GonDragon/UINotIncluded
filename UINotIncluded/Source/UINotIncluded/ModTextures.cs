@@ -27,8 +27,6 @@ namespace UINotIncluded
         public static readonly Texture2D seasonPermaSummer = ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/PermanentSummer");
         public static readonly Texture2D seasonPermaWinter = ContentFinder<Texture2D>.Get("GD/UI/Icons/Season/PermanentWinter");
 
-        public static readonly Texture2D iconAltInspector = ContentFinder<Texture2D>.Get("GD/UI/Icons/Playsettings/alt-info");
-
         public static readonly Texture2D iconWorld = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/world");
         public static readonly Texture2D iconCog = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/cog");
 
