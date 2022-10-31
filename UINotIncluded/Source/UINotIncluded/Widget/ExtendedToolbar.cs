@@ -29,7 +29,7 @@ namespace UINotIncluded.Widget
 
             foreach (Widget.Configs.ElementConfig element in elements)
             {
-                if (!element.Worker.Visible) continue;
+                if (!element.Worker.Visible()) continue;
                 if (!element.Worker.FixedWidth) elasticElementsAmount++;
                 else fixedWidth += element.Worker.Width;
             }
@@ -40,7 +40,7 @@ namespace UINotIncluded.Widget
             float curX = 0;
             foreach (Widget.Configs.ElementConfig element in elements)
             {
-                if (!element.Worker.Visible) continue;
+                if (!element.Worker.Visible()) continue;
                 float eWidth = element.Worker.Width;
                 if (!element.Worker.FixedWidth) eWidth = elasticElementWidth;
 
@@ -80,7 +80,7 @@ namespace UINotIncluded.Widget
 
             foreach (Widget.Configs.ElementConfig element in elements)
             {
-                if (!element.Worker.Visible) continue;
+                if (!element.Worker.Visible()) continue;
                 if (!element.Worker.FixedWidth) elasticElementsAmount++;
                 else fixedWidth += element.Worker.Width;
             }
@@ -102,7 +102,7 @@ namespace UINotIncluded.Widget
             float curX = 0;
             foreach (Widget.Configs.ElementConfig element in elements.ListFullCopy())
             {
-                if (!element.Worker.Visible) continue;
+                if (!element.Worker.Visible()) continue;
                 float eWidth = element.Worker.Width;
                 if (!element.Worker.FixedWidth) eWidth = elasticElementWidth;
                 Rect elementRect = new Rect(curX, inRect.y, eWidth, Height);

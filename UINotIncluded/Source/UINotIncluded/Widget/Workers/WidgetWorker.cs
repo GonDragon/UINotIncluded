@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Verse;
 
 namespace UINotIncluded.Widget
@@ -7,7 +8,7 @@ namespace UINotIncluded.Widget
     {
         public float IconSize => ExtendedToolbar.Height - 9f;
 
-        public virtual bool Visible => true;
+        public Func<bool> Visible = () => { return true; };
         public virtual bool FixedWidth => false;
         public virtual float Width => 100f;
 

@@ -7,7 +7,7 @@ namespace UINotIncluded.Widget.Workers
 {
     internal class TimeIrl_Worker : WidgetWorker
     {
-        public override bool Visible { get => Prefs.ShowRealtimeClock; }
+        public new Func<bool> Visible = () => Prefs.ShowRealtimeClock;
 
         public override bool FixedWidth => true;
 

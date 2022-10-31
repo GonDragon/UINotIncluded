@@ -13,7 +13,7 @@ namespace UINotIncluded.Widget.Workers
         private const float extra = 50f;
         public override float Width => TimeWidth + DateWidth + this.IconSize + 26;
 
-        public override bool Visible => Find.CurrentMap != null;
+        public new Func<bool> Visible = () => Find.CurrentMap != null;
 
         private float TimeWidth
         {

@@ -14,8 +14,6 @@ namespace UINotIncluded.Widget.Workers
         private float HalfIconSize => IconSize / 2;
         public readonly Widget.Configs.ButtonConfig config;
 
-        public override bool Visible => def.buttonVisible || config.forceShow;
-
         public Button_Worker(Widget.Configs.ButtonConfig config)
         {
             this.config = config;
@@ -23,12 +21,20 @@ namespace UINotIncluded.Widget.Workers
             config.RefreshCache();
             config.RefreshIcon();
 
-            if(def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
+            if (def.workerClass == typeof(MainButtonWorker_ToggleMechTab))
             {
                 OnRepaint = this._OnRepaint;
-            } else
+                Visible = () => !def.Worker.Disabled || config.forceShow;
+            }
+            else if (def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
+            {
+                OnRepaint = this._OnRepaint;
+                Visible = () => def.buttonVisible || config.forceShow;
+            }
+            else
             {
                 OnRepaint = def.Worker.DoButton;
+                Visible = () => def.buttonVisible || config.forceShow;
             }
         }
 
