@@ -29,6 +29,8 @@ namespace UINotIncluded
         public static bool vanillaRealtime = true;
         public static bool vanillaWeather = true;
         public static bool vanillaTemperature = true;
+        
+        public static bool forceCustomTab = true;
 
         public static float barsHeight = 35f;
 
@@ -196,6 +198,8 @@ namespace UINotIncluded
 
             Scribe_Values.Look(ref lastVersion, "lastVersion");
             Scribe_Values.Look(ref barsHeight, "barsHeight", 35f);
+
+            Scribe_Values.Look(ref forceCustomTab, "forceCustomTab", true);
 
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
@@ -378,6 +382,7 @@ namespace UINotIncluded
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.togglersOnTop".Translate(), ref Settings.togglersOnTop, "UINotIncluded.Setting.togglersOnTop.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaAnimals".Translate(), ref Settings.vanillaAnimals, "UINotIncluded.Setting.vanillaAnimals.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.centeredWindows".Translate(), ref Settings.centeredWindows, "UINotIncluded.Setting.centeredWindows.Description".Translate());
+            listingStandard.CheckboxLabeled("UINotIncluded.Setting.forceCustomTab".Translate(), ref Settings.forceCustomTab, "UINotIncluded.Setting.forceCustomTab.Description".Translate());
 
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaReadout".Translate(), ref Settings.vanillaReadout, "UINotIncluded.Setting.vanillaReadout.Description".Translate());
             listingStandard.CheckboxLabeled("UINotIncluded.Setting.vanillaRealtime".Translate(), ref Settings.vanillaRealtime, "UINotIncluded.Setting.vanillaRealtime.Description".Translate());

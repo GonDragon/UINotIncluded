@@ -26,7 +26,7 @@ namespace UINotIncluded.Widget.Workers
                 OnRepaint = this._OnRepaint;
                 Visible = () => !def.Worker.Disabled || config.forceShow;
             }
-            else if (def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
+            else if (Settings.forceCustomTab || def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
             {
                 OnRepaint = this._OnRepaint;
                 Visible = () => def.buttonVisible || config.forceShow;
