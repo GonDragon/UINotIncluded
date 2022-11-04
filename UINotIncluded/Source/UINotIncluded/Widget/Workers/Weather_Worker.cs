@@ -46,6 +46,8 @@ namespace UINotIncluded.Widget.Workers
             ExtendedToolbar.DoWidgetBackground(innerRect);
             this.Padding(ref innerRect);
 
+            if (Find.CurrentMap == null) return;
+
             WeatherDef weatherPerceived = Find.CurrentMap.weatherManager.CurWeatherPerceived;
             Texture2D icon = ModTextures.WeatherIcon(weatherPerceived.GetModExtension<WeatherDefExtension>()?.icon ?? "GD/UI/Icons/Weather/Unknown");
 

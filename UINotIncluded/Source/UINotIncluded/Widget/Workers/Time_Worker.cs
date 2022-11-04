@@ -76,6 +76,8 @@ namespace UINotIncluded.Widget.Workers
             ExtendedToolbar.DoWidgetBackground(innerRect);
             this.Padding(ref innerRect);
 
+            if (Find.CurrentMap == null) return;
+
             Rect space = innerRect.ContractedBy(ExtendedToolbar.padding);
 
             Vector2 pos = Find.WorldGrid.LongLatOf(Find.CurrentMap.Tile);
