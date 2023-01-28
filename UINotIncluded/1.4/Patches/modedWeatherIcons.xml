@@ -16,7 +16,7 @@
 
     <Operation Class="PatchOperationFindMod">
         <mods>
-            <li>ReGrowth: Core and Framework</li>
+            <li>ReGrowth: Core</li>
         </mods>
         <match Class="PatchOperationSequence">
             <operations>
