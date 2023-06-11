@@ -30,14 +30,14 @@ namespace UINotIncluded
         public static readonly Texture2D iconWorld = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/world");
         public static readonly Texture2D iconCog = ContentFinder<Texture2D>.Get("GD/UI/Icons/Others/cog");
 
-        public static readonly Texture2D pause = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Pause");
-        public static readonly Texture2D pause_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/pause-outline");
-        public static readonly Texture2D play = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Normal");
-        public static readonly Texture2D play_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/play-outline");
-        public static readonly Texture2D speedOne = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Fast");
-        public static readonly Texture2D speedOne_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/fast-forward-outline");
-        public static readonly Texture2D speedTwo = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Superfast");
-        public static readonly Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/skip-forward-outline");
+        //public static readonly Texture2D pause = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Pause");
+        //public static readonly Texture2D pause_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/pause-outline");
+        //public static readonly Texture2D play = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Normal");
+        //public static readonly Texture2D play_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/play-outline");
+        //public static readonly Texture2D speedOne = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Fast");
+        //public static readonly Texture2D speedOne_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/fast-forward-outline");
+        //public static readonly Texture2D speedTwo = ContentFinder<Texture2D>.Get("UI/TimeControls/TimeSpeedButton_Superfast");
+        //public static readonly Texture2D speedTwo_outl = ContentFinder<Texture2D>.Get("UI/TimeControls/skip-forward-outline");
 
         public static readonly Texture2D buttonDraggable = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_drag");
         public static readonly Texture2D buttonDraggableMouseover = ContentFinder<Texture2D>.Get("GD/UI/Buttons/ButtonBG_dragMousover");
