@@ -25,7 +25,7 @@ namespace UINotIncluded.Widget.Workers
 
         public Timespeed_Worker()
         {
-            cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoTimeControlsGUI;
+            cached_DoTimeControlsGUI = cached_DoTimeControlsGUI ?? CustomTimeControls.DoSmartTimeControlsGUI2;
         }
 
         public override void OnGUI(Rect rect)
@@ -156,6 +156,11 @@ namespace UINotIncluded.Widget.Workers
             public static void DoSmartTimeControlsGUI(Rect timerRect)
             {
                 timerRect.x += 14;
+                TimeControls.DoTimeControlsGUI(timerRect);
+            }
+
+            public static void DoSmartTimeControlsGUI2(Rect timerRect)
+            {
                 TimeControls.DoTimeControlsGUI(timerRect);
             }
         }
