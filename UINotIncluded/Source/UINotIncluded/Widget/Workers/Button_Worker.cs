@@ -21,20 +21,22 @@ namespace UINotIncluded.Widget.Workers
             config.RefreshCache();
             config.RefreshIcon();
 
+            UINI.Log("Selecting type");
+
             if (def.workerClass == typeof(MainButtonWorker_ToggleMechTab))
             {
                 OnRepaint = this._OnRepaint;
-                Visible = () => !def.Worker.Disabled || config.forceShow;
+                Visible = () => config.forceShow || !def.Worker.Disabled;
             }
             else if (Settings.forceCustomTab || def.workerClass == typeof(MainButtonWorker) || def.workerClass == typeof(MainButtonWorker_ToggleTab) || def.workerClass == typeof(MainButtonWorker_ToggleWorld) || def.workerClass == typeof(MainButtonWorker_ToggleResearchTab))
             {
                 OnRepaint = this._OnRepaint;
-                Visible = () => def.buttonVisible || config.forceShow;
+                Visible = () => config.forceShow || def.Worker.Visible;
             }
             else
             {
                 OnRepaint = def.Worker.DoButton;
-                Visible = () => def.buttonVisible || config.forceShow;
+                Visible = () => config.forceShow || def.buttonVisible;
             }
         }
 
