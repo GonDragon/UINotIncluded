@@ -17,13 +17,13 @@ namespace Verse
             if (Mouse.IsOver(butRect))
             {
                 flag1 = true;
-                if (!instance.disabled)
+                if (!instance.Disabled)
                     color = GenUI.MouseoverColor;
             }
             MouseoverSounds.DoRegion(butRect, SoundDefOf.Mouseover_Command);
             if (parms.highLight)
                 Widgets.DrawStrongHighlight(butRect.ExpandedBy(12f));
-            Material material = instance.disabled || parms.lowLight ? TexUI.GrayscaleGUI : (Material)null;
+            Material material = instance.Disabled || parms.lowLight ? TexUI.GrayscaleGUI : (Material)null;
             GUI.color = parms.lowLight ? Command.LowLightBgColor : color;
             GenUI.DrawTextureWithMaterial(butRect, parms.shrunk ? (Texture)instance.BGTextureShrunk : (Texture)instance.BGTexture, material);
             GUI.color = color;
@@ -84,7 +84,7 @@ namespace Verse
             Text.Font = GameFont.Small;
             if (flag2)
             {
-                if (instance.disabled)
+                if (instance.Disabled)
                 {
                     if (!instance.disabledReason.NullOrEmpty())
                         Messages.Message(instance.disabledReason, MessageTypeDefOf.RejectInput, false);

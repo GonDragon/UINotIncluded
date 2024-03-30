@@ -88,7 +88,7 @@ namespace Verse
                     Gizmo gizmo = (Gizmo)null;
                     for (int index4 = 0; index4 < gizmoGroup.Count; ++index4)
                     {
-                        if (!gizmoGroup[index4].disabled)
+                        if (!gizmoGroup[index4].Disabled)
                         {
                             gizmo = gizmoGroup[index4];
                             break;
@@ -102,7 +102,7 @@ namespace Verse
                         {
                             for (int index5 = 0; index5 < gizmoGroup.Count; ++index5)
                             {
-                                if (gizmoGroup[index5] is Command_Toggle commandToggle24 && !commandToggle24.disabled && commandToggle24.isActive())
+                                if (gizmoGroup[index5] is Command_Toggle commandToggle24 && !commandToggle24.Disabled && commandToggle24.isActive())
                                 {
                                     gizmo = gizmoGroup[index5];
                                     break;
@@ -113,7 +113,7 @@ namespace Verse
                         {
                             for (int index6 = 0; index6 < gizmoGroup.Count; ++index6)
                             {
-                                if (gizmoGroup[index6] is Command_Toggle commandToggle25 && !commandToggle25.disabled && !commandToggle25.isActive())
+                                if (gizmoGroup[index6] is Command_Toggle commandToggle25 && !commandToggle25.Disabled && !commandToggle25.isActive())
                                 {
                                     gizmo = gizmoGroup[index6];
                                     break;
@@ -169,7 +169,7 @@ namespace Verse
                     for (int index = 0; index < matchingGroup.Count; ++index)
                     {
                         Gizmo other = matchingGroup[index];
-                        if (other != interactedGiz && !other.disabled && interactedGiz.InheritInteractionsFrom(other))
+                        if (other != interactedGiz && !other.Disabled && interactedGiz.InheritInteractionsFrom(other))
                             other.ProcessInput(interactedEvent);
                     }
                     interactedGiz.ProcessInput(interactedEvent);
@@ -184,7 +184,7 @@ namespace Verse
                     for (int index7 = 0; index7 < matchingGroup.Count; ++index7)
                     {
                         Gizmo other = matchingGroup[index7];
-                        if (other != floatMenuGiz && !other.disabled && floatMenuGiz.InheritFloatMenuInteractionsFrom(other))
+                        if (other != floatMenuGiz && !other.Disabled && floatMenuGiz.InheritFloatMenuInteractionsFrom(other))
                         {
                             foreach (FloatMenuOption clickFloatMenuOption in other.RightClickFloatMenuOptions)
                             {
