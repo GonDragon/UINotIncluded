@@ -106,7 +106,6 @@
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />
     <Compile Include="Utility\MainIconDef.cs" />
-    <Compile Include="Utility\VUIEhelper.cs" />
     <Compile Include="Widget\AnimalButtons.cs" />
     <Compile Include="Widget\Configs\BlankSpaceConfig.cs" />
     <Compile Include="Widget\Configs\ButtonConfig.cs" />
