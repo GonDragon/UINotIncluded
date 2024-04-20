@@ -21,8 +21,6 @@ namespace UINotIncluded.Widget.Workers
             config.RefreshCache();
             config.RefreshIcon();
 
-            UINI.Log("Selecting type");
-
             if (def.workerClass == typeof(MainButtonWorker_ToggleMechTab))
             {
                 OnRepaint = this._OnRepaint;
