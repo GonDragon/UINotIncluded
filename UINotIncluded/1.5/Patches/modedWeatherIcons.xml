@@ -37,14 +37,6 @@
                     </value>
                 </li>
                 <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_Hail"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/VEE_Hail</icon>
-                        </li>
-                    </value>
-                </li>
-                <li Class="PatchOperationAddModExtension">
                     <xpath>/Defs/WeatherDef[defName="RG_Drizzle"]</xpath>
                     <value>
                         <li Class="UINotIncluded.WeatherDefExtension">

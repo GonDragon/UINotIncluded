@@ -60,7 +60,10 @@ namespace UINotIncluded.Widget.Workers
             innerRect.width -= iconSpace.width;
 
             WidgetRow row = new WidgetRow(innerRect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
-            string tempLabel = Mathf.Round(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile)).ToStringTemperature("F0");
+
+            //string tempLabel = Mathf.Round(Find.World.tileTemperatures.GetOutdoorTemp(Find.CurrentMap.Tile)).ToStringTemperature("F0");
+            string tempLabel = Mathf.Round(Find.CurrentMap.mapTemperature.OutdoorTemp).ToStringTemperature("F0");
+
 
             Text.Anchor = TextAnchor.MiddleLeft;
             row.Label(tempLabel, innerRect.width, null, rect.height);
