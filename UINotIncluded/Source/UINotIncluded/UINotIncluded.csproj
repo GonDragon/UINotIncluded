@@ -101,8 +101,6 @@
     <Compile Include="Utility\AssemblyChecker.cs" />
     <Compile Include="Utility\BarStyle.cs" />
     <Compile Include="Utility\Deprecated\DeprecationManager.cs" />
-    <Compile Include="Utility\Deprecated\ElementWrapper.cs" />
-    <Compile Include="Utility\Deprecated\Memory.cs" />
     <Compile Include="Utility\DragManager.cs" />
     <Compile Include="Utility\DesignatorExtension.cs" />
     <Compile Include="Utility\CustomGizGridDrawer.cs" />

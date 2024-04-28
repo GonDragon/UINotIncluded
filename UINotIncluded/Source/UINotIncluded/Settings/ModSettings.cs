@@ -201,11 +201,11 @@ namespace UINotIncluded
 
             Scribe_Values.Look(ref forceCustomTab, "forceCustomTab", true);
 
-            if (Scribe.mode == LoadSaveMode.LoadingVars)
-            {
-                Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedTopBar, "topBar", LookMode.Deep);
-                Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedBottomBar, "bottomBar", LookMode.Deep);
-            }
+            //if (Scribe.mode == LoadSaveMode.LoadingVars)
+            //{
+            //    Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedTopBar, "topBar", LookMode.Deep);
+            //    Scribe_Collections.Look(ref Utility.Deprecated.DeprecationManager.DeprecatedBottomBar, "bottomBar", LookMode.Deep);
+            //}
 
             base.ExposeData();
         }
