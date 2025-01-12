@@ -24,4 +24,16 @@ namespace UINotIncluded
             }
         }
     }
+
+    [HarmonyPatch(typeof(ColonistBarColonistDrawer), "GroupFrameRect")]
+    internal class GroupFrameRectPatch
+    {
+        public static void Postfix(ref Rect __result)
+        {
+            if (Settings.TabsOnTop)
+            {
+                __result.y += UIManager.ExtendedBarHeight;
+            }
+        }
+    }
 }
