@@ -11,7 +11,7 @@ namespace UINotIncluded.Widget.Workers
 
         public override bool FixedWidth => true;
 
-        private float extra => this.IconSize + 6f;
+        private float extra => this.IconSize + 16f;
         private float cacheWidth = -1f;
         private GameFont fontCache;
         public override float Width
@@ -42,7 +42,15 @@ namespace UINotIncluded.Widget.Workers
             innerRect.width -= iconSpace.width;
             WidgetRow row = new WidgetRow(innerRect.x, rect.y, UIDirection.RightThenDown, gap: ExtendedToolbar.interGap);
 
-            String label = DateTime.Now.ToString("HH:mm");
+            String label;
+
+            if(Prefs.TwelveHourClockMode)
+            {
+                label = DateTime.Now.ToString("hh:mm tt");
+            } else
+            {
+                label = DateTime.Now.ToString("HH:mm") + " hs";
+            }
 
             Text.Anchor = TextAnchor.MiddleLeft;
             row.Label(label, innerRect.width, null, rect.height);
