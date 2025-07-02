@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using RimWorld.Planet;
 
 namespace UINotIncluded.Widget
 {
@@ -17,8 +18,7 @@ namespace UINotIncluded.Widget
 
         public void JobDesignatorBarOnGUI()
         {
-            //if (Find.DesignatorManager.SelectedDesignator != null)
-            //    Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0.0f, (float)((double)(UI.screenHeight - 35) - (double)((MainTabWindow_Architect)MainButtonDefOf.Architect.TabWindow).WinHeight - 270.0));
+            if (RimWorld.Planet.WorldRendererUtility.WorldSelected) return;
 
             float rigthWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.right], rigthRows);
             float mainWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.main], mainRows);
