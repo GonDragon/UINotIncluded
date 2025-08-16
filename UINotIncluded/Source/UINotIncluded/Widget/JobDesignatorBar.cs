@@ -18,7 +18,7 @@ namespace UINotIncluded.Widget
 
         public void JobDesignatorBarOnGUI()
         {
-            if (RimWorld.Planet.WorldRendererUtility.WorldSelected) return;
+            if (!WorldRendererUtility.WorldBackgroundNow && WorldRendererUtility.WorldRendered) return;
 
             float rigthWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.right], rigthRows);
             float mainWidth = CustomGizmoGridDrawer.CalculateWidth(Jobs[(int)DesignationConfig.main], mainRows);
