@@ -16,18 +16,10 @@
 
     <Operation Class="PatchOperationFindMod">
         <mods>
-            <li>ReGrowth: Core</li>
+            <li>ReGrowth 2</li>
         </mods>
         <match Class="PatchOperationSequence">
             <operations>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_Overcast"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_Overcast</icon>
-                        </li>
-                    </value>
-                </li>
                 <li Class="PatchOperationAddModExtension">
                     <xpath>/Defs/WeatherDef[defName="RG_Windy"]</xpath>
                     <value>
@@ -44,14 +36,7 @@
                         </li>
                     </value>
                 </li>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_Monsoon"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_Monsoon</icon>
-                        </li>
-                    </value>
-                </li>
+
                 <li Class="PatchOperationAddModExtension">
                     <xpath>/Defs/WeatherDef[defName="RG_FoggySnow"]</xpath>
                     <value>
@@ -60,38 +45,16 @@
                         </li>
                     </value>
                 </li>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_Blizzard"]</xpath>
+                
+				<li Class="PatchOperationAddModExtension">
+                    <xpath>/Defs/WeatherDef[defName="RG_FogStorm"]</xpath>
                     <value>
                         <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_Blizzard</icon>
+                            <icon>GD/UI/Icons/Weather/RG_FogStorm</icon>
                         </li>
                     </value>
                 </li>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_FoggySandstorm"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_FoggySandstorm</icon>
-                        </li>
-                    </value>
-                </li>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_SandStorm"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_SandStorm</icon>
-                        </li>
-                    </value>
-                </li>
-                <li Class="PatchOperationAddModExtension">
-                    <xpath>/Defs/WeatherDef[defName="RG_SandStormHard"]</xpath>
-                    <value>
-                        <li Class="UINotIncluded.WeatherDefExtension">
-                            <icon>GD/UI/Icons/Weather/RG_SandStormHard</icon>
-                        </li>
-                    </value>
-                </li>
+                
             </operations>
 		</match>
     </Operation>
