@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -10,18 +9,18 @@ namespace UINotIncluded.Widget
         public static float Height => Settings.barsHeight;
         public static float Width => UI.screenWidth;
 
-        public static float interGap = 0;
-        public static float padding = 2;
-        public static float margin = 3;
+        public static readonly float interGap = 0;
+        public static readonly float padding = 2;
+        public static readonly float margin = 3;
 
         public static void ExtendedToolbarOnGUI(List<Widget.Configs.ElementConfig> elements, Rect inRect)
         {
 #if DEBUG
-            string key = "Draw Toolbar";
-            Analyzer.Profiling.Profiler profiler = Analyzer.Profiling.ProfileController.Start(key);
+            const string key = "Draw Toolbar";
+            Analyzer.Profiling.ProfileController.Start(key);
 #endif
 
-            if (elements.Count() == 0) return;
+            if (!elements.Any()) return;
             Settings.BarStyle.DoToolbarBackground(inRect);
 
             float fixedWidth = 0f;
@@ -34,8 +33,8 @@ namespace UINotIncluded.Widget
                 else fixedWidth += element.Worker.Width;
             }
 
-            float elasticSpaceAvaible = Width - fixedWidth;
-            float elasticElementWidth = elasticSpaceAvaible / elasticElementsAmount;
+            float elasticSpaceAvailable = Width - fixedWidth;
+            float elasticElementWidth = elasticSpaceAvailable / elasticElementsAmount;
 
             float curX = 0;
             foreach (Widget.Configs.ElementConfig element in elements)

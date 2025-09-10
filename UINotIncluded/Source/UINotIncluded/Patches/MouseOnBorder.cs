@@ -19,15 +19,15 @@ namespace UINotIncluded.Patches
             OpCode[] target = new OpCode[] { OpCodes.Ldloca_S, OpCodes.Ldflda, OpCodes.Dup, OpCodes.Ldind_R4, OpCodes.Ldarg_0, OpCodes.Ldfld, OpCodes.Ldfld, OpCodes.Add, OpCodes.Stind_R4 };
             int matches = 0;
 
-            int numbermatches = 0;
+            int numberMatches = 0;
             bool numberInjected = false;
 
             var Field_mouseTouchingScreenBottomEdgeStartTime = AccessTools.Field(typeof(CameraDriver), "mouseTouchingScreenBottomEdgeStartTime");
 
             foreach (var code in instructions)
             {
-                if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 20f) numbermatches++;
-                if (numbermatches == 3 && !numberInjected)
+                if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 20f) numberMatches++;
+                if (numberMatches == 3 && !numberInjected)
                 {
                     code.operand = 6f;
                     numberInjected = true;
@@ -120,15 +120,15 @@ namespace UINotIncluded.Patches
             OpCode[] target = new OpCode[] { OpCodes.Ldloca_S, OpCodes.Ldflda, OpCodes.Dup, OpCodes.Ldind_R4, OpCodes.Ldarg_0, OpCodes.Ldfld, OpCodes.Ldfld, OpCodes.Add, OpCodes.Stind_R4 };
             int matches = 0;
 
-            int numbermatches = 0;
+            int numberMatches = 0;
             bool numberInjected = false;
 
             var Field_mouseTouchingScreenBottomEdgeStartTime = AccessTools.Field(typeof(WorldCameraDriver), "mouseTouchingScreenBottomEdgeStartTime");
 
             foreach (var code in instructions)
             {
-                if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 20f) numbermatches++;
-                if (numbermatches == 3 && !numberInjected)
+                if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 20f) numberMatches++;
+                if (numberMatches == 3 && !numberInjected)
                 {
                     code.operand = 6f;
                     numberInjected = true;
